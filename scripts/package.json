@@ -1,0 +1,19 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate:queries": "pgtyped -c pgtyped-config.json && node rewrite-pg-import.js && cd ../api && deno fmt",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@pgtyped/cli": "^2.0.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "replace-in-files": "^3.0.0"
+  }
+}

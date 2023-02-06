@@ -1,0 +1,22 @@
+{
+  "transforms": [
+    {
+      "mode": "sql",
+      "include": "**/*.sql",
+      "emitTemplate": "{{dir}}/{{name}}.queries.ts"
+    },
+    {
+      "mode": "ts",
+      "include": "**/*.ts",
+      "emitTemplate": "{{dir}}/{{name}}.types.ts"
+    }
+  ],
+  "srcDir": "../api/",
+  "dbUrl": "postgresql://postgres@localhost/ponder",
+  "camelCaseColumnNames": true,
+  "typesOverrides": {
+    "int8": "bigint",
+    "bigint": "bigint",
+    "bigserial": "bigint"
+  }
+}
