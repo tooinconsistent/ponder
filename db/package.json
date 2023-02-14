@@ -1,0 +1,20 @@
+{
+  "name": "db",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "migrate": "graphile-migrate migrate",
+    "watch": "graphile-migrate watch",
+    "commit": "graphile-migrate commit",
+    "uncommit": "graphile-migrate uncommit",
+    "reset": "graphile-migrate reset",
+    "seed": "bun ./scripts/seed.ts"
+  },
+  "devDependencies": {
+    "bun-types": "^0.5.0"
+  },
+  "dependencies": {
+    "graphile-migrate": "^1.4.1",
+    "pg": "^8.9.0"
+  }
+}

@@ -1,0 +1,101 @@
+# Conventions used in this database schema:
+
+### Naming
+
+- snake_case for tables, functions, columns (avoids having to put them in quotes
+  in most cases)
+- plural table names (avoids conflicts with e.g. `user` built ins, can be depluralised)
+- trigger functions valid for one table only are named
+  tg\_[table_name]\_\_[task_name]
+- trigger functions valid for many tables are named tg\_\_[task_name]
+- trigger names should be prefixed with `_NNN_` where NNN is a three digit
+  number that defines the priority of the trigger (use _500_ if unsure)
+- prefer lowercase over UPPERCASE, except for the `NEW`, `OLD` and `TG_OP`
+  keywords.
+
+### Explicitness
+
+- all functions should explicitly state immutable/stable/volatile
+- do not override search_path during migrations or in server code - prefer to
+  explicitly list schemas
+
+### Functions
+
+- if a function can be expressed as a single SQL statement it should use the
+  `sql` language if possible. Other functions should use `plpgsql`.
+- be aware of the function inlining rules:
+  https://wiki.postgresql.org/wiki/Inlining_of_SQL_functions
+
+### Relations
+
+- all foreign key `references` statements should have `on delete` clauses. Some
+  may also want `on update` clauses, but that's optional
+- all comments should be defined using '"escape" string constants' - e.g.
+  `E'...'` - because this more easily allows adding special characters such as
+  newlines
+- defining things (primary key, checks, unique constraints, etc) within the
+  `create table` statement is preferable to adding them after
+
+### General conventions
+
+- avoid `plv8` and other extensions that aren't built in because they can be
+  complex for people to install
+
+### Definitions
+
+Please adhere to the following templates (respecting newlines):
+
+Tables:
+
+```sql
+create table <schema_name>.<table_name> (
+  ...
+);
+```
+
+SQL functions:
+
+```sql
+create function <fn_name>(<args...>) returns <return_value> as $$
+  select ...
+  from ...
+  inner join ...
+  on ...
+  where ...
+  and ...
+  order by ...
+  limit ...;
+$$ language sql <strict?> <immutable|stable|volatile> <security definer?> set search_path from current;
+```
+
+PL/pgSQL functions:
+
+```sql
+create function <fn_name>(<args...>) returns <return_value> as $$
+declare
+  v_[varname] <type>[ = <default>];
+  ...
+begin
+  if ... then
+    ...
+  end if;
+  return <value>;
+end;
+$$ language plpgsql <strict?> <immutable|stable|volatile> <security definer?> set search_path from current;
+```
+
+Triggers:
+
+```sql
+create trigger _NNN_trigger_name
+  <before|after> <insert|update|delete> on <schema_name>.<table_name>
+  for each row [when (<condition>)]
+  execute procedure <schema_name.function_name>(...);
+```
+
+Comments:
+
+```sql
+comment on <table|column|function|...> <fully.qualified.name> is
+  E'...';
+```

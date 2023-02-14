@@ -1,7 +1,7 @@
 import { ParentComponent, Show, useContext } from "solid-js";
 
-import { AuthContext } from "./AuthProvider";
-import { Authentication } from "./Authentication";
+import { AuthContext } from "./AuthProvider.jsx";
+import { Authentication } from "./Authentication.jsx";
 
 interface EnsureAuthenticatedProps {}
 

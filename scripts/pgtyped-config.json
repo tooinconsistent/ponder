@@ -11,7 +11,7 @@
       "emitTemplate": "{{dir}}/{{name}}.types.ts"
     }
   ],
-  "srcDir": "../api/",
+  "srcDir": "../api/src",
   "dbUrl": "postgresql://postgres@localhost/ponder",
   "camelCaseColumnNames": true,
   "typesOverrides": {

@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [solidPlugin()],
   resolve: {
     alias: {
-      "~": path.resolve(__dirname, "./src"),
+      "@tooinconsistent/client": path.resolve(__dirname, "./src"),
     },
   },
   server: {

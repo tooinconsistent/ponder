@@ -1,7 +1,7 @@
 import { Component, Suspense } from "solid-js";
 
-import { Providers } from "./components/Providers";
-import { Root } from "./components/Root";
+import { Providers } from "./components/Providers.jsx";
+import { Root } from "./components/Root.jsx";
 
 const App: Component = () => {
   return (

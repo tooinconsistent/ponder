@@ -3,19 +3,17 @@
     "strict": true,
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "nodenext",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "types": ["vite/client"],
     "noEmit": true,
-    "isolatedModules": true,
-    "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
     "paths": {
-      "npm:*": ["./node_modules/*"],
-      "@/*": ["../api/*"],
-      "~/*": ["./src/*"]
+      "@tooinconsistent/api/*": ["../api/src/*"],
+      "@tooinconsistent/client/*": ["./src/*"]
     }
   }
 }

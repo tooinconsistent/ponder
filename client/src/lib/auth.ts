@@ -1,4 +1,4 @@
-import { trpc } from "~/lib/trpc";
+import { trpc } from "@tooinconsistent/client/lib/trpc.js";
 
 const AUTH_TOKEN_KEY = "_auth";
 
@@ -14,9 +14,13 @@ const removeToken = () => {
   globalThis.localStorage.removeItem(AUTH_TOKEN_KEY);
 };
 
-export const login = async (
-  { email, password }: { email: string; password: string },
-) => {
+export const login = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
   const { token } = await trpc.auth.login.mutate({ email, password });
   if (token) {
     setToken(token);

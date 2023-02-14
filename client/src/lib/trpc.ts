@@ -1,9 +1,9 @@
 import { createTRPCProxyClient, httpBatchLink, loggerLink } from "@trpc/client";
 import superjson from "superjson";
 
-import type { AppRouter } from "../../../api/trpc/router";
+import type { AppRouter } from "@tooinconsistent/api/trpc/router.js";
 
-import { getToken } from "./auth";
+import { getToken } from "./auth.js";
 
 export const trpc = createTRPCProxyClient<AppRouter>({
   transformer: superjson,

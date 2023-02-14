@@ -4,9 +4,13 @@ import {
   createContext,
   createResource,
 } from "solid-js";
-import { trpc } from "~/lib/trpc";
 
-import { login as doLogin, logout as doLogout } from "~/lib/auth";
+import { trpc } from "@tooinconsistent/client/lib/trpc.js";
+
+import {
+  login as doLogin,
+  logout as doLogout,
+} from "@tooinconsistent/client/lib/auth.js";
 
 export const AuthContext = createContext<{
   currentUserId: Resource<bigint | null>;
