@@ -1,13 +1,13 @@
 import { getUserById as getUserByIdQuery } from "./queries/user.queries.js";
 
 export interface User {
-  id: bigint;
+  id: string;
 
   createdAt: Date;
   updatedAt: Date;
 }
 
-export const getUserById = async (userId: bigint): Promise<User | null> => {
+export const getUserById = async (userId: string): Promise<User | null> => {
   const result = await getUserByIdQuery.run(
     { userId },
     {

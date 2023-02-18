@@ -9,7 +9,7 @@ import { selectUserAndHashByEmail } from "@tooinconsistent/api/domains/auth/quer
 export const getUserIdFromEmailAndPassword = async (
   { email, password }: { email: string; password: string },
   pgConnection: DBClient
-): Promise<bigint | null> => {
+): Promise<string | null> => {
   const [userDetails] = await selectUserAndHashByEmail.execute(
     { userEmail: email },
     pgConnection
@@ -29,6 +29,6 @@ export const getUserIdFromEmailAndPassword = async (
 export const getUserIdFromToken = (
   token: string,
   pgConnection: DBClient
-): Promise<bigint | null> => {
+): Promise<string | null> => {
   return getUserIdFromSession(token, pgConnection);
 };

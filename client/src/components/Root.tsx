@@ -8,7 +8,7 @@ import { Main } from "./main/Main.jsx";
 export const Root: Component = () => {
   return (
     <EnsureAuthenticated>
-      <div class="h-full bg-background flex">
+      <div class="h-full bg-[var(--base-background)] text-[var(--base-foreground)] flex">
         <Navigation />
         <Main />
       </div>

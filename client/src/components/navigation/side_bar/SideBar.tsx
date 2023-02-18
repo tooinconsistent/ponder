@@ -10,7 +10,7 @@ export const SideBar: Component<SideBarProps> = (props) => {
   // TODO: Add resizability
   return (
     <Show when={store.sideBar.currentTab !== null}>
-      <div class="h-full w-72">
+      <div class="h-full w-72 bg-[var(--sideBar-background)] fg-[var(--sideBar-foreground)] border-r border-[var(--sideBar-border)]">
         <Switch>
           <Match when={store.sideBar.currentTab === "channels"}>
             <ChannelsSideBarView />

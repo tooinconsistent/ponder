@@ -6,7 +6,7 @@ import {
 } from "./queries/session.queries.js";
 
 export const createSession = async (
-  userId: bigint,
+  userId: string,
   pgConnection: DBClient
 ): Promise<{ sessionId: string }> => {
   const [result] = await insertSessionForUser.execute({ userId }, pgConnection);
@@ -21,7 +21,7 @@ export const createSession = async (
 export const getUserIdFromSession = async (
   sessionId: string,
   pgConnection: DBClient
-): Promise<bigint | null> => {
+): Promise<string | null> => {
   const [result] = await selectSessionById.execute({ sessionId }, pgConnection);
 
   if (result) {

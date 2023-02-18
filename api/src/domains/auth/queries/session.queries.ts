@@ -2,12 +2,12 @@
 import { PreparedQuery } from "@tooinconsistent/api/lib/db.js";
 
 /** 'SelectSessionById' parameters type */
-export interface ISelectSessionByIdParams {
+export interface SelectSessionByIdParams {
   sessionId: string;
 }
 
 /** 'SelectSessionById' return type */
-export interface ISelectSessionByIdResult {
+export interface SelectSessionByIdResult {
   createdAt: Date;
   lastActive: Date;
   userId: string;
@@ -15,9 +15,9 @@ export interface ISelectSessionByIdResult {
 }
 
 /** 'SelectSessionById' query type */
-export interface ISelectSessionByIdQuery {
-  params: ISelectSessionByIdParams;
-  result: ISelectSessionByIdResult;
+export interface SelectSessionByIdQuery {
+  params: SelectSessionByIdParams;
+  result: SelectSessionByIdResult;
 }
 
 const selectSessionByIdIR: any = {
@@ -42,24 +42,24 @@ const selectSessionByIdIR: any = {
  * ```
  */
 export const selectSessionById = new PreparedQuery<
-  ISelectSessionByIdParams,
-  ISelectSessionByIdResult
+  SelectSessionByIdParams,
+  SelectSessionByIdResult
 >(selectSessionByIdIR);
 
 /** 'InsertSessionForUser' parameters type */
-export interface IInsertSessionForUserParams {
+export interface InsertSessionForUserParams {
   userId: string;
 }
 
 /** 'InsertSessionForUser' return type */
-export interface IInsertSessionForUserResult {
+export interface InsertSessionForUserResult {
   sessionId: string;
 }
 
 /** 'InsertSessionForUser' query type */
-export interface IInsertSessionForUserQuery {
-  params: IInsertSessionForUserParams;
-  result: IInsertSessionForUserResult;
+export interface InsertSessionForUserQuery {
+  params: InsertSessionForUserParams;
+  result: InsertSessionForUserResult;
 }
 
 const insertSessionForUserIR: any = {
@@ -85,6 +85,6 @@ const insertSessionForUserIR: any = {
  * ```
  */
 export const insertSessionForUser = new PreparedQuery<
-  IInsertSessionForUserParams,
-  IInsertSessionForUserResult
+  InsertSessionForUserParams,
+  InsertSessionForUserResult
 >(insertSessionForUserIR);

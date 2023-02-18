@@ -14,7 +14,7 @@ export async function createContext({
   resHeaders: _resHeaders,
   pgConnection,
 }: FetchCreateContextFnOptions & { pgConnection: DBClient }) {
-  let userId: bigint | null = null;
+  let userId: string | null = null;
 
   const authHeader = req.headers.get("Authorization");
 

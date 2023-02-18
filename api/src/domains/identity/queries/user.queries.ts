@@ -2,21 +2,21 @@
 import { PreparedQuery } from "@tooinconsistent/api/lib/db.js";
 
 /** 'GetUserById' parameters type */
-export interface IGetUserByIdParams {
+export interface GetUserByIdParams {
   userId?: string | null | void;
 }
 
 /** 'GetUserById' return type */
-export interface IGetUserByIdResult {
+export interface GetUserByIdResult {
   createdAt: Date;
   id: string;
   updatedAt: Date;
 }
 
 /** 'GetUserById' query type */
-export interface IGetUserByIdQuery {
-  params: IGetUserByIdParams;
-  result: IGetUserByIdResult;
+export interface GetUserByIdQuery {
+  params: GetUserByIdParams;
+  result: GetUserByIdResult;
 }
 
 const getUserByIdIR: any = {
@@ -39,6 +39,6 @@ const getUserByIdIR: any = {
  * ```
  */
 export const getUserById = new PreparedQuery<
-  IGetUserByIdParams,
-  IGetUserByIdResult
+  GetUserByIdParams,
+  GetUserByIdResult
 >(getUserByIdIR);

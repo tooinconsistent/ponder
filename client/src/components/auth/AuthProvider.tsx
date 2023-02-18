@@ -13,7 +13,7 @@ import {
 } from "@tooinconsistent/client/lib/auth.js";
 
 export const AuthContext = createContext<{
-  currentUserId: Resource<bigint | null>;
+  currentUserId: Resource<string | null>;
   login: (credentials: { email: string; password: string }) => Promise<void>;
   logout: () => Promise<void>;
 }>();

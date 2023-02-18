@@ -2,21 +2,21 @@
 import { PreparedQuery } from "@tooinconsistent/api/lib/db.js";
 
 /** 'SelectUserAndHashByEmail' parameters type */
-export interface ISelectUserAndHashByEmailParams {
+export interface SelectUserAndHashByEmailParams {
   userEmail: string;
 }
 
 /** 'SelectUserAndHashByEmail' return type */
-export interface ISelectUserAndHashByEmailResult {
+export interface SelectUserAndHashByEmailResult {
   email: string;
   passwordHash: string;
   userId: string;
 }
 
 /** 'SelectUserAndHashByEmail' query type */
-export interface ISelectUserAndHashByEmailQuery {
-  params: ISelectUserAndHashByEmailParams;
-  result: ISelectUserAndHashByEmailResult;
+export interface SelectUserAndHashByEmailQuery {
+  params: SelectUserAndHashByEmailParams;
+  result: SelectUserAndHashByEmailResult;
 }
 
 const selectUserAndHashByEmailIR: any = {
@@ -49,6 +49,6 @@ const selectUserAndHashByEmailIR: any = {
  * ```
  */
 export const selectUserAndHashByEmail = new PreparedQuery<
-  ISelectUserAndHashByEmailParams,
-  ISelectUserAndHashByEmailResult
+  SelectUserAndHashByEmailParams,
+  SelectUserAndHashByEmailResult
 >(selectUserAndHashByEmailIR);

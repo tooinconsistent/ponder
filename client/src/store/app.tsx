@@ -73,6 +73,8 @@ export const AppStoreProvider: ParentComponent = (props) => {
     }, {})
   );
 
+  // https://github.com/leeoniya/uFuzzy -- for command palette
+
   return (
     <AppStoreContext.Provider value={{ store, actions: actionPerformers }}>
       {props.children}

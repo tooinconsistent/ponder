@@ -38,9 +38,9 @@ export const ActivityBar: Component<ActivityBarProps> = (props) => {
   const bottomGroup: Array<Activities> = ["settings"];
 
   return (
-    <div class="h-full w-12 bg-background flex flex-col justify-between">
+    <div class="h-full w-12 bg-[var(--activityBar-background)] border-r border-[var(--activityBar-border)] flex flex-col justify-between">
       {/* Top Group */}
-      <div class="text-fg-0">
+      <div>
         <For each={topGroup}>
           {(activityId) => (
             <ActivityBarButton

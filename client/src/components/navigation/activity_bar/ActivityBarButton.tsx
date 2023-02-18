@@ -13,8 +13,14 @@ export const ActivityBarButton: ParentComponent<ActivityBarButtonProps> = (
     <div
       onClick={props.onClick}
       class={classes(
-        "w-12 h-12 p-2 text-fg-2 hover:text-fg-0 flex justify-center items-center border-l-2 cursor-pointer",
-        props.isActive ? "border-fg-0" : "border-transparent"
+        "w-12 h-12 p-2 flex justify-center items-center border-l-2 cursor-pointer",
+        props.isActive
+          ? "text-[var(--activityBar-foreground)]"
+          : "text-[var(--activityBar-inactiveForeground)] hover:text-[var(--activityBar-foreground)]",
+        props.isActive
+          ? "border-[var(--activityBar-activeBorder)]"
+          : "border-transparent",
+        props.isActive ? "bg-[var(--activityBar-activeBackground)]" : null
       )}
     >
       {props.children}

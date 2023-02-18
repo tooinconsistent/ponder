@@ -14,9 +14,5 @@
   "srcDir": "../api/src",
   "dbUrl": "postgresql://postgres@localhost/ponder",
   "camelCaseColumnNames": true,
-  "typesOverrides": {
-    "int8": "bigint",
-    "bigint": "bigint",
-    "bigserial": "bigint"
-  }
+  "hungarianNotation": false
 }
