@@ -18,9 +18,7 @@ copies or substantial portions of the Software.
 /**
  * A map of keybinding strings to event handlers.
  */
-export interface KeyBindingMap {
-  [keybinding: string]: (event: KeyboardEvent) => void;
-}
+export type KeyBindingMap = Record<string, (event: KeyboardEvent) => void>;
 
 export interface KeyBindingHandlerOptions {
   /**
@@ -95,7 +93,8 @@ export function parseKeybinding(binding: string) {
     .split(" ")
     .map((press) => {
       let mods = press.split(/\b\+/);
-      const key = mods.pop() as string;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const key = mods.pop()!;
       mods = mods.map((mod) => (mod === "$mod" ? MOD : mod));
       return { mods, key };
     });
@@ -327,8 +326,8 @@ export function keybindings(
   keyBindingMap: KeyBindingMap,
   options: KeyBindingOptions = {}
 ): () => void {
-  let event = options.event ?? DEFAULT_EVENT;
-  let onKeyEvent = createKeybindingsHandler(keyBindingMap, options);
+  const event = options.event ?? DEFAULT_EVENT;
+  const onKeyEvent = createKeybindingsHandler(keyBindingMap, options);
 
   target.addEventListener(event, onKeyEvent);
 

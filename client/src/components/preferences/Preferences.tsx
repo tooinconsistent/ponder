@@ -1,12 +1,8 @@
 import { ParentComponent, createContext } from "solid-js";
 import { createStore } from "solid-js/store";
 
-import {
-  ColorTheme,
-  getInitialTheme,
-  injectColorSystem,
-  setColorTheme,
-} from "./theme.js";
+import { getInitialTheme, injectColorSystem, setColorTheme } from "./theme.js";
+import { ColorTheme } from "@tooinconsistent/client/lib/theme/theme.js";
 
 export type Preferences = {
   theme: ColorTheme;

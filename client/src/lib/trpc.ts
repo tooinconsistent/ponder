@@ -1,4 +1,5 @@
 import { createTRPCProxyClient, httpBatchLink, loggerLink } from "@trpc/client";
+
 import superjson from "superjson";
 
 import type { AppRouter } from "@tooinconsistent/api/trpc/router.js";

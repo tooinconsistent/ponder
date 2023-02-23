@@ -8,14 +8,19 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "check:formatting": "prettier -c ."
+    "check:formatting": "prettier -c .",
+    "check:linting": "eslint ."
   },
   "license": "MIT",
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
     "@types/babel__core": "^7.20.0",
     "@types/node": "^18.11.19",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
     "autoprefixer": "^10.4.13",
+    "eslint": "^8.34.0",
+    "eslint-plugin-solid": "^0.10.0",
     "postcss": "^8.4.21",
     "prettier": "^2.8.4",
     "tailwindcss": "^3.2.4",
@@ -24,6 +29,7 @@
     "vite-plugin-solid": "^2.5.0"
   },
   "dependencies": {
+    "@tailwindcss/line-clamp": "^0.4.2",
     "@trpc/client": "10.11.0",
     "@trpc/server": "10.11.0",
     "solid-js": "^1.6.10",

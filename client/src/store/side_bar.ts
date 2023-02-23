@@ -2,12 +2,14 @@ import { ActionProps } from "./app.jsx";
 
 export type SideBarTabs = "inbox" | "channels" | "settings";
 
-export type SideBarStore = {
+export interface SideBarStore {
   currentTab: SideBarTabs | null;
   preToggleTab: SideBarTabs | null;
-};
+}
 
-export const init = () => {
+const id = "sideBar";
+
+const init = (): SideBarStore => {
   const store: SideBarStore = {
     currentTab: "inbox",
     preToggleTab: null,
@@ -16,7 +18,7 @@ export const init = () => {
   return store;
 };
 
-export const actions = [
+const actions = [
   {
     id: "openChannels",
     title: "Open Channels",
@@ -56,3 +58,12 @@ export const actions = [
     },
   },
 ] as const;
+
+const effects = [] as const;
+
+export const sideBar = {
+  id,
+  init,
+  actions,
+  effects,
+};

@@ -1,5 +1,5 @@
 --! Previous: -
---! Hash: sha1:49de267e21f0829f0bdd4e73286bb6bdf47bc1fc
+--! Hash: sha1:43e82790192553e5e0b655689e5f25603c442641
 
 --! split: 001-setup.sql
 drop schema if exists app_internal cascade;
@@ -123,7 +123,7 @@ create table app_internal.sessions (
 );
 
 -- To allow us to efficiently see what sessions are open for a particular user.
-create index on app_internal.sessions (user_id);
+create index idx_sessions_user on app_internal.sessions (user_id);
 
 --! split: 004-create_organisations.sql
 drop type if exists organisation_membership_role;

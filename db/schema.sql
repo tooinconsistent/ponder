@@ -339,17 +339,17 @@ ALTER TABLE ONLY graphile_migrate.migrations
 
 
 --
+-- Name: idx_sessions_user; Type: INDEX; Schema: app_internal; Owner: -
+--
+
+CREATE INDEX idx_sessions_user ON app_internal.sessions USING btree (user_id);
+
+
+--
 -- Name: idx_user_passwords_user; Type: INDEX; Schema: app_internal; Owner: -
 --
 
 CREATE INDEX idx_user_passwords_user ON app_internal.user_passwords USING btree (user_id);
-
-
---
--- Name: sessions_user_id_idx; Type: INDEX; Schema: app_internal; Owner: -
---
-
-CREATE INDEX sessions_user_id_idx ON app_internal.sessions USING btree (user_id);
 
 
 --

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { hexToRgb, hslToRgb, lighten, rgbToHex, rgbToHsl } from "./colors.js";
 
 export const ColorTheme = z.object({
   name: z.string(),
@@ -9,13 +10,40 @@ export const ColorTheme = z.object({
   ),
 });
 
+const functionMatch = /^(\w+)\(([\w\s(),]+)\)$/;
+
 export type ColorTheme = z.infer<typeof ColorTheme>;
 
 export const colorsFromTheme = (theme: ColorTheme): Record<string, string> => {
   const parseColor = (color: string): string => {
     // If color is raw hex just return it
-    if (color.charAt(0) === "#") {
+    if (color.startsWith("#") || color === "transparent") {
       return color;
+    }
+
+    // test for function
+    const functionMatchResult = functionMatch.exec(color);
+    if (functionMatchResult) {
+      if (functionMatchResult[1] === "lighten") {
+        const [color, amount] = functionMatchResult[2].split(",");
+
+        if (!color || !amount || Number.isNaN(Number(amount))) {
+          throw new Error(
+            "Failed to parse theme :: invalid application of lighten."
+          );
+        }
+
+        const parsedColor = parseColor(color);
+        const lightenBy = Number(amount);
+
+        const hsl = rgbToHsl(hexToRgb(parsedColor));
+        const lightened = lighten(hsl, lightenBy);
+        const result = rgbToHex(hslToRgb(lightened));
+
+        return result;
+      }
+
+      throw new Error("Failed to parse theme :: unknown function.");
     }
 
     // TODO: Add color processing functions here.
@@ -24,8 +52,9 @@ export const colorsFromTheme = (theme: ColorTheme): Record<string, string> => {
     // Otherwise look it up in palette
     const paletteColor = theme.palette[color];
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (paletteColor === undefined) {
-      throw new Error("Failed to parse theme.");
+      throw new Error("Failed to parse theme :: failed to lookup color.");
     }
 
     return paletteColor;
@@ -41,7 +70,7 @@ export const colorsFromTheme = (theme: ColorTheme): Record<string, string> => {
 };
 
 const flatten = (object: Record<string, string | Record<string, string>>) => {
-  let result: Record<string, string> = {};
+  const result: Record<string, string> = {};
 
   for (const key in object) {
     const current = object[key];

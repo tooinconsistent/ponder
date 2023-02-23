@@ -1,4 +1,4 @@
-const monokai = {
+export const monokai = {
   colors: {
     "activityBar.activeFocusBorder": "#ffd866",
     "activityBar.background": "#19181a",

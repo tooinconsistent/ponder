@@ -1,78 +1,55 @@
 import { ParentComponent, createContext, useContext } from "solid-js";
 import { SetStoreFunction, createStore } from "solid-js/store";
 
-import {
-  SideBarStore,
-  init as initSideBar,
-  actions as sideBarActions,
-} from "./side_bar.js";
-import { keybindings } from "../lib/keybindings.js";
-
-export type ActionProps = {
+import { AppStore, registry } from "./registry.js";
+import { initialiseShortcuts } from "../lib/shortcuts/shortcuts.js";
+export interface ActionProps<T = never> {
   store: AppStore;
   setStore: SetStoreFunction<AppStore>;
-  params?: any;
-};
+  params: T;
+}
 
-export type ActionDefinition = {
+export interface ActionDefinition<T = never> {
   readonly id: string;
   readonly title: string;
   readonly subtitle?: string;
   readonly shortcut?: string;
-  readonly perform: ({ store, setStore, params }: ActionProps) => void;
-};
+  readonly perform: ({ store, setStore, params }: ActionProps<T>) => void;
+}
 
-export type AppStore = {
-  sideBar: SideBarStore;
-};
+// Get inital store values
+const initialStore = registry.reduce<AppStore>((appStore, currentStore) => {
+  return { ...appStore, [currentStore.id]: currentStore.init() };
+}, {} as AppStore);
 
 // Actions
-const actions = [...sideBarActions];
+const actions = registry.map((store) => store.actions).flat();
+
 type AppActions = (typeof actions)[number]["id"];
+type ActionExecutor = <T>(params: T) => void;
 
 const AppStoreContext = createContext<{
   store: AppStore;
-  actions: Record<AppActions, () => void>;
+  actions: Record<AppActions, ActionExecutor>;
 }>();
 
 export const AppStoreProvider: ParentComponent = (props) => {
-  const sideBar = initSideBar();
+  const [store, setStore] = createStore<AppStore>(initialStore);
 
-  const [store, setStore] = createStore<AppStore>({ sideBar });
-
-  const actionPerformers = actions.reduce((acc, action: ActionDefinition) => {
-    return {
-      ...acc,
-      [action.id]: (params: any) => {
-        console.log(`executing action :: ${action.id}`);
-        action.perform({ store, setStore, params });
-      },
-    };
-  }, {} as Record<AppActions, () => void>);
-
-  keybindings(
-    window,
-    actions.reduce((acc, action: ActionDefinition) => {
-      if (action.shortcut) {
-        return {
-          ...acc,
-          [action.shortcut]: (e: KeyboardEvent) => {
-            if (e.repeat) {
-              return;
-            }
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            console.log(`got shortcut for action :: ${action.id}`);
-            action.perform({ store, setStore });
-          },
-        };
-      }
-      return { ...acc };
-    }, {})
+  const actionPerformers = actions.reduce<Record<AppActions, ActionExecutor>>(
+    (acc, action) => {
+      return {
+        ...acc,
+        [action.id]: (params: unknown) => {
+          console.log(`executing action :: ${action.id}`);
+          action.perform({ store, setStore, params: params as never });
+        },
+      };
+    },
+    {} as Record<AppActions, ActionExecutor>
   );
 
+  initialiseShortcuts(actions, store, setStore);
   // https://github.com/leeoniya/uFuzzy -- for command palette
 
   return (

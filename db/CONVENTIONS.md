@@ -99,3 +99,5 @@ Comments:
 comment on <table|column|function|...> <fully.qualified.name> is
   E'...';
 ```
+# No soft deletes:
+https://brandur.org/fragments/deleted-record-insert

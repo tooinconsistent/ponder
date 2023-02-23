@@ -28,8 +28,49 @@ export const solarizedDarkTheme: ColorTheme = {
   palette: darkPalette,
   colors: {
     base: {
-      background: "base0",
+      background: "base1",
       foreground: "base4",
+    },
+
+    button: {
+      background: "primary",
+      foreground: "base0",
+      border: "transparent",
+      hoverBackground: "lighten(primary, 5)",
+
+      secondaryBackground: "secondary",
+      secondaryForeground: "base5",
+      secondaryBorder: "transparent",
+      secondaryHoverBackground: "lighten(secondary, 5)",
+
+      whiteBackground: "base1",
+      whiteForeground: "base4",
+      whiteBorder: "base4",
+      whiteHoverBackground: "base2",
+    },
+
+    textDescription: {
+      foreground: "base3",
+    },
+
+    textHeader: {
+      foreground: "base6",
+    },
+
+    //     textBlockQuote.background: Background color for block quotes in text.
+    // textBlockQuote.border: Border color for block quotes in text.
+    // textCodeBlock.background: Background color for code blocks in text.
+    // textLink.activeForeground: Foreground color for links in text when clicked on and on mouse hover.
+    // textLink.foreground: Foreground color for links in text.
+    // textPreformat.foreground: Foreground color for preformatted text segments.
+    // textSeparator.foreground: Color for text separators.
+
+    list: {
+      hoverBackground: "base1",
+      hoverForeground: "base5",
+
+      inactiveSelectionBackground: "base2",
+      inactiveSelectionForeground: "base6",
     },
 
     activityBar: {
@@ -43,7 +84,7 @@ export const solarizedDarkTheme: ColorTheme = {
     },
 
     sideBar: {
-      background: "base1",
+      background: "base0",
       foreground: "base4",
       border: "base1",
     },
@@ -51,8 +92,29 @@ export const solarizedDarkTheme: ColorTheme = {
     sideBarTitle: {
       foreground: "base5",
     },
+
+    sideBarSectionHeader: {
+      background: "base1",
+      foreground: "base5",
+      border: "base1",
+    },
+
+    channel: {
+      threadRowDivider: "base3",
+      threadListBackground: "base1",
+      threadRowHoverBackground: "lighten(base1, 5)",
+    },
   },
 };
+
+// button.background: Button background color.
+// button.foreground: Button foreground color.
+// button.border: Button border color.
+// button.separator: Button separator color.
+// button.hoverBackground: Button background color when hovering.
+// button.secondaryForeground: Secondary button foreground color.
+// button.secondaryBackground: Secondary button background color.
+// button.secondaryHoverBackground: Secondary button background color when hovering.
 
 // base.backround: Base background for all elements, unless overriden.
 // base.foreground: Base foreground for all elements, unless overriden.
@@ -81,3 +143,35 @@ export const solarizedDarkTheme: ColorTheme = {
 // sideBarSectionHeader.background: Side Bar section header background color.
 // sideBarSectionHeader.foreground: Side Bar section header foreground color.
 // sideBarSectionHeader.border: Side bar section header border color.
+
+// list.activeSelectionBackground: List/Tree background color for the selected item when the list/tree is active.
+// list.activeSelectionForeground: List/Tree foreground color for the selected item when the list/tree is active.
+// list.activeSelectionIconForeground: List/Tree icon foreground color for the selected item when the list/tree is active. An active list/tree has keyboard focus, an inactive does not.
+// list.dropBackground: List/Tree drag and drop background when moving items around using the mouse.
+// list.focusBackground: List/Tree background color for the focused item when the list/tree is active.
+// list.focusForeground: List/Tree foreground color for the focused item when the list/tree is active. An active list/tree has keyboard focus, an inactive does not.
+// list.focusHighlightForeground: List/Tree foreground color of the match highlights on actively focused items when searching inside the list/tree.
+// list.focusOutline: List/Tree outline color for the focused item when the list/tree is active. An active list/tree has keyboard focus, an inactive does not.
+// list.focusAndSelectionOutline: List/Tree outline color for the focused item when the list/tree is active and selected. An active list/tree has keyboard focus, an inactive does not.
+// list.highlightForeground: List/Tree foreground color of the match highlights when searching inside the list/tree.
+// list.hoverBackground: List/Tree background when hovering over items using the mouse.
+// list.hoverForeground: List/Tree foreground when hovering over items using the mouse.
+// list.inactiveSelectionBackground: List/Tree background color for the selected item when the list/tree is inactive.
+// list.inactiveSelectionForeground: List/Tree foreground color for the selected item when the list/tree is inactive. An active list/tree has keyboard focus, an inactive does not.
+// list.inactiveSelectionIconForeground: List/Tree icon foreground color for the selected item when the list/tree is inactive. An active list/tree has keyboard focus, an inactive does not.
+// list.inactiveFocusBackground: List background color for the focused item when the list is inactive. An active list has keyboard focus, an inactive does not. Currently only supported in lists.
+// list.inactiveFocusOutline: List/Tree outline color for the focused item when the list/tree is inactive. An active list/tree has keyboard focus, an inactive does not.
+// list.invalidItemForeground: List/Tree foreground color for invalid items, for example an unresolved root in explorer.
+// list.errorForeground: Foreground color of list items containing errors.
+// list.warningForeground: Foreground color of list items containing warnings.
+// listFilterWidget.background: List/Tree Filter background color of typed text when searching inside the list/tree.
+// listFilterWidget.outline: List/Tree Filter Widget's outline color of typed text when searching inside the list/tree.
+// listFilterWidget.noMatchesOutline: List/Tree Filter Widget's outline color when no match is found of typed text when searching inside the list/tree.
+// listFilterWidget.shadow: Shadown color of the type filter widget in lists and tree
+// list.filterMatchBackground: Background color of the filtered matches in lists and trees.
+// list.filterMatchBorder: Border color of the filtered matches in lists and trees.
+// list.deemphasizedForeground: List/Tree foreground color for items that are deemphasized.
+// tree.indentGuidesStroke: Tree Widget's stroke color for indent guides.
+// tree.inactiveIndentGuidesStroke: Tree stroke color for the indentation guides that are not active.
+// tree.tableColumnsBorder: Tree stroke color for the indentation guides.
+// tree.tableOddRowsBackground: Background color for odd table rows.
