@@ -26,6 +26,7 @@ export const Channel: Component = (_props) => {
         <ChannelDetails
           name={channel.latest?.name ?? ""}
           description={channel.latest?.description ?? ""}
+          isPrivate={!channel.latest?.isPublic}
         />
         <div class="px-9 divide-y divide-[var(--channel-threadRowDivider)] bg-[var(--channel-threadListBackground)] overflow-auto">
           <For each={channel.latest?.threads ?? []}>
