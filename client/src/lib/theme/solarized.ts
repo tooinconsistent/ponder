@@ -60,6 +60,10 @@ export const solarizedDarkTheme: ColorTheme = {
       foreground: "base6",
     },
 
+    textPlaceholder: {
+      foreground: "base2",
+    },
+
     textLink: {
       activeForeground: "lighten(secondary, 10)",
       foreground: "secondary",

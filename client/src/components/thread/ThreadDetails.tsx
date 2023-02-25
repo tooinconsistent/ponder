@@ -6,7 +6,7 @@ interface ThreadDetailsProps {
 
 export const ThreadDetails: Component<ThreadDetailsProps> = (props) => {
   return (
-    <div class="px-11 py-8  flex justify-between items-end">
+    <div class="flex items-end  justify-between px-11 py-8">
       <div>
         <div class="text-3xl font-bold text-[var(--textHeader-foreground)]">
           {props.title}

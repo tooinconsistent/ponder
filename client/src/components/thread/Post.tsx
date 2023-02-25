@@ -60,7 +60,7 @@ export const Post: Component<PostProps> = (props) => {
               </p>
             </div>
             <div
-              class="mt-1 prose prose-sm prose-default"
+              class="prose prose-sm prose-default mt-1"
               ref={(ref) => initialiseEditor(ref)}
             />
           </div>

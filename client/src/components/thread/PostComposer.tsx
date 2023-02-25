@@ -6,6 +6,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 
 import { buttonClasses } from "../atoms/button.js";
 import { Avatar } from "../atoms/Avatar.jsx";
+
 import { currentUserProfile } from "@tooinconsistent/client/store/users.js";
 
 interface PostComposerProps {
@@ -19,7 +20,10 @@ export const PostComposer: Component<PostComposerProps> = (props) => {
   const initialiseEditor = (editorRef: HTMLDivElement) => {
     const editorInstance = new Editor({
       element: editorRef,
-      extensions: [Placeholder.configure({ placeholder: "Reply" }), StarterKit],
+      extensions: [
+        StarterKit,
+        Placeholder.configure({ placeholder: "Reply..." }),
+      ],
       editorProps: {
         attributes: {
           class:
@@ -67,7 +71,7 @@ export const PostComposer: Component<PostComposerProps> = (props) => {
       </div>
       <div class="flex-1">
         <div ref={(ref) => initialiseEditor(ref)} />
-        <div class="flex justify-end mt-2">
+        <div class="mt-2 flex justify-end">
           <button
             class={buttonClasses()}
             disabled={isEmpty()}

@@ -78,11 +78,11 @@ export const Thread: Component = (_props) => {
   };
 
   return (
-    <div class="h-full flex justify-center">
-      <div class="h-full flex flex-col max-w-6xl flex-1">
+    <div class="flex h-full justify-center">
+      <div class="flex h-full max-w-6xl flex-1 flex-col">
         <ThreadDetails title={thread.latest?.title ?? ""} />
-        <div class="flex-1 flex justify-center p-8 overflow-y-auto">
-          <div class="max-w-xl w-full">
+        <div class="flex flex-1 justify-center overflow-y-auto p-8">
+          <div class="w-full max-w-xl">
             <ul role="list">
               <For each={thread.latest?.posts}>
                 {(post, _idx) => (
@@ -100,7 +100,7 @@ export const Thread: Component = (_props) => {
           </div>
         </div>
         <div class="flex justify-center">
-          <div class="max-w-xl w-full pb-8">
+          <div class="w-full max-w-xl pb-8">
             <PostComposer onSubmit={submitHandler} />
           </div>
         </div>

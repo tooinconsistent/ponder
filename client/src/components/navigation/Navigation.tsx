@@ -7,7 +7,7 @@ interface NavigationProps {}
 
 export const Navigation: Component<NavigationProps> = (props) => {
   return (
-    <div class="h-full flex">
+    <div class="flex h-full">
       <ActivityBar />
       <SideBar />
     </div>

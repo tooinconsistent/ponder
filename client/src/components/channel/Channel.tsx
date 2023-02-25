@@ -21,14 +21,14 @@ export const Channel: Component = (_props) => {
   );
 
   return (
-    <div class="h-full flex justify-center">
-      <div class="h-full flex flex-col max-w-6xl flex-1">
+    <div class="flex h-full justify-center">
+      <div class="flex h-full max-w-6xl flex-1 flex-col">
         <ChannelDetails
           name={channel.latest?.name ?? ""}
           description={channel.latest?.description ?? ""}
           isPrivate={!channel.latest?.isPublic}
         />
-        <div class="px-9 divide-y divide-[var(--channel-threadRowDivider)] bg-[var(--channel-threadListBackground)] overflow-auto">
+        <div class="divide-y divide-[var(--channel-threadRowDivider)] overflow-auto bg-[var(--channel-threadListBackground)] px-9">
           <For each={channel.latest?.threads ?? []}>
             {(thread) => (
               <ThreadRow

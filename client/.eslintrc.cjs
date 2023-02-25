@@ -9,6 +9,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:@typescript-eslint/strict",
     "plugin:solid/typescript",
+    "plugin:tailwindcss/recommended",
   ],
   overrides: [],
   parser: "@typescript-eslint/parser",
@@ -26,5 +27,9 @@ module.exports = {
     ],
     "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
     "@typescript-eslint/prefer-reduce-type-parameter": "off",
+    "tailwindcss/no-custom-classname": [
+      "warn",
+      { whitelist: ["prose-default"] },
+    ],
   },
 };

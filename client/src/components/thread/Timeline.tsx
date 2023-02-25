@@ -5,7 +5,7 @@ interface TimelineProps {}
 
 export const Timeline: Component<TimelineProps> = (props) => {
   return (
-    <div class="max-w-xl w-full">
+    <div class="w-full max-w-xl">
       <ul role="list">
         <Post
           author={{
