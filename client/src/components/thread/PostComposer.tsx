@@ -2,6 +2,7 @@ import { Component, createSignal, onCleanup, onMount } from "solid-js";
 
 import StarterKit from "@tiptap/starter-kit";
 import { Editor, JSONContent } from "@tiptap/core";
+import Placeholder from "@tiptap/extension-placeholder";
 
 import { buttonClasses } from "../atoms/button.js";
 import { Avatar } from "../atoms/Avatar.jsx";
@@ -18,7 +19,7 @@ export const PostComposer: Component<PostComposerProps> = (props) => {
   const initialiseEditor = (editorRef: HTMLDivElement) => {
     const editorInstance = new Editor({
       element: editorRef,
-      extensions: [StarterKit],
+      extensions: [Placeholder.configure({ placeholder: "Reply" }), StarterKit],
       editorProps: {
         attributes: {
           class:
