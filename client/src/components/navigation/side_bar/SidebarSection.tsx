@@ -8,7 +8,7 @@ interface SidebarSectionProps {
 export const SidebarSection: ParentComponent<SidebarSectionProps> = (props) => {
   return (
     <>
-      <div class="bg-[var(--sideBarSectionHeader-background)] text-[var(--sideBarSectionHeader-foreground)] flex justify-between p-1 px-2 text-sm font-semibold">
+      <div class="flex justify-between bg-[var(--sideBarSectionHeader-background)] p-1 px-2 text-sm font-semibold text-[var(--sideBarSectionHeader-foreground)]">
         <div>{props.sectionTitle}</div>
         <div>{props.sectionHeaderActions}</div>
       </div>

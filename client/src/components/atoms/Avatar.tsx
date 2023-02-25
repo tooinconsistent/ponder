@@ -15,7 +15,7 @@ export const Avatar: Component<AvatarProps> = (props) => {
         <div
           class={`inline-block h-${props.size ?? 6} w-${
             props.size ?? 6
-          } p-1 min-w-[1.5rem] rounded-full text-[var(--base-foreground)] border-2 border-[var(--base-foreground)] ${
+          } min-w-[1.5rem] rounded-full border-2 border-[var(--base-foreground)] p-1 text-[var(--base-foreground)] ${
             props.margins ?? ""
           }`}
         >

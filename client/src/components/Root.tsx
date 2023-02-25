@@ -8,7 +8,7 @@ import { View } from "./view/View.jsx";
 export const Root: Component = () => {
   return (
     <EnsureAuthenticated>
-      <div class="h-full bg-[var(--base-background)] text-[var(--base-foreground)] flex">
+      <div class="flex h-full bg-[var(--base-background)] text-[var(--base-foreground)]">
         <Navigation />
         <View />
       </div>

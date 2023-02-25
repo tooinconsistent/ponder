@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.7
--- Dumped by pg_dump version 14.7
+-- Dumped from database version 13.7
+-- Dumped by pg_dump version 14.7 (Homebrew)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -63,6 +63,16 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
 --
 
 COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
+--
+-- Name: channel_type; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.channel_type AS ENUM (
+    'threaded',
+    'combined'
+);
 
 
 --
@@ -127,6 +137,36 @@ CREATE TABLE app_internal.user_passwords (
 
 
 --
+-- Name: channel_memberships; Type: TABLE; Schema: app_public; Owner: -
+--
+
+CREATE TABLE app_public.channel_memberships (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    channel_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: channels; Type: TABLE; Schema: app_public; Owner: -
+--
+
+CREATE TABLE app_public.channels (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    name text NOT NULL,
+    description text,
+    is_public boolean DEFAULT true NOT NULL,
+    type public.channel_type NOT NULL,
+    organisation_id uuid NOT NULL,
+    creator_id uuid NOT NULL,
+    archived_at timestamp with time zone,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL
+);
+
+
+--
 -- Name: organisation_details; Type: TABLE; Schema: app_public; Owner: -
 --
 
@@ -163,6 +203,36 @@ CREATE TABLE app_public.organisations (
     slug public.citext NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: posts; Type: TABLE; Schema: app_public; Owner: -
+--
+
+CREATE TABLE app_public.posts (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    thread_id uuid NOT NULL,
+    author_id uuid NOT NULL,
+    content jsonb NOT NULL,
+    content_plain text NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL
+);
+
+
+--
+-- Name: threads; Type: TABLE; Schema: app_public; Owner: -
+--
+
+CREATE TABLE app_public.threads (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    channel_id uuid NOT NULL,
+    title text NOT NULL,
+    author_id uuid NOT NULL,
+    closed_at timestamp with time zone,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL
 );
 
 
@@ -251,6 +321,38 @@ ALTER TABLE ONLY app_internal.user_passwords
 
 
 --
+-- Name: channel_memberships channel_memberships_channel_id_user_id_key; Type: CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.channel_memberships
+    ADD CONSTRAINT channel_memberships_channel_id_user_id_key UNIQUE (channel_id, user_id);
+
+
+--
+-- Name: channel_memberships channel_memberships_pkey; Type: CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.channel_memberships
+    ADD CONSTRAINT channel_memberships_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: channels channels_name_organisation_id_key; Type: CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.channels
+    ADD CONSTRAINT channels_name_organisation_id_key UNIQUE (name, organisation_id);
+
+
+--
+-- Name: channels channels_pkey; Type: CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.channels
+    ADD CONSTRAINT channels_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: organisation_details organisation_details_pkey; Type: CONSTRAINT; Schema: app_public; Owner: -
 --
 
@@ -288,6 +390,22 @@ ALTER TABLE ONLY app_public.organisations
 
 ALTER TABLE ONLY app_public.organisations
     ADD CONSTRAINT organisations_slug_key UNIQUE (slug);
+
+
+--
+-- Name: posts posts_pkey; Type: CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.posts
+    ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: threads threads_pkey; Type: CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.threads
+    ADD CONSTRAINT threads_pkey PRIMARY KEY (id);
 
 
 --
@@ -353,6 +471,27 @@ CREATE INDEX idx_user_passwords_user ON app_internal.user_passwords USING btree 
 
 
 --
+-- Name: idx_channel_memberships_channel; Type: INDEX; Schema: app_public; Owner: -
+--
+
+CREATE INDEX idx_channel_memberships_channel ON app_public.channel_memberships USING btree (channel_id);
+
+
+--
+-- Name: idx_channel_memberships_user; Type: INDEX; Schema: app_public; Owner: -
+--
+
+CREATE INDEX idx_channel_memberships_user ON app_public.channel_memberships USING btree (user_id);
+
+
+--
+-- Name: idx_channels_organisation; Type: INDEX; Schema: app_public; Owner: -
+--
+
+CREATE INDEX idx_channels_organisation ON app_public.channels USING btree (organisation_id);
+
+
+--
 -- Name: idx_organisation_memberships_organisation; Type: INDEX; Schema: app_public; Owner: -
 --
 
@@ -364,6 +503,34 @@ CREATE INDEX idx_organisation_memberships_organisation ON app_public.organisatio
 --
 
 CREATE INDEX idx_organisation_memberships_user ON app_public.organisation_memberships USING btree (user_id);
+
+
+--
+-- Name: idx_posts_author; Type: INDEX; Schema: app_public; Owner: -
+--
+
+CREATE INDEX idx_posts_author ON app_public.posts USING btree (author_id);
+
+
+--
+-- Name: idx_posts_thread; Type: INDEX; Schema: app_public; Owner: -
+--
+
+CREATE INDEX idx_posts_thread ON app_public.posts USING btree (thread_id);
+
+
+--
+-- Name: idx_threads_author; Type: INDEX; Schema: app_public; Owner: -
+--
+
+CREATE INDEX idx_threads_author ON app_public.threads USING btree (author_id);
+
+
+--
+-- Name: idx_threads_channel; Type: INDEX; Schema: app_public; Owner: -
+--
+
+CREATE INDEX idx_threads_channel ON app_public.threads USING btree (channel_id);
 
 
 --
@@ -395,6 +562,13 @@ CREATE UNIQUE INDEX uniq_user_emails_verified_email ON app_public.user_emails US
 
 
 --
+-- Name: channels _100_timestamps; Type: TRIGGER; Schema: app_public; Owner: -
+--
+
+CREATE TRIGGER _100_timestamps BEFORE INSERT OR UPDATE ON app_public.channels FOR EACH ROW EXECUTE FUNCTION app_internal.tg__timestamps();
+
+
+--
 -- Name: organisation_details _100_timestamps; Type: TRIGGER; Schema: app_public; Owner: -
 --
 
@@ -413,6 +587,20 @@ CREATE TRIGGER _100_timestamps BEFORE INSERT OR UPDATE ON app_public.organisatio
 --
 
 CREATE TRIGGER _100_timestamps BEFORE INSERT OR UPDATE ON app_public.organisations FOR EACH ROW EXECUTE FUNCTION app_internal.tg__timestamps();
+
+
+--
+-- Name: posts _100_timestamps; Type: TRIGGER; Schema: app_public; Owner: -
+--
+
+CREATE TRIGGER _100_timestamps BEFORE INSERT OR UPDATE ON app_public.posts FOR EACH ROW EXECUTE FUNCTION app_internal.tg__timestamps();
+
+
+--
+-- Name: threads _100_timestamps; Type: TRIGGER; Schema: app_public; Owner: -
+--
+
+CREATE TRIGGER _100_timestamps BEFORE INSERT OR UPDATE ON app_public.threads FOR EACH ROW EXECUTE FUNCTION app_internal.tg__timestamps();
 
 
 --
@@ -453,6 +641,38 @@ ALTER TABLE ONLY app_internal.user_passwords
 
 
 --
+-- Name: channel_memberships channel_memberships_channel_id_fkey; Type: FK CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.channel_memberships
+    ADD CONSTRAINT channel_memberships_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES app_public.channels(id) ON DELETE CASCADE;
+
+
+--
+-- Name: channel_memberships channel_memberships_user_id_fkey; Type: FK CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.channel_memberships
+    ADD CONSTRAINT channel_memberships_user_id_fkey FOREIGN KEY (user_id) REFERENCES app_public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: channels channels_creator_id_fkey; Type: FK CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.channels
+    ADD CONSTRAINT channels_creator_id_fkey FOREIGN KEY (creator_id) REFERENCES app_public.users(id);
+
+
+--
+-- Name: channels channels_organisation_id_fkey; Type: FK CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.channels
+    ADD CONSTRAINT channels_organisation_id_fkey FOREIGN KEY (organisation_id) REFERENCES app_public.organisations(id) ON DELETE CASCADE;
+
+
+--
 -- Name: organisation_details organisation_details_organisation_id_fkey; Type: FK CONSTRAINT; Schema: app_public; Owner: -
 --
 
@@ -474,6 +694,38 @@ ALTER TABLE ONLY app_public.organisation_memberships
 
 ALTER TABLE ONLY app_public.organisation_memberships
     ADD CONSTRAINT organisation_memberships_user_id_fkey FOREIGN KEY (user_id) REFERENCES app_public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: posts posts_author_id_fkey; Type: FK CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.posts
+    ADD CONSTRAINT posts_author_id_fkey FOREIGN KEY (author_id) REFERENCES app_public.users(id);
+
+
+--
+-- Name: posts posts_thread_id_fkey; Type: FK CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.posts
+    ADD CONSTRAINT posts_thread_id_fkey FOREIGN KEY (thread_id) REFERENCES app_public.threads(id) ON DELETE CASCADE;
+
+
+--
+-- Name: threads threads_author_id_fkey; Type: FK CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.threads
+    ADD CONSTRAINT threads_author_id_fkey FOREIGN KEY (author_id) REFERENCES app_public.users(id);
+
+
+--
+-- Name: threads threads_channel_id_fkey; Type: FK CONSTRAINT; Schema: app_public; Owner: -
+--
+
+ALTER TABLE ONLY app_public.threads
+    ADD CONSTRAINT threads_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES app_public.channels(id) ON DELETE CASCADE;
 
 
 --

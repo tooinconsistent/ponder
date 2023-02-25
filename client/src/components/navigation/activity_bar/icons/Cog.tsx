@@ -10,7 +10,7 @@ export const Cog: Component<CogProps> = (props) => {
       viewBox="0 0 24 24"
       stroke-width="1.5"
       stroke="currentColor"
-      class="w-full h-full"
+      class="h-full w-full"
     >
       <path
         stroke-linecap="round"

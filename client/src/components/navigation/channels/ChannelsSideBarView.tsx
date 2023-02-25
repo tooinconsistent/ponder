@@ -28,7 +28,7 @@ export const ChannelsSideBarView: Component = (_props) => {
                 actions.openChannel({ channelId: channel.id });
               }}
               class={classes(
-                "px-4 py-1 cursor-pointer font-light text-sm",
+                "cursor-pointer px-4 py-1 text-sm font-light",
                 currentChannel() !== channel.id &&
                   "hover:bg-[var(--list-hoverBackground)] hover:text-[var(--list-hoverForeground)]",
                 currentChannel() === channel.id &&

@@ -19,16 +19,16 @@ interface ThreadRowProps {
 
 export const ThreadRow: Component<ThreadRowProps> = (props) => {
   return (
-    <div class="hover:bg-[var(--channel-threadRowHoverBackground)] cursor-pointer">
+    <div class="cursor-pointer hover:bg-[var(--channel-threadRowHoverBackground)]">
       <a href={`/thread/${props.threadId}`}>
-        <div class="px-2 py-4 flex items-center sm:px-4">
+        <div class="flex items-center px-2 py-4 sm:px-4">
           <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-            <div class="truncate flex-1">
-              <div class="flex text-sm justify-between items-baseline">
-                <p class="font-medium text-[var(--textHeader-foreground)] truncate">
+            <div class="flex-1 truncate">
+              <div class="flex items-baseline justify-between text-sm">
+                <p class="truncate font-medium text-[var(--textHeader-foreground)]">
                   {props.title}
                 </p>
-                <div class="text-xs text-[var(--textDescription-foreground)] mr-2 sm:mr-0">
+                <div class="mr-2 text-xs text-[var(--textDescription-foreground)] sm:mr-0">
                   {getFormattedRealtiveTime(
                     (props.latestPost.createdAt.valueOf() - Date.now()) / 1000
                   )}
@@ -42,7 +42,7 @@ export const ThreadRow: Component<ThreadRowProps> = (props) => {
                 />
                 <div class="flex items-center text-xs text-[var(--base-foreground)]">
                   <p class="whitespace-normal line-clamp-2">
-                    <span class="font-medium mr-1">
+                    <span class="mr-1 font-medium">
                       {props.latestPost.author.displayName}:
                     </span>
                     {props.latestPost.content}
