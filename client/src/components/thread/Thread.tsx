@@ -1,6 +1,8 @@
 import { Component, For, createResource } from "solid-js";
 import { JSONContent } from "@tiptap/core";
 
+import { onMount } from "solid-js";
+
 import { useStore } from "@tooinconsistent/client/store/app.jsx";
 import { trpc } from "@tooinconsistent/client/lib/trpc.js";
 
@@ -21,6 +23,21 @@ export const Thread: Component = (_props) => {
       return threadDetails;
     }
   );
+
+  // TODO: Scroll to unread
+  const scrollToLastPost = () => {
+    const lastPost = document.querySelector("ul[role=list] > li:last-child");
+    if (lastPost) {
+      lastPost.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
+  onMount(() => {
+    scrollToLastPost();
+  });
 
   const submitHandler = async (content: JSONContent, contentPlain: string) => {
     const threadId = thread()?.id;
@@ -56,6 +73,8 @@ export const Thread: Component = (_props) => {
         };
       }
     });
+
+    scrollToLastPost();
   };
 
   return (
