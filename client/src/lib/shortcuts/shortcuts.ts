@@ -24,7 +24,9 @@ export const initialiseShortcuts = (
             e.preventDefault();
             e.stopPropagation();
 
-            console.log(`got shortcut for action :: ${action.id}`);
+            console.debug(
+              `shortcuts :: got shortcut for action :: ${action.id}`
+            );
             action.perform({ store, setStore, params: undefined as never });
           },
         };

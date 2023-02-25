@@ -3,6 +3,7 @@ import { SetStoreFunction, createStore } from "solid-js/store";
 
 import { AppStore, registry } from "./registry.js";
 import { initialiseShortcuts } from "../lib/shortcuts/shortcuts.js";
+import { startRouting } from "../lib/router/router.js";
 export interface ActionProps<T = never> {
   store: AppStore;
   setStore: SetStoreFunction<AppStore>;
@@ -25,8 +26,8 @@ const initialStore = registry.reduce<AppStore>((appStore, currentStore) => {
 // Actions
 const actions = registry.map((store) => store.actions).flat();
 
-type AppActions = (typeof actions)[number]["id"];
-type ActionExecutor = <T>(params: T) => void;
+export type AppActions = (typeof actions)[number]["id"];
+export type ActionExecutor = <T>(params: T) => void;
 
 const AppStoreContext = createContext<{
   store: AppStore;
@@ -41,7 +42,7 @@ export const AppStoreProvider: ParentComponent = (props) => {
       return {
         ...acc,
         [action.id]: (params: unknown) => {
-          console.log(`executing action :: ${action.id}`);
+          console.debug(`app :: executing action :: ${action.id}`);
           action.perform({ store, setStore, params: params as never });
         },
       };
@@ -50,6 +51,7 @@ export const AppStoreProvider: ParentComponent = (props) => {
   );
 
   initialiseShortcuts(actions, store, setStore);
+  startRouting(actionPerformers, store);
   // https://github.com/leeoniya/uFuzzy -- for command palette
 
   return (

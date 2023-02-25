@@ -1,25 +1,22 @@
-import { getUserById as getUserByIdQuery } from "./queries/user.queries.js";
+import { DBClient } from "@tooinconsistent/api/lib/db.js";
+import { unsafelySelectUserProfile } from "./queries/user.queries.js";
 
-export interface User {
-  id: string;
-
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export const getUserById = async (userId: string): Promise<User | null> => {
-  const result = await getUserByIdQuery.run(
+export const unsafelyGetUserProfile = async (
+  {
+    userId,
+  }: {
+    userId: string;
+  },
+  pgConnection: DBClient
+) => {
+  const [result] = await unsafelySelectUserProfile.execute(
     { userId },
-    {
-      query: async () => {
-        return { rows: [] };
-      },
-    }
+    pgConnection
   );
 
-  if (result.length === 1) {
-    return result[0]!;
-  } else {
+  if (!result) {
     return null;
   }
+
+  return result;
 };

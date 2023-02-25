@@ -11,7 +11,7 @@ const id = "sideBar";
 
 const init = (): SideBarStore => {
   const store: SideBarStore = {
-    currentTab: "inbox",
+    currentTab: "channels",
     preToggleTab: null,
   };
 
@@ -46,7 +46,7 @@ const actions = [
   {
     id: "toggleSideBar",
     title: "Toggle SideBar",
-    shortcut: "$mod+b",
+    shortcut: "$mod+Shift+b",
     perform: ({ store, setStore }: ActionProps) => {
       if (store.sideBar.currentTab !== null) {
         setStore("sideBar", "preToggleTab", store.sideBar.currentTab);

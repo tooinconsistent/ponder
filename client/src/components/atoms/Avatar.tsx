@@ -4,6 +4,7 @@ interface AvatarProps {
   displayName: string;
   avatarUrl: string | null;
   margins?: string;
+  size?: number;
 }
 
 export const Avatar: Component<AvatarProps> = (props) => {
@@ -12,7 +13,9 @@ export const Avatar: Component<AvatarProps> = (props) => {
       when={props.avatarUrl}
       fallback={
         <div
-          class={`inline-block h-6 w-6 p-1 min-w-[1.5rem] rounded-full text-[var(--base-foreground)] border-2 border-[var(--base-foreground)] ${
+          class={`inline-block h-${props.size ?? 6} w-${
+            props.size ?? 6
+          } p-1 min-w-[1.5rem] rounded-full text-[var(--base-foreground)] border-2 border-[var(--base-foreground)] ${
             props.margins ?? ""
           }`}
         >
@@ -33,7 +36,9 @@ export const Avatar: Component<AvatarProps> = (props) => {
       }
     >
       <img
-        class={`inline-block h-6 w-6 min-w-[1.5rem] rounded-full border-2 border-[var(--base-foreground)] saturate-50 ${
+        class={`inline-block h-${props.size ?? 6} w-${
+          props.size ?? 6
+        } min-w-[1.5rem] rounded-full border-2 border-[var(--base-foreground)] saturate-50 ${
           props.margins ?? ""
         }`}
         // Must be non null, since we are in <Show> component

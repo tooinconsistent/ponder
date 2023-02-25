@@ -20,7 +20,10 @@ module.exports = {
   plugins: ["solid", "@typescript-eslint"],
   ignorePatterns: [".eslintrc.cjs"],
   rules: {
-    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+    ],
     "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
     "@typescript-eslint/prefer-reduce-type-parameter": "off",
   },

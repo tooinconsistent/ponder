@@ -1,5 +1,13 @@
-import { routeToRegex } from "./routeHelper.js";
+import { createEffect } from "solid-js";
+
+import { AppStore } from "@tooinconsistent/client/store/registry.js";
+import {
+  ActionExecutor,
+  AppActions,
+} from "@tooinconsistent/client/store/app.jsx";
+
 import { routes } from "./routes.js";
+import { injectValuesIntoRoute, routeToRegex } from "./routeHelper.js";
 
 const routeMatchers = routes.map((route) => ({
   ...route,
@@ -7,7 +15,10 @@ const routeMatchers = routes.map((route) => ({
 }));
 
 export class Router {
-  constructor(private viewStore: Instance<typeof ViewStore>) {}
+  constructor(
+    private store: AppStore,
+    private actions: Record<AppActions, ActionExecutor>
+  ) {}
 
   matchPath = (path: string) => {
     let matchingRoute = routeMatchers.find((routeMatcher) =>
@@ -16,28 +27,31 @@ export class Router {
 
     if (!matchingRoute) {
       // TODO: Handle 404 gracefully
-      console.error(`ROUTER::"${path}" not found`);
+      console.error(`router :: "${path}" not found`);
       matchingRoute = routeMatchers[0];
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const matches = matchingRoute.pattern.exec(path)!;
     const routeParams = matchingRoute.keys.reduce(
       (rp, key, i) => ({ ...rp, [key]: matches[i + 1] }),
       {}
     );
 
-    console.debug(`ROUTER::Scrolling to top`);
+    console.debug(`router :: Scrolling to top`);
     window.scrollTo(0, 0);
 
-    console.debug(`ROUTER::Navigating to ${matchingRoute.route}`);
-    return matchingRoute.handler(this.viewStore, routeParams);
+    console.debug(`router :: Navigating to ${matchingRoute.route}`);
+    return matchingRoute.handler(this.actions, routeParams);
   };
 
   clickListener = (event: MouseEvent) => {
-    const anchor = (event.target as HTMLElement)?.closest("a");
+    const anchor = (event.target as HTMLElement | null)?.closest("a");
     const path = anchor?.pathname;
-    if (!path || anchor?.target || anchor?.host !== window.location.host)
+    if (!path || anchor.target || anchor.host !== window.location.host) {
       return;
+    }
+
     if (
       event.ctrlKey ||
       event.metaKey ||
@@ -45,23 +59,39 @@ export class Router {
       event.shiftKey ||
       event.button ||
       event.defaultPrevented
-    )
+    ) {
       return;
+    }
 
-    console.debug(`ROUTER::Handling click on the target: ${event.target}`);
+    console.debug(
+      `router :: Handling click on the target: ${String(event.target)}`
+    );
     event.preventDefault();
     this.matchPath(path);
   };
 
   historyListener = () => {
-    console.debug(`ROUTER::Handling history PopState event`);
+    console.debug(`router :: Handling history PopState event`);
     this.matchPath(document.location.pathname);
   };
 
   syncLocationWithStore = () => {
     // Keep browser history in sync with the store
-    autorun(() => {
-      const path = this.viewStore.currentPath;
+    createEffect(() => {
+      const currentView = this.store.view.currentView;
+      const currentRoute = routeMatchers.find(
+        (routeMatcher) => routeMatcher.view === currentView
+      );
+
+      if (!currentRoute) {
+        throw new Error("couldn't find route for curent view");
+      }
+
+      const path = injectValuesIntoRoute(
+        currentRoute.route,
+        this.store.view.currentViewProps ?? {}
+      );
+
       if (path !== window.location.pathname)
         window.history.pushState(null, "", path);
     });
@@ -77,7 +107,7 @@ export class Router {
     // If we're replacing the state we have to do it here
     // Otherwise we'll let the `syncLocationWithStore` take care of it
     console.debug(
-      `ROUTER::${replace ? "Replacing" : "Pushing"} "${path}" to history`
+      `router :: ${replace ? "Replacing" : "Pushing"} "${path}" to history`
     );
     if (replace) {
       window.history.replaceState(null, "", path);
@@ -86,8 +116,11 @@ export class Router {
   };
 }
 
-export const startRouting = (viewStore: Instance<typeof ViewStore>) => {
-  const router = new Router(viewStore);
+export const startRouting = (
+  actions: Record<AppActions, ActionExecutor>,
+  store: AppStore
+) => {
+  const router = new Router(store, actions);
 
   // Attach to the browser event handlers
   router.attachListeners();
@@ -97,10 +130,3 @@ export const startRouting = (viewStore: Instance<typeof ViewStore>) => {
 
   return router;
 };
-
-const RouterContext = React.createContext<{ router: Router }>({
-  router: {} as Router,
-});
-
-export const useRouter = () => useContext(RouterContext);
-export const RouterProvider = RouterContext.Provider;

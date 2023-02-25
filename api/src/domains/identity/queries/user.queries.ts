@@ -1,44 +1,56 @@
 /** Types generated for queries found in "../api/src/domains/identity/queries/user.sql" */
 import { PreparedQuery } from "@tooinconsistent/api/lib/db.js";
 
-/** 'GetUserById' parameters type */
-export interface GetUserByIdParams {
+/** 'UnsafelySelectUserProfile' parameters type */
+export interface UnsafelySelectUserProfileParams {
   userId?: string | null | void;
 }
 
-/** 'GetUserById' return type */
-export interface GetUserByIdResult {
-  createdAt: Date;
+/** 'UnsafelySelectUserProfile' return type */
+export interface UnsafelySelectUserProfileResult {
+  about: string | null;
+  avatarUrl: string | null;
+  displayName: string;
+  fullName: string | null;
   id: string;
-  updatedAt: Date;
+  userId: string;
 }
 
-/** 'GetUserById' query type */
-export interface GetUserByIdQuery {
-  params: GetUserByIdParams;
-  result: GetUserByIdResult;
+/** 'UnsafelySelectUserProfile' query type */
+export interface UnsafelySelectUserProfileQuery {
+  params: UnsafelySelectUserProfileParams;
+  result: UnsafelySelectUserProfileResult;
 }
 
-const getUserByIdIR: any = {
+const unsafelySelectUserProfileIR: any = {
   usedParamSet: { userId: true },
   params: [
     {
       name: "userId",
       required: false,
       transform: { type: "scalar" },
-      locs: [{ a: 42, b: 48 }],
+      locs: [{ a: 131, b: 137 }],
     },
   ],
-  statement: "SELECT * FROM app_public.users WHERE id = :userId",
+  statement:
+    "select \n\tid,\n\tuser_id,\n\tdisplay_name,\n\tfull_name,\n\tabout,\n\tavatar_url \nfrom app_public.user_profiles\nwhere user_profiles.user_id = :userId",
 };
 
 /**
  * Query generated from SQL:
  * ```
- * SELECT * FROM app_public.users WHERE id = :userId
+ * select
+ * 	id,
+ * 	user_id,
+ * 	display_name,
+ * 	full_name,
+ * 	about,
+ * 	avatar_url
+ * from app_public.user_profiles
+ * where user_profiles.user_id = :userId
  * ```
  */
-export const getUserById = new PreparedQuery<
-  GetUserByIdParams,
-  GetUserByIdResult
->(getUserByIdIR);
+export const unsafelySelectUserProfile = new PreparedQuery<
+  UnsafelySelectUserProfileParams,
+  UnsafelySelectUserProfileResult
+>(unsafelySelectUserProfileIR);

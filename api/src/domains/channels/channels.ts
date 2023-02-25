@@ -4,7 +4,7 @@ import {
   selectChannelsForUserInOrg,
   selectChannelById,
   unsafelySelectThreadsForChannelWithLatestPost,
-} from "./queries/channel.queries.js";
+} from "./queries/channels.queries.js";
 
 export const getChannelsForUser = async (
   { userId, organisationId }: { userId: string; organisationId: string },
@@ -64,10 +64,7 @@ export const getChannelById = async (
   }));
 
   return {
-    id: channel.channelId,
-    name: channel.name,
-    description: channel.description,
-    isPublic: channel.isPublic,
+    ...channel,
     threads,
   };
 };

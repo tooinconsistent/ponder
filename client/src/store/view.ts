@@ -32,6 +32,18 @@ export const actions = [
       );
     },
   },
+  {
+    id: "openThread",
+    title: "Open Thread",
+    perform: ({ setStore, params }: ActionProps<{ threadId: string }>) => {
+      setStore(
+        produce((s) => {
+          s.view.currentView = "thread";
+          s.view.currentViewProps = { threadId: params.threadId };
+        })
+      );
+    },
+  },
 ] as const;
 
 const effects = [] as const;

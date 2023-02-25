@@ -37,16 +37,19 @@ export const solarizedDarkTheme: ColorTheme = {
       foreground: "base0",
       border: "transparent",
       hoverBackground: "lighten(primary, 5)",
+      disabledBackground: "base2",
 
       secondaryBackground: "secondary",
       secondaryForeground: "base5",
       secondaryBorder: "transparent",
       secondaryHoverBackground: "lighten(secondary, 5)",
+      secondaryDisabledBackground: "base4",
 
       whiteBackground: "base1",
       whiteForeground: "base4",
       whiteBorder: "base4",
       whiteHoverBackground: "base2",
+      whiteDisabledBackground: "base1",
     },
 
     textDescription: {
@@ -57,13 +60,29 @@ export const solarizedDarkTheme: ColorTheme = {
       foreground: "base6",
     },
 
-    //     textBlockQuote.background: Background color for block quotes in text.
-    // textBlockQuote.border: Border color for block quotes in text.
-    // textCodeBlock.background: Background color for code blocks in text.
-    // textLink.activeForeground: Foreground color for links in text when clicked on and on mouse hover.
-    // textLink.foreground: Foreground color for links in text.
-    // textPreformat.foreground: Foreground color for preformatted text segments.
-    // textSeparator.foreground: Color for text separators.
+    textLink: {
+      activeForeground: "lighten(secondary, 10)",
+      foreground: "secondary",
+    },
+
+    prose: {
+      body: "base4",
+      headings: "base6",
+      lead: "base4",
+      links: "secondary",
+      bold: "base6",
+      counters: "base3",
+      bullets: "base3",
+      hr: "base3",
+      quotes: "base4",
+      quoteBorders: "base5",
+      captions: "base5",
+      code: "base5",
+      preCode: "base0",
+      preBg: "base5",
+      proseThBorders: "base3",
+      proseTdBorders: "base2",
+    },
 
     list: {
       hoverBackground: "base1",
@@ -103,6 +122,11 @@ export const solarizedDarkTheme: ColorTheme = {
       threadRowDivider: "base3",
       threadListBackground: "base1",
       threadRowHoverBackground: "lighten(base1, 5)",
+    },
+
+    thread: {
+      editorBorder: "base4",
+      editorActiveBorder: "base6",
     },
   },
 };

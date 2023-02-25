@@ -15,7 +15,8 @@ export const getUserIdFromEmailAndPassword = async (
     pgConnection
   );
 
-  // TODO: Currenntly this is leaking existence of user email through timing attack
+  // TODO: Currenntly this is leaking existence of
+  //       user email through timing attack.
   //       Might want to consider fixing this.
   if (userDetails && (await verify(userDetails.passwordHash, password))) {
     return userDetails?.userId ?? null;

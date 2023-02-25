@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 
-import { Button } from "@tooinconsistent/client/components/atoms/Button.jsx";
+import { buttonClasses } from "@tooinconsistent/client/components/atoms/button.js";
 
 interface ChannelDetailsProps {
   name: string;
@@ -9,7 +9,7 @@ interface ChannelDetailsProps {
 
 export const ChannelDetails: Component<ChannelDetailsProps> = (props) => {
   return (
-    <div class="px-12 py-8  flex justify-between items-end">
+    <div class="px-11 py-8  flex justify-between items-end">
       <div>
         <div class="text-3xl font-bold text-[var(--textHeader-foreground)]">
           {props.name}
@@ -18,7 +18,7 @@ export const ChannelDetails: Component<ChannelDetailsProps> = (props) => {
       </div>
       <div class="flex">
         <div>
-          <Button>New Thread</Button>
+          <button class={buttonClasses()}>New Thread</button>
         </div>
       </div>
     </div>

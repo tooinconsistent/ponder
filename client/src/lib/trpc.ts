@@ -9,7 +9,7 @@ import { getToken } from "./auth.js";
 export const trpc = createTRPCProxyClient<AppRouter>({
   transformer: superjson,
   links: [
-    loggerLink(),
+    loggerLink({ console: { log: console.debug, error: console.error } }),
     httpBatchLink({
       url: "http://localhost:3000/trpc",
       headers: () => {
@@ -19,7 +19,6 @@ export const trpc = createTRPCProxyClient<AppRouter>({
             Authorization: `Bearer ${token}`,
           };
         }
-
         return {};
       },
     }),

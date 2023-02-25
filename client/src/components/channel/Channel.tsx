@@ -31,6 +31,7 @@ export const Channel: Component = (_props) => {
           <For each={channel.latest?.threads ?? []}>
             {(thread) => (
               <ThreadRow
+                threadId={thread.id}
                 title={thread.title}
                 latestPost={{
                   content: thread.latestPost.contentPlain,

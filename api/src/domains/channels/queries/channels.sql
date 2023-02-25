@@ -12,7 +12,7 @@ group by channels.id;
 
 /* @name selectChannelById */
 select
-	channels.id as "channelId", 
+	channels.id,
 	channels.name,
 	channels.description,
 	channels.is_public

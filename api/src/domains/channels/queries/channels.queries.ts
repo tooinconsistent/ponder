@@ -1,4 +1,4 @@
-/** Types generated for queries found in "../api/src/domains/channels/queries/channel.sql" */
+/** Types generated for queries found in "../api/src/domains/channels/queries/channels.sql" */
 import { PreparedQuery } from "@tooinconsistent/api/lib/db.js";
 
 /** 'SelectChannelsForUserInOrg' parameters type */
@@ -70,8 +70,8 @@ export interface SelectChannelByIdParams {
 
 /** 'SelectChannelById' return type */
 export interface SelectChannelByIdResult {
-  channelId: string;
   description: string | null;
+  id: string;
   isPublic: boolean;
   name: string;
 }
@@ -89,27 +89,27 @@ const selectChannelByIdIR: any = {
       name: "channelId",
       required: true,
       transform: { type: "scalar" },
-      locs: [{ a: 347, b: 357 }],
+      locs: [{ a: 331, b: 341 }],
     },
     {
       name: "userId",
       required: true,
       transform: { type: "scalar" },
       locs: [
-        { a: 399, b: 406 },
-        { a: 444, b: 451 },
+        { a: 383, b: 390 },
+        { a: 428, b: 435 },
       ],
     },
   ],
   statement:
-    'select\n\tchannels.id as "channelId", \n\tchannels.name,\n\tchannels.description,\n\tchannels.is_public\nfrom app_public.channels\nleft join app_public.channel_memberships on channels.id = channel_memberships.channel_id\nleft join app_public.organisation_memberships on channels.organisation_id = organisation_memberships.organisation_id\nwhere channels.id = :channelId!\n\tand organisation_memberships.user_id = :userId!\n\tand (channel_memberships.user_id = :userId! or channels.is_public = true)\ngroup by channels.id',
+    "select\n\tchannels.id,\n\tchannels.name,\n\tchannels.description,\n\tchannels.is_public\nfrom app_public.channels\nleft join app_public.channel_memberships on channels.id = channel_memberships.channel_id\nleft join app_public.organisation_memberships on channels.organisation_id = organisation_memberships.organisation_id\nwhere channels.id = :channelId!\n\tand organisation_memberships.user_id = :userId!\n\tand (channel_memberships.user_id = :userId! or channels.is_public = true)\ngroup by channels.id",
 };
 
 /**
  * Query generated from SQL:
  * ```
  * select
- * 	channels.id as "channelId",
+ * 	channels.id,
  * 	channels.name,
  * 	channels.description,
  * 	channels.is_public
