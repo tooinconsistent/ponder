@@ -22,8 +22,11 @@ const handler = async (req: Request): Promise<Response> => {
     return res;
   }
 
-  const pgConnection = await pool.connect();
+  if (req.method === "GET" && new URL(req.url).pathname === "/health") {
+    return new Response(`ok!`);
+  }
 
+  const pgConnection = await pool.connect();
   try {
     const res = await fetchRequestHandler({
       endpoint: "/trpc",
