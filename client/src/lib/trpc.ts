@@ -11,7 +11,7 @@ export const trpc = createTRPCProxyClient<AppRouter>({
   links: [
     loggerLink({ console: { log: console.debug, error: console.error } }),
     httpBatchLink({
-      url: "http://localhost:3000/trpc",
+      url: import.meta.env.VITE_API_URL,
       headers: () => {
         const token = getToken();
         if (token) {
