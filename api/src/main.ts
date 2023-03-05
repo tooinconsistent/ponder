@@ -11,6 +11,8 @@ import { databaseUrl } from "@tooinconsistent/api/env.js";
 const pool = new pg.Pool({ connectionString: databaseUrl });
 
 const handler = async (req: Request): Promise<Response> => {
+  const since = Bun.nanoseconds();
+  console.debug(`Handling new request :: at ${since}`);
   if (req.method === "OPTIONS") {
     const res = new Response();
 
@@ -28,6 +30,7 @@ const handler = async (req: Request): Promise<Response> => {
 
   const pgConnection = await pool.connect();
   try {
+    console.debug(`Delegating to handler :: at ${Bun.nanoseconds()}`);
     const res = await fetchRequestHandler({
       endpoint: "/trpc",
       req,
@@ -40,10 +43,15 @@ const handler = async (req: Request): Promise<Response> => {
     res.headers.set("Access-Control-Allow-Methods", "OPTIONS, GET");
     res.headers.set("Access-Control-Allow-Headers", "*");
 
+    console.debug(
+      `Sending response :: at ${Bun.nanoseconds()} :: took ${
+        Bun.nanoseconds() - since
+      }`
+    );
     return res;
   } catch (err) {
     const res = new Response();
-    console.log(err);
+    console.error(err);
     return res;
   } finally {
     pgConnection.release();
