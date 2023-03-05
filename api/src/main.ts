@@ -46,8 +46,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.debug(
       `Sending response :: at ${Bun.nanoseconds()} :: took ${
-        Bun.nanoseconds() - since
-      }`
+        (Bun.nanoseconds() - since) / 1000000
+      }ms`
     );
     return res;
   } catch (err) {
