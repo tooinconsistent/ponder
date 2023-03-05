@@ -18,11 +18,6 @@ export interface ActionDefinition<T = never> {
   readonly perform: ({ store, setStore, params }: ActionProps<T>) => void;
 }
 
-// Get inital store values
-const initialStore = registry.reduce<AppStore>((appStore, currentStore) => {
-  return { ...appStore, [currentStore.id]: currentStore.init() };
-}, {} as AppStore);
-
 // Actions
 const actions = registry.map((store) => store.actions).flat();
 
@@ -35,6 +30,11 @@ const AppStoreContext = createContext<{
 }>();
 
 export const AppStoreProvider: ParentComponent = (props) => {
+  // Get inital store values
+  const initialStore = registry.reduce<AppStore>((appStore, currentStore) => {
+    return { ...appStore, [currentStore.id]: currentStore.init() };
+  }, {} as AppStore);
+
   const [store, setStore] = createStore<AppStore>(initialStore);
 
   const actionPerformers = actions.reduce<Record<AppActions, ActionExecutor>>(

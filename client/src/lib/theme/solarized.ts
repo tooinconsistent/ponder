@@ -123,14 +123,27 @@ export const solarizedDarkTheme: ColorTheme = {
     },
 
     channel: {
+      metaDetailsBackground: "base1",
+      metaDetailsBorder: "base1",
       threadRowDivider: "base3",
       threadListBackground: "base1",
       threadRowHoverBackground: "lighten(base1, 5)",
     },
 
     thread: {
+      metaDetailsBackground: "base1",
+      metaDetailsBorder: "base1",
+      metaDetailsActionBackground: "base1",
+      metaDetailsActionHoveredBackground: "lighten(base1, 5)",
       editorBorder: "base4",
       editorActiveBorder: "base6",
+    },
+
+    threadComposer: {
+      border: "base1",
+      background: "base0",
+      separator: "base0",
+      focusedBorder: "base4",
     },
   },
 };

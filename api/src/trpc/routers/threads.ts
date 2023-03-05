@@ -3,6 +3,7 @@ import { z } from "zod";
 import { router, userProcedure } from "@tooinconsistent/api/trpc/trpc.js";
 
 import {
+  createNewThread,
   getThreadById,
   replyInThread,
 } from "@tooinconsistent/api/domains/channels/threads.js";
@@ -17,6 +18,29 @@ export const threadsRouter = router({
     .query(({ input, ctx }) => {
       return getThreadById(
         { userId: ctx.userId, threadId: input.threadId },
+        ctx.pgConnection
+      );
+    }),
+
+  createNewThread: userProcedure
+    .input(
+      z.object({
+        channelId: z.string().uuid(),
+        // TODO: Tighten this type
+        title: z.string(),
+        content: z.any(),
+        contentPlain: z.string(),
+      })
+    )
+    .mutation(({ input, ctx }) => {
+      return createNewThread(
+        {
+          userId: ctx.userId,
+          channelId: input.channelId,
+          title: input.title,
+          content: input.content,
+          contentPlain: input.contentPlain,
+        },
         ctx.pgConnection
       );
     }),

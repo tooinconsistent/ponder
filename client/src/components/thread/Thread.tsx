@@ -9,7 +9,6 @@ import { trpc } from "@tooinconsistent/client/lib/trpc.js";
 import { ThreadDetails } from "./ThreadDetails.jsx";
 import { PostComposer } from "./PostComposer.jsx";
 import { Post } from "./Post.jsx";
-import { currentUserProfile } from "@tooinconsistent/client/store/users.js";
 
 export const Thread: Component = (_props) => {
   const { store } = useStore();
@@ -25,11 +24,11 @@ export const Thread: Component = (_props) => {
   );
 
   // TODO: Scroll to unread
-  const scrollToLastPost = () => {
+  const scrollToLastPost = (smoothly?: boolean) => {
     const lastPost = document.querySelector("ul[role=list] > li:last-child");
     if (lastPost) {
       lastPost.scrollIntoView({
-        behavior: "smooth",
+        behavior: smoothly ? "smooth" : "auto",
         block: "start",
       });
     }
@@ -64,9 +63,9 @@ export const Thread: Component = (_props) => {
             {
               ...newPost,
               author: {
-                id: currentUserProfile()?.userId ?? "",
-                avatarUrl: currentUserProfile()?.avatarUrl ?? null,
-                displayName: currentUserProfile()?.displayName ?? "",
+                id: store.users.currentUserProfile?.userId ?? "",
+                avatarUrl: store.users.currentUserProfile?.avatarUrl ?? null,
+                displayName: store.users.currentUserProfile?.displayName ?? "",
               },
             },
           ],
@@ -74,13 +73,16 @@ export const Thread: Component = (_props) => {
       }
     });
 
-    scrollToLastPost();
+    scrollToLastPost(true);
   };
 
   return (
     <div class="flex h-full justify-center">
       <div class="flex h-full max-w-6xl flex-1 flex-col">
-        <ThreadDetails title={thread.latest?.title ?? ""} />
+        <ThreadDetails
+          title={thread.latest?.title ?? ""}
+          channelId={thread.latest?.channelId}
+        />
         <div class="flex flex-1 justify-center overflow-y-auto p-8">
           <div class="w-full max-w-xl">
             <ul role="list">
@@ -99,8 +101,8 @@ export const Thread: Component = (_props) => {
             </ul>
           </div>
         </div>
-        <div class="flex justify-center">
-          <div class="w-full max-w-xl pb-8">
+        <div class="flex justify-center px-8 pb-8">
+          <div class="w-full max-w-xl">
             <PostComposer onSubmit={submitHandler} />
           </div>
         </div>

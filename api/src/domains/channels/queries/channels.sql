@@ -1,6 +1,6 @@
 /* @name selectChannelsForUserInOrg */
 select
-	channels.id, 
+	channels.id,
 	channels.name
 from app_public.channels
 left join app_public.channel_memberships on channels.id = channel_memberships.channel_id

@@ -1,8 +1,6 @@
 import { Component } from "solid-js";
 
-interface PrivateProps {}
-
-export const Private: Component<PrivateProps> = (props) => {
+export const Private: Component = (_props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +8,7 @@ export const Private: Component<PrivateProps> = (props) => {
       viewBox="0 0 24 24"
       stroke-width="1.5"
       stroke="currentColor"
-      class="h-6 w-6"
+      class="h-4 w-4"
     >
       <path
         stroke-linecap="round"

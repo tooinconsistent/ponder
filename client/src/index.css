@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  background: var(--base-background);
+}
+
 .ProseMirror p.is-editor-empty:first-child::before {
   color: var(--textPlaceholder-foreground);
   content: attr(data-placeholder);

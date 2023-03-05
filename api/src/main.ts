@@ -47,7 +47,5 @@ const handler = async (req: Request): Promise<Response> => {
   }
 };
 
-// Learn more at https://deno.land/manual/examples/module_metadata#concepts
 const port = 3000;
-console.log(`Spinning up the server on: ${port}`);
-Bun.serve({ fetch: handler, port });
+export default { fetch: handler, port };

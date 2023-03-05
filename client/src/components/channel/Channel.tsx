@@ -5,8 +5,6 @@ import { trpc } from "@tooinconsistent/client/lib/trpc.js";
 import { ChannelDetails } from "./ChannelDetails.jsx";
 import { ThreadRow } from "./ThreadRow.jsx";
 
-// interface ChannelProps {}
-
 export const Channel: Component = (_props) => {
   const { store } = useStore();
 
@@ -27,8 +25,9 @@ export const Channel: Component = (_props) => {
           name={channel.latest?.name ?? ""}
           description={channel.latest?.description ?? ""}
           isPrivate={!channel.latest?.isPublic}
+          channelId={channel.latest?.id ?? null}
         />
-        <div class="divide-y divide-[var(--channel-threadRowDivider)] overflow-auto bg-[var(--channel-threadListBackground)] px-9">
+        <div class="flex-1 divide-y divide-[var(--channel-threadRowDivider)] overflow-auto bg-[var(--channel-threadListBackground)] px-9">
           <For each={channel.latest?.threads ?? []}>
             {(thread) => (
               <ThreadRow

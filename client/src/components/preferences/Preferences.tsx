@@ -4,9 +4,9 @@ import { createStore } from "solid-js/store";
 import { getInitialTheme, injectColorSystem, setColorTheme } from "./theme.js";
 import { ColorTheme } from "@tooinconsistent/client/lib/theme/theme.js";
 
-export type Preferences = {
+export interface Preferences {
   theme: ColorTheme;
-};
+}
 
 // Color theme setup
 injectColorSystem();

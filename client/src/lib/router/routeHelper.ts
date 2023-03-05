@@ -46,8 +46,8 @@ export const injectValuesIntoRoute = (
   return route.replace(
     RGX,
     (x: string, lead: string, key: string, optional: string) => {
-      x = String(values[key == "*" ? "wild" : key.substring(1)]);
-      return x ? "/" + x : optional || key == "*" ? "" : "/" + key;
+      const v = values[key == "*" ? "wild" : key.substring(1)];
+      return v ? "/" + String(v) : optional || key == "*" ? "" : "/" + key;
     }
   );
 };

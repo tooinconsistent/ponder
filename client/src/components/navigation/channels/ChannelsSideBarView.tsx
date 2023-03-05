@@ -1,11 +1,10 @@
 import { Component, For } from "solid-js";
 
-import { channels } from "@tooinconsistent/client/store/channels.js";
+import { useStore } from "@tooinconsistent/client/store/app.jsx";
+import { classes } from "@tooinconsistent/client/lib/classes.js";
 
 import { SideBarViewTitle } from "../side_bar/SideBarViewTitle.jsx";
 import { SidebarSection } from "../side_bar/SidebarSection.jsx";
-import { useStore } from "@tooinconsistent/client/store/app.jsx";
-import { classes } from "@tooinconsistent/client/lib/classes.js";
 
 export const ChannelsSideBarView: Component = (_props) => {
   const { actions, store } = useStore();
@@ -21,7 +20,7 @@ export const ChannelsSideBarView: Component = (_props) => {
     <div class="h-full">
       <SideBarViewTitle title="Channels" />
       <SidebarSection sectionTitle="Joined Channels">
-        <For each={channels()}>
+        <For each={store.channels.channels}>
           {(channel) => (
             <div
               onClick={() => {

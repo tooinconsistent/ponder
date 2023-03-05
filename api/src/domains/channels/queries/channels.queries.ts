@@ -26,20 +26,20 @@ const selectChannelsForUserInOrgIR: any = {
       name: "organisationId",
       required: true,
       transform: { type: "scalar" },
-      locs: [{ a: 301, b: 316 }],
+      locs: [{ a: 300, b: 315 }],
     },
     {
       name: "userId",
       required: true,
       transform: { type: "scalar" },
       locs: [
-        { a: 358, b: 365 },
-        { a: 403, b: 410 },
+        { a: 357, b: 364 },
+        { a: 402, b: 409 },
       ],
     },
   ],
   statement:
-    "select\n\tchannels.id, \n\tchannels.name\nfrom app_public.channels\nleft join app_public.channel_memberships on channels.id = channel_memberships.channel_id\nleft join app_public.organisation_memberships on channels.organisation_id = organisation_memberships.organisation_id\nwhere channels.organisation_id = :organisationId!\n\tand organisation_memberships.user_id = :userId!\n\tand (channel_memberships.user_id = :userId! or channels.is_public = true)\ngroup by channels.id",
+    "select\n\tchannels.id,\n\tchannels.name\nfrom app_public.channels\nleft join app_public.channel_memberships on channels.id = channel_memberships.channel_id\nleft join app_public.organisation_memberships on channels.organisation_id = organisation_memberships.organisation_id\nwhere channels.organisation_id = :organisationId!\n\tand organisation_memberships.user_id = :userId!\n\tand (channel_memberships.user_id = :userId! or channels.is_public = true)\ngroup by channels.id",
 };
 
 /**

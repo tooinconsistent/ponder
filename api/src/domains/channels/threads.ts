@@ -1,11 +1,14 @@
 import { DBClient } from "@tooinconsistent/api/lib/db.js";
 
+import { JSONContent } from "@tooinconsistent/api/lib/docs.js";
+
 import {
   selectThreadById,
   unsafelyInsertNewPostForThread,
+  unsafelyInsertNewThreadInChannel,
   unsafelySelectPostsForThread,
 } from "./queries/threads.queries.js";
-import { JSONContent } from "@tooinconsistent/api/lib/docs.js";
+import { selectChannelById } from "./queries/channels.queries.js";
 
 export const getThreadById = async (
   {
@@ -92,4 +95,61 @@ export const replyInThread = async (
   );
 
   return newPost ?? null;
+};
+
+export const createNewThread = async (
+  {
+    userId,
+    channelId,
+    title,
+    content,
+    contentPlain,
+  }: {
+    userId: string;
+    channelId: string;
+    title: string;
+    content: JSONContent;
+    contentPlain: string;
+  },
+  pgConnection: DBClient
+) => {
+  const [channel] = await selectChannelById.execute(
+    {
+      channelId,
+      userId,
+    },
+    pgConnection
+  );
+
+  if (!channel) {
+    return null;
+  }
+
+  const [result] = await unsafelyInsertNewThreadInChannel.execute(
+    {
+      newThread: { channelId, title, authorId: userId },
+      initalPostContent: content,
+      initalPostContentPlain: contentPlain,
+      initialPostAuthorId: userId,
+    },
+    pgConnection
+  );
+
+  if (!result) {
+    return null;
+  }
+
+  return {
+    id: result.threadId,
+    title: result.title,
+    channelId: result.channelId,
+    posts: [
+      {
+        id: result.postId,
+        content: result.content,
+        contentPlain: result.contentPlain,
+        authorId: result.authorId,
+      },
+    ],
+  };
 };

@@ -1,7 +1,7 @@
 import { produce } from "solid-js/store";
 import { ActionProps } from "./app.jsx";
 
-export type MainViews = "home" | "channel" | "thread";
+export type MainViews = "home" | "channel" | "thread" | "new_thread";
 
 export interface ViewStore {
   currentView: MainViews;
@@ -40,6 +40,18 @@ export const actions = [
         produce((s) => {
           s.view.currentView = "thread";
           s.view.currentViewProps = { threadId: params.threadId };
+        })
+      );
+    },
+  },
+  {
+    id: "openNewThread",
+    title: "Open New Thread Creator",
+    perform: ({ setStore, params }: ActionProps<{ channelId: string }>) => {
+      setStore(
+        produce((s) => {
+          s.view.currentView = "new_thread";
+          s.view.currentViewProps = { channelId: params.channelId };
         })
       );
     },

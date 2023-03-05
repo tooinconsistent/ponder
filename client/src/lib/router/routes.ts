@@ -10,7 +10,7 @@ interface RouteDefinition {
   view: MainViews;
   handler: (
     actions: Record<AppActions, ActionExecutor>,
-    // TODO:
+    // TODO: type this in some reasonable way
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     routeParams: any
   ) => void;
@@ -29,6 +29,13 @@ export const routes: RouteDefinition[] = [
     view: "channel",
     handler: (actions, routeParams: { channelId: string }) => {
       actions.openChannel({ channelId: routeParams.channelId });
+    },
+  },
+  {
+    route: "/thread/new/:channelId?",
+    view: "new_thread",
+    handler: (actions, routeParams: { channelId: string }) => {
+      actions.openNewThread({ channelId: routeParams.channelId });
     },
   },
   {

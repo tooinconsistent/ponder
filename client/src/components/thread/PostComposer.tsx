@@ -4,16 +4,18 @@ import StarterKit from "@tiptap/starter-kit";
 import { Editor, JSONContent } from "@tiptap/core";
 import Placeholder from "@tiptap/extension-placeholder";
 
+import { useStore } from "@tooinconsistent/client/store/app.jsx";
+
 import { buttonClasses } from "../atoms/button.js";
 import { Avatar } from "../atoms/Avatar.jsx";
-
-import { currentUserProfile } from "@tooinconsistent/client/store/users.js";
 
 interface PostComposerProps {
   onSubmit: (reply: JSONContent, replyPlain: string) => Promise<void>;
 }
 
 export const PostComposer: Component<PostComposerProps> = (props) => {
+  const { store } = useStore();
+
   const [editor, setEditor] = createSignal<Editor>();
   const [isEmpty, setIsEmpty] = createSignal(true);
 
@@ -64,8 +66,8 @@ export const PostComposer: Component<PostComposerProps> = (props) => {
     <div class="flex space-x-3">
       <div>
         <Avatar
-          avatarUrl={currentUserProfile()?.avatarUrl ?? null}
-          displayName={currentUserProfile()?.displayName ?? ""}
+          avatarUrl={store.users.currentUserProfile?.avatarUrl ?? null}
+          displayName={store.users.currentUserProfile?.displayName ?? ""}
           size={10}
         />
       </div>
@@ -75,9 +77,9 @@ export const PostComposer: Component<PostComposerProps> = (props) => {
           <button
             class={buttonClasses()}
             disabled={isEmpty()}
-            // TODO: This seems to be working fine, so I think solid types need fixing.
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onClick={handleReply}
+            onClick={() => {
+              void handleReply();
+            }}
           >
             Reply
           </button>

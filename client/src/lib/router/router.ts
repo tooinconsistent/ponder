@@ -32,16 +32,24 @@ export class Router {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const matches = matchingRoute.pattern.exec(path)!;
+    const matches = matchingRoute.pattern
+      .exec(path)!
+      // This fixes weird behaviour in safari, that somehow returns undefined as a string
+      .map((match) => (match === "undefined" ? undefined : match));
+
     const routeParams = matchingRoute.keys.reduce(
-      (rp, key, i) => ({ ...rp, [key]: matches[i + 1] }),
+      (rp, key, i) => ({ ...rp, [key]: matches[i + 1] || null }),
       {}
     );
 
     console.debug(`router :: Scrolling to top`);
     window.scrollTo(0, 0);
 
-    console.debug(`router :: Navigating to ${matchingRoute.route}`);
+    console.debug(
+      `router :: Navigating to ${matchingRoute.route} with ${JSON.stringify(
+        routeParams
+      )}`
+    );
     return matchingRoute.handler(this.actions, routeParams);
   };
 
