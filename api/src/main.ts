@@ -8,7 +8,8 @@ import { createContext } from "@tooinconsistent/api/trpc/context.js";
 import { databaseUrl } from "@tooinconsistent/api/env.js";
 
 // Create a database pool with three connections that are lazily established
-const pool = new pg.Pool({ connectionString: databaseUrl });
+// TODO: !!! Make this work with ssl, because it's kinda ass now.
+const pool = new pg.Pool({ connectionString: databaseUrl, ssl: false });
 
 const handler = async (req: Request): Promise<Response> => {
   const since = Bun.nanoseconds();
