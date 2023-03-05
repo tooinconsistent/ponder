@@ -50,5 +50,4 @@ const handler = async (req: Request): Promise<Response> => {
   }
 };
 
-const port = 3000;
-export default { fetch: handler, port };
+export default { fetch: handler };
