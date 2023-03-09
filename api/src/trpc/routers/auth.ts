@@ -8,10 +8,24 @@ import {
 
 import { getUserIdFromEmailAndPassword } from "@tooinconsistent/api/domains/auth/auth.js";
 import { createSession } from "@tooinconsistent/api/domains/auth/session.js";
+import { getOrganisationsForUser } from "@tooinconsistent/api/domains/identity/organisations.js";
 
 export const authRouter = router({
   whoami: publicProcedure.query(({ ctx }) => {
     return { userId: ctx.userId };
+  }),
+
+  myOrganisations: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.userId) {
+      return [];
+    }
+
+    const organisations = await getOrganisationsForUser(
+      ctx.userId,
+      ctx.pgConnection
+    );
+
+    return organisations;
   }),
 
   login: publicProcedure

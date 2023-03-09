@@ -3,7 +3,7 @@ import { PreparedQuery } from "@tooinconsistent/api/lib/db.js";
 
 /** 'UnsafelySelectUserProfile' parameters type */
 export interface UnsafelySelectUserProfileParams {
-  userId?: string | null | void;
+  userId: string;
 }
 
 /** 'UnsafelySelectUserProfile' return type */
@@ -27,13 +27,13 @@ const unsafelySelectUserProfileIR: any = {
   params: [
     {
       name: "userId",
-      required: false,
+      required: true,
       transform: { type: "scalar" },
-      locs: [{ a: 131, b: 137 }],
+      locs: [{ a: 131, b: 138 }],
     },
   ],
   statement:
-    "select \n\tid,\n\tuser_id,\n\tdisplay_name,\n\tfull_name,\n\tabout,\n\tavatar_url \nfrom app_public.user_profiles\nwhere user_profiles.user_id = :userId",
+    "select \n\tid,\n\tuser_id,\n\tdisplay_name,\n\tfull_name,\n\tabout,\n\tavatar_url \nfrom app_public.user_profiles\nwhere user_profiles.user_id = :userId!",
 };
 
 /**
@@ -47,7 +47,7 @@ const unsafelySelectUserProfileIR: any = {
  * 	about,
  * 	avatar_url
  * from app_public.user_profiles
- * where user_profiles.user_id = :userId
+ * where user_profiles.user_id = :userId!
  * ```
  */
 export const unsafelySelectUserProfile = new PreparedQuery<

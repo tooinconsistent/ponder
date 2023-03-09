@@ -13,18 +13,24 @@ import {
 } from "@tooinconsistent/client/lib/auth.js";
 
 export const AuthContext = createContext<{
-  currentUserId: Resource<string | null>;
+  currentUser: Resource<{
+    userId: string;
+    organisations: Array<{ organisationId: string; role: string }>;
+  } | null>;
   login: (credentials: { email: string; password: string }) => Promise<void>;
   logout: () => Promise<void>;
 }>();
 
 export const AuthProvider: ParentComponent = (props) => {
-  const [currentUserId, { refetch: refetchUserId }] = createResource(
-    async () => {
-      const { userId } = await trpc.auth.whoami.query();
-      return userId;
+  const [currentUser, { refetch: refetchUserId }] = createResource(async () => {
+    const { userId } = await trpc.auth.whoami.query();
+    const organisations = await trpc.auth.myOrganisations.query();
+    if (userId === null) {
+      return null;
     }
-  );
+
+    return { userId, organisations };
+  });
 
   const login = async ({
     email,
@@ -43,7 +49,7 @@ export const AuthProvider: ParentComponent = (props) => {
   };
 
   return (
-    <AuthContext.Provider value={{ currentUserId, login, logout }}>
+    <AuthContext.Provider value={{ currentUser, login, logout }}>
       {props.children}
     </AuthContext.Provider>
   );

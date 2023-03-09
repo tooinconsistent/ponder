@@ -8,7 +8,7 @@ import { createContext } from "@tooinconsistent/api/trpc/context.js";
 import { databaseUrl } from "@tooinconsistent/api/env.js";
 
 // Create a database pool with three connections that are lazily established
-// TODO: !!! Make this work with ssl, because it's kinda ass now.
+// TODO: !!! Make this work with ssl, because it's kinda' ass now.
 const pool = new pg.Pool({ connectionString: databaseUrl, ssl: false });
 
 const handler = async (req: Request): Promise<Response> => {
@@ -22,6 +22,11 @@ const handler = async (req: Request): Promise<Response> => {
     res.headers.set("Access-Control-Allow-Methods", "OPTIONS, GET");
     res.headers.set("Access-Control-Allow-Headers", "*");
 
+    console.debug(
+      `Sending options response :: at ${Bun.nanoseconds()} :: took ${
+        (Bun.nanoseconds() - since) / 1000000
+      }ms`
+    );
     return res;
   }
 

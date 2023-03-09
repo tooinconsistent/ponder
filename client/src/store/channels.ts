@@ -1,6 +1,8 @@
-import { createResource } from "solid-js";
+import { createResource, useContext } from "solid-js";
 
 import { trpc } from "../lib/trpc.js";
+
+import { AuthContext } from "../components/auth/AuthProvider.jsx";
 
 export interface ChannelsStore {
   channels: Array<{ id: string; name: string }> | undefined;
@@ -9,9 +11,17 @@ export interface ChannelsStore {
 const id = "channels";
 
 const init = (): ChannelsStore => {
+  const { currentUser } = useContext(AuthContext)!;
+
   const [channels] = createResource(() => {
+    const organisationId = currentUser()?.organisations[0]?.organisationId;
+
+    if (!organisationId) {
+      return [];
+    }
+
     return trpc.channels.listAll.query({
-      organisationId: "30000000-0000-4000-0000-000000000001",
+      organisationId,
     });
   });
 
