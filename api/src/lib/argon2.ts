@@ -39,7 +39,7 @@ export const hash = (password: string) => {
 };
 
 const hashRegex =
-  /^\$argon2id\$v=19\$m=(?<memorySize>\d+),t=(?<passes>\d+),p=(?<parallelism>\d+)\$(?<salt>\w+)\$(?<hash>\w+)$/;
+  /^\$argon2id\$v=19\$m=(?<memorySize>\d+),t=(?<passes>\d+),p=(?<parallelism>\d+)\$(?<salt>[\w+/]+)\$(?<hash>[\w+/]+)$/;
 export const verify = (storedHash: string, password: string) => {
   const storedParams = hashRegex.exec(storedHash);
   if (!storedParams?.groups) {
