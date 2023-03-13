@@ -2,16 +2,20 @@ import { Component, Match, Show, Switch } from "solid-js";
 
 import { useStore } from "@tooinconsistent/client/store/app.jsx";
 import { ChannelsSideBarView } from "../channels/ChannelsSideBarView.jsx";
+import { SettingsSidebarView } from "../settings/SettingsSidebarView.jsx";
 
 export const SideBar: Component = (_props) => {
   const { store } = useStore();
   // TODO: Add resizability
   return (
     <Show when={store.sideBar.currentTab !== null}>
-      <div class="fg-[var(--sideBar-foreground)] h-full w-72 border-r border-[var(--sideBar-border)] bg-[var(--sideBar-background)]">
+      <div class="h-full w-72 border-r border-[var(--sideBar-border)] bg-[var(--sideBar-background)] text-[var(--sideBar-foreground)]">
         <Switch>
           <Match when={store.sideBar.currentTab === "channels"}>
             <ChannelsSideBarView />
+          </Match>
+          <Match when={store.sideBar.currentTab === "settings"}>
+            <SettingsSidebarView />
           </Match>
         </Switch>
       </div>

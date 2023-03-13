@@ -1,4 +1,4 @@
-import { JSX, ParentComponent, children } from "solid-js";
+import { JSX, ParentComponent } from "solid-js";
 
 interface SidebarSectionProps {
   sectionTitle: string;

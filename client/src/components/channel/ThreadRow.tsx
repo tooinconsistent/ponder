@@ -38,7 +38,7 @@ export const ThreadRow: Component<ThreadRowProps> = (props) => {
                 <Avatar
                   displayName={props.latestPost.author.displayName}
                   avatarUrl={props.latestPost.author.avatarUrl}
-                  margins="mr-1"
+                  margins="mr-2"
                 />
                 <div class="flex items-center text-xs text-[var(--base-foreground)]">
                   <p class="whitespace-normal line-clamp-2">

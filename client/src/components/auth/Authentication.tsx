@@ -1,10 +1,10 @@
-import { Component, createSignal, useContext } from "solid-js";
+import { Component, createSignal } from "solid-js";
 
-import { AuthContext } from "./AuthProvider.jsx";
+import { useAuthentication } from "./auth.js";
 import { buttonClasses } from "../atoms/button.js";
 
 export const Authentication: Component = (_props) => {
-  const { login } = useContext(AuthContext)!;
+  const { login } = useAuthentication();
 
   const [email, setEmail] = createSignal("");
   const [password, setPassword] = createSignal("");

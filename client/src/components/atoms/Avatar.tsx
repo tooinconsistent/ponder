@@ -1,10 +1,11 @@
+import { classes } from "@tooinconsistent/client/lib/classes.js";
 import { Component, Show } from "solid-js";
 
 interface AvatarProps {
   displayName: string;
   avatarUrl: string | null;
   margins?: string;
-  size?: number;
+  size?: 6 | 10;
 }
 
 export const Avatar: Component<AvatarProps> = (props) => {
@@ -13,11 +14,11 @@ export const Avatar: Component<AvatarProps> = (props) => {
       when={props.avatarUrl}
       fallback={
         <div
-          class={`inline-block h-${props.size ?? 6} w-${
-            props.size ?? 6
-          } min-w-[1.5rem] rounded-full border-2 border-[var(--base-foreground)] p-1 text-[var(--base-foreground)] ${
-            props.margins ?? ""
-          }`}
+          class={classes(
+            props.size == 10 ? "h-10 w-10" : "h-6 w-6",
+            "inline-block min-w-[1.5rem] rounded-full border-2 border-[var(--base-foreground)] p-1 text-[var(--base-foreground)]",
+            props.margins
+          )}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -36,11 +37,11 @@ export const Avatar: Component<AvatarProps> = (props) => {
       }
     >
       <img
-        class={`inline-block h-${props.size ?? 6} w-${
-          props.size ?? 6
-        } min-w-[1.5rem] rounded-full border-2 border-[var(--base-foreground)] saturate-50 ${
-          props.margins ?? ""
-        }`}
+        class={classes(
+          props.size == 10 ? "h-10 w-10" : "h-6 w-6",
+          "inline-block min-w-[1.5rem] rounded-full border-2 border-[var(--base-foreground)] saturate-50",
+          props.margins
+        )}
         // Must be non null, since we are in <Show> component
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         src={props.avatarUrl!}

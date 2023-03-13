@@ -7,6 +7,8 @@ import { Channel } from "../channel/Channel.jsx";
 import { Thread } from "../thread/Thread.jsx";
 import { ThreadComposer } from "../thread/ThreadComposer.jsx";
 
+import { AdvancedAppSettings } from "../settings/AdvancedAppSettings.jsx";
+
 export const View: Component = (_props) => {
   const { store } = useStore();
 
@@ -22,6 +24,9 @@ export const View: Component = (_props) => {
           </Match>
           <Match when={store.view.currentView === "new_thread"}>
             <ThreadComposer />
+          </Match>
+          <Match when={store.view.currentView === "advanced_app_settings"}>
+            <AdvancedAppSettings />
           </Match>
         </Switch>
       </Suspense>

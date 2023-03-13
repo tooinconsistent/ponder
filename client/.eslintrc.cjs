@@ -27,9 +27,11 @@ module.exports = {
     ],
     "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
     "@typescript-eslint/prefer-reduce-type-parameter": "off",
+    // Tailwind stuff
     "tailwindcss/no-custom-classname": [
       "warn",
-      { whitelist: ["prose-default"] },
+      { whitelist: ["prose-default", "line-clamp-2"] },
     ],
+    "tailwindcss/classnames-order": "off",
   },
 };

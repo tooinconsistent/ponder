@@ -11,10 +11,11 @@ export interface ChannelsStore {
 const id = "channels";
 
 const init = (): ChannelsStore => {
-  const { currentUser } = useContext(AuthContext)!;
+  const auth = useContext(AuthContext);
 
   const [channels] = createResource(() => {
-    const organisationId = currentUser()?.organisations[0]?.organisationId;
+    const organisationId =
+      auth?.currentUser()?.organisations[0]?.organisationId;
 
     if (!organisationId) {
       return [];

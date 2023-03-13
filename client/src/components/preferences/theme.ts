@@ -13,7 +13,7 @@ export const getInitialTheme = (): ColorTheme => {
   );
 
   try {
-    const storedTheme = JSON.parse(storedThemeString ?? "");
+    const storedTheme = JSON.parse(storedThemeString ?? "") as ColorTheme;
     return ColorTheme.parse(storedTheme);
   } catch (err) {
     return solarizedDarkTheme;

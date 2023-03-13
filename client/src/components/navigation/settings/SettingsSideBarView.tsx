@@ -1,0 +1,30 @@
+import { Component } from "solid-js";
+
+import { classes } from "@tooinconsistent/client/lib/classes.js";
+import { useStore } from "@tooinconsistent/client/store/app.jsx";
+
+import { SideBarViewTitle } from "../side_bar/SideBarViewTitle.jsx";
+import { SidebarSection } from "../side_bar/SidebarSection.jsx";
+
+export const SettingsSidebarView: Component = (_props) => {
+  const { actions } = useStore();
+
+  return (
+    <div class="h-full">
+      <SideBarViewTitle title="Settings" />
+      <SidebarSection sectionTitle="Advanced Settings">
+        <div
+          onClick={() => {
+            actions.openAdvancedAppSettings({});
+          }}
+          class={classes(
+            "cursor-pointer px-4 py-1 text-sm font-light",
+            "hover:bg-[var(--list-hoverBackground)] hover:text-[var(--list-hoverForeground)]"
+          )}
+        >
+          Application Settings
+        </div>
+      </SidebarSection>
+    </div>
+  );
+};

@@ -45,6 +45,13 @@ export const routes: RouteDefinition[] = [
       actions.openThread({ threadId: routeParams.threadId });
     },
   },
+  {
+    route: "/advanced_app_settings",
+    view: "advanced_app_settings",
+    handler: (actions) => {
+      actions.openAdvancedAppSettings({});
+    },
+  },
   // {
   //   route: "/settings",
   //   handler: (actions) => actions.openSettingsView(),

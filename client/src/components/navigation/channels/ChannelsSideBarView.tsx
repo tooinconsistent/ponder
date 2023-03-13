@@ -19,7 +19,7 @@ export const ChannelsSideBarView: Component = (_props) => {
   return (
     <div class="h-full">
       <SideBarViewTitle title="Channels" />
-      <SidebarSection sectionTitle="Joined Channels">
+      <SidebarSection sectionTitle="All Channels">
         <For each={store.channels.channels}>
           {(channel) => (
             <div

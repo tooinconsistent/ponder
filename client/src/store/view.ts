@@ -1,7 +1,12 @@
 import { produce } from "solid-js/store";
 import { ActionProps } from "./app.jsx";
 
-export type MainViews = "home" | "channel" | "thread" | "new_thread";
+export type MainViews =
+  | "home"
+  | "channel"
+  | "thread"
+  | "new_thread"
+  | "advanced_app_settings";
 
 export interface ViewStore {
   currentView: MainViews;
@@ -52,6 +57,18 @@ export const actions = [
         produce((s) => {
           s.view.currentView = "new_thread";
           s.view.currentViewProps = { channelId: params.channelId };
+        })
+      );
+    },
+  },
+  {
+    id: "openAdvancedAppSettings",
+    title: "Open Advanced Application Settings",
+    perform: ({ setStore }: ActionProps) => {
+      setStore(
+        produce((s) => {
+          s.view.currentView = "advanced_app_settings";
+          s.view.currentViewProps = null;
         })
       );
     },
