@@ -1,6 +1,6 @@
 import { Component, For, JSX } from "solid-js";
 
-import { useStore } from "@tooinconsistent/client/store/app.jsx";
+import { ActionExecutor, useStore } from "@tooinconsistent/client/store/app.jsx";
 import { SideBarTabs } from "@tooinconsistent/client/store/side_bar.js";
 
 import { ActivityBarButton } from "./ActivityBarButton.jsx";
@@ -18,7 +18,7 @@ export const ActivityBar: Component<ActivityBarProps> = (props) => {
 
   const activities: Record<
     Activities,
-    { icon: JSX.Element; openAction: () => void }
+    { icon: JSX.Element; openAction: ActionExecutor }
   > = {
     inbox: {
       icon: <Inbox />,
@@ -49,9 +49,9 @@ export const ActivityBar: Component<ActivityBarProps> = (props) => {
                 e.preventDefault();
 
                 if (store.sideBar.currentTab === activityId) {
-                  actions.toggleSideBar();
+                  actions.toggleSideBar({});
                 } else {
-                  activities[activityId].openAction();
+                  activities[activityId].openAction({});
                 }
               }}
             >
@@ -70,9 +70,9 @@ export const ActivityBar: Component<ActivityBarProps> = (props) => {
                 e.preventDefault();
 
                 if (store.sideBar.currentTab === activityId) {
-                  actions.toggleSideBar();
+                  actions.toggleSideBar({});
                 } else {
-                  activities[activityId].openAction();
+                  activities[activityId].openAction({});
                 }
               }}
             >

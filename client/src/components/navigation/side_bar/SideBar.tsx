@@ -2,7 +2,7 @@ import { Component, Match, Show, Switch } from "solid-js";
 
 import { useStore } from "@tooinconsistent/client/store/app.jsx";
 import { ChannelsSideBarView } from "../channels/ChannelsSideBarView.jsx";
-import { SettingsSidebarView } from "../settings/SettingsSidebarView.jsx";
+import { SettingsSidebarView } from "../settings/SettingsSideBarView.jsx";
 
 export const SideBar: Component = (_props) => {
   const { store } = useStore();
