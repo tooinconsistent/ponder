@@ -39,8 +39,11 @@ export const ActivityBar: Component<ActivityBarProps> = (props) => {
     // },
   };
 
-  const topGroup: Array<Activities> = ["inbox", "channels"];
-  const bottomGroup: Array<Activities> = ["settings"];
+  // const topGroup: Array<Activities> = ["inbox", "channels"];
+  // const bottomGroup: Array<Activities> = ["settings"];
+
+  const topGroup: Array<Activities> = ["channels"];
+  const bottomGroup: Array<Activities> = [];
 
   return (
     <div class="flex h-full w-12 flex-col justify-between border-r border-[var(--activityBar-border)] bg-[var(--activityBar-background)]">
