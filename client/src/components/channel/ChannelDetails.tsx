@@ -31,8 +31,12 @@ export const ChannelDetails: Component<ChannelDetailsProps> = (props) => {
           <div class="leading-none">
             {props.isPrivate ? "Private" : "Public"}
           </div>
-          <div class="mx-1">·</div>
-          <div class="font-light leading-none">{props.description}</div>
+          {props.description && (
+            <>
+              <div class="mx-1">·</div>
+              <div class="font-light leading-none">{props.description}</div>
+            </>
+          )}
         </div>
       </div>
       <div class="flex">

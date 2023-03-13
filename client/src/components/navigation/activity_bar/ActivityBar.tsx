@@ -1,6 +1,9 @@
 import { Component, For, JSX } from "solid-js";
 
-import { ActionExecutor, useStore } from "@tooinconsistent/client/store/app.jsx";
+import {
+  ActionExecutor,
+  useStore,
+} from "@tooinconsistent/client/store/app.jsx";
 import { SideBarTabs } from "@tooinconsistent/client/store/side_bar.js";
 
 import { ActivityBarButton } from "./ActivityBarButton.jsx";
@@ -16,22 +19,24 @@ interface ActivityBarProps {}
 export const ActivityBar: Component<ActivityBarProps> = (props) => {
   const { store, actions } = useStore();
 
+  // TODO: remove the ignore once other stuff is ready
+  // @ts-ignore
   const activities: Record<
     Activities,
     { icon: JSX.Element; openAction: ActionExecutor }
   > = {
-    inbox: {
-      icon: <Inbox />,
-      openAction: actions.openInbox,
-    },
+    // inbox: {
+    //   icon: <Inbox />,
+    //   openAction: actions.openInbox,
+    // },
     channels: {
       icon: <ChatBubbles />,
       openAction: actions.openChannels,
     },
-    settings: {
-      icon: <Cog />,
-      openAction: actions.openSettings,
-    },
+    // settings: {
+    //   icon: <Cog />,
+    //   openAction: actions.openSettings,
+    // },
   };
 
   const topGroup: Array<Activities> = ["inbox", "channels"];
