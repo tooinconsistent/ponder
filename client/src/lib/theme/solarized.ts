@@ -122,6 +122,12 @@ export const solarizedDarkTheme: ColorTheme = {
       border: "base1",
     },
 
+    statusBar: {
+      background: "base0",
+      foreground: "base4",
+      border: "base1",
+    },
+
     channel: {
       metaDetailsBackground: "base1",
       metaDetailsBorder: "base1",
