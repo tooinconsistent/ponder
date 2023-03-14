@@ -33,7 +33,7 @@ export const ChannelDetails: Component<ChannelDetailsProps> = (props) => {
           </div>
           {props.description && (
             <>
-              <div class="mx-1">·</div>
+              <div class="mx-1 leading-none">·</div>
               <div class="font-light leading-none">{props.description}</div>
             </>
           )}
