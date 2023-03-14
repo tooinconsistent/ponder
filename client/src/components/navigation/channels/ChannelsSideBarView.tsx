@@ -16,11 +16,20 @@ export const ChannelsSideBarView: Component = (_props) => {
     );
   };
 
+  const sortedChannels = () => {
+    const channels = store.channels.channels ?? [];
+    const sortedCopy = [...channels].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+
+    return sortedCopy;
+  };
+
   return (
     <div class="h-full">
       <SideBarViewTitle title="Channels" />
       <SidebarSection sectionTitle="All Channels">
-        <For each={store.channels.channels}>
+        <For each={sortedChannels()}>
           {(channel) => (
             <div
               onClick={() => {
