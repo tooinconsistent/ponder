@@ -5,7 +5,9 @@
   "scripts": {
     "check:formatting": "prettier -c .",
     "format": "prettier -w .",
-    "dev": "bun --hot ./src/main.ts"
+    "node:dev": "npx tsx watch ./src/main.ts",
+    "bun:dev": "bun --hot ./src/main.ts",
+    "generate:queries": "pgtyped -c pgtyped-config.json && bun ./scripts/rewrite-pg-import.ts && cd ../api && bun run format"
   },
   "devDependencies": {
     "@types/pg": "^8.6.6",
@@ -14,11 +16,14 @@
     "typescript": "beta"
   },
   "dependencies": {
+    "@pgtyped/cli": "^2.1.0",
     "@pgtyped/runtime": "^2.0.0",
     "@trpc/server": "10.11.0",
     "argon2id": "^1.0.0",
     "camelcase-keys": "^8.0.2",
+    "dotenv": "^16.0.3",
     "pg": "^8.9.0",
+    "replace-in-file": "^6.3.5",
     "superjson": "1.12.2",
     "zod": "^3.20.6"
   }

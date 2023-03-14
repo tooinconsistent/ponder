@@ -1,4 +1,4 @@
-/** Types generated for queries found in "../api/src/domains/channels/queries/threads.sql" */
+/** Types generated for queries found in "src/domains/channels/queries/threads.sql" */
 import { PreparedQuery } from "@tooinconsistent/api/lib/db.js";
 
 export type Json =

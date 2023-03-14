@@ -4,15 +4,9 @@
       "mode": "sql",
       "include": "**/*.sql",
       "emitTemplate": "{{dir}}/{{name}}.queries.ts"
-    },
-    {
-      "mode": "ts",
-      "include": "**/*.ts",
-      "emitTemplate": "{{dir}}/{{name}}.types.ts"
     }
   ],
-  "srcDir": "../api/src",
-  "dbUrl": "postgresql://postgres@localhost/ponder",
+  "srcDir": "./src",
   "camelCaseColumnNames": true,
   "hungarianNotation": false
 }

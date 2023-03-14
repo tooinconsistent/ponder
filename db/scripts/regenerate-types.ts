@@ -12,7 +12,7 @@ if (!connectionString) {
   process.exit(1);
 }
 
-spawn("cd ../scripts && bun", ["run generate:queries"], {
+spawn("cd ../api && bun", ["run generate:queries"], {
   // cwd: join(import.meta.path, "../../scripts"),
   env: { DATABASE_URL: connectionString, PATH: process.env.PATH },
   stdio: "inherit",

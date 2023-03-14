@@ -1,4 +1,4 @@
-/** Types generated for queries found in "../api/src/domains/channels/queries/channels.sql" */
+/** Types generated for queries found in "src/domains/channels/queries/channels.sql" */
 import { PreparedQuery } from "@tooinconsistent/api/lib/db.js";
 
 /** 'SelectChannelsForUserInOrg' parameters type */

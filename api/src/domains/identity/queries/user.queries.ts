@@ -1,4 +1,4 @@
-/** Types generated for queries found in "../api/src/domains/identity/queries/user.sql" */
+/** Types generated for queries found in "src/domains/identity/queries/user.sql" */
 import { PreparedQuery } from "@tooinconsistent/api/lib/db.js";
 
 /** 'UnsafelySelectUserProfile' parameters type */

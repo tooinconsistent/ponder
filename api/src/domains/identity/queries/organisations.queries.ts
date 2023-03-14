@@ -1,4 +1,4 @@
-/** Types generated for queries found in "../api/src/domains/identity/queries/organisations.sql" */
+/** Types generated for queries found in "src/domains/identity/queries/organisations.sql" */
 import { PreparedQuery } from "@tooinconsistent/api/lib/db.js";
 
 export type organisation_membership_role = "admin" | "member";

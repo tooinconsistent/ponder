@@ -1,4 +1,4 @@
-/** Types generated for queries found in "../api/src/domains/auth/queries/session.sql" */
+/** Types generated for queries found in "src/domains/auth/queries/session.sql" */
 import { PreparedQuery } from "@tooinconsistent/api/lib/db.js";
 
 /** 'SelectSessionById' parameters type */
