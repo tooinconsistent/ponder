@@ -18,6 +18,7 @@ export const PostComposer: Component<PostComposerProps> = (props) => {
 
   const [editor, setEditor] = createSignal<Editor>();
   const [isEmpty, setIsEmpty] = createSignal(true);
+  const [isSubmitting, setIsSubmitting] = createSignal(false);
 
   const initialiseEditor = (editorRef: HTMLDivElement) => {
     const editorInstance = new Editor({
@@ -52,12 +53,16 @@ export const PostComposer: Component<PostComposerProps> = (props) => {
     const replyPlain = editor()?.getText();
     if (reply && replyPlain) {
       try {
+        setIsSubmitting(true);
         await props.onSubmit(reply, replyPlain);
         // TODO: This can be disabled once tiptap fixes their typings
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         editor()?.commands.clearContent();
+        setIsEmpty(true);
       } catch {
         console.error("post compose :: failed to submit reply");
+      } finally {
+        setIsSubmitting(false);
       }
     }
   };
@@ -76,7 +81,7 @@ export const PostComposer: Component<PostComposerProps> = (props) => {
         <div class="mt-2 flex justify-end">
           <button
             class={buttonClasses()}
-            disabled={isEmpty()}
+            disabled={isEmpty() || isSubmitting()}
             onClick={() => {
               void handleReply();
             }}
