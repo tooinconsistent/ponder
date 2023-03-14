@@ -18,8 +18,8 @@ export const hash = (password: string) => {
 
   const salt = crypto.getRandomValues(new Uint8Array(32));
 
-  const parallelism = 4;
-  const passes = 8;
+  const parallelism = 2;
+  const passes = 4;
   const memorySize = 2 ** 16;
   const tagLength = 32;
 
