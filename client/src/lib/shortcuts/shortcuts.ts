@@ -1,7 +1,7 @@
 import { SetStoreFunction } from "solid-js/store";
 
-import { ActionDefinition } from "@tooinconsistent/client/store/app.jsx";
-import { AppStore } from "@tooinconsistent/client/store/registry.js";
+import { ActionDefinition } from "@ponder/client/store/app.jsx";
+import { AppStore } from "@ponder/client/store/registry.js";
 
 import { keybindings } from "./keybindings.js";
 

@@ -1,10 +1,10 @@
 import { Component } from "solid-js";
 
-import { buttonClasses } from "@tooinconsistent/client/atoms/button.js";
+import { buttonClasses } from "@ponder/client/atoms/button.js";
 
 import { Private } from "./icons/Private.jsx";
 
-import { useStore } from "@tooinconsistent/client/store/app.jsx";
+import { useStore } from "@ponder/client/store/app.jsx";
 
 interface ChannelDetailsProps {
   name: string;

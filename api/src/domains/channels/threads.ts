@@ -1,6 +1,6 @@
-import { DBClient } from "@tooinconsistent/api/lib/db.js";
+import { DBClient } from "@ponder/api/lib/db.js";
 
-import { JSONContent } from "@tooinconsistent/api/lib/docs.js";
+import { JSONContent } from "@ponder/api/lib/docs.js";
 
 import {
   selectThreadById,

@@ -4,11 +4,11 @@ import {
   publicProcedure,
   router,
   userProcedure,
-} from "@tooinconsistent/api/trpc/trpc.js";
+} from "@ponder/api/trpc/trpc.js";
 
-import { getUserIdFromEmailAndPassword } from "@tooinconsistent/api/domains/auth/auth.js";
-import { createSession } from "@tooinconsistent/api/domains/auth/session.js";
-import { getOrganisationsForUser } from "@tooinconsistent/api/domains/identity/organisations.js";
+import { getUserIdFromEmailAndPassword } from "@ponder/api/domains/auth/auth.js";
+import { createSession } from "@ponder/api/domains/auth/session.js";
+import { getOrganisationsForUser } from "@ponder/api/domains/identity/organisations.js";
 
 export const authRouter = router({
   whoami: publicProcedure.query(({ ctx }) => {

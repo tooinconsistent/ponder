@@ -3,9 +3,9 @@ import { Component, createSignal, onCleanup } from "solid-js";
 import { Editor, JSONContent } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 
-import { getFormattedRealtiveTime } from "@tooinconsistent/client/lib/relative_time.js";
+import { getFormattedRealtiveTime } from "@ponder/client/lib/relative_time.js";
 
-import { Avatar } from "@tooinconsistent/client/atoms/Avatar.jsx";
+import { Avatar } from "@ponder/client/atoms/Avatar.jsx";
 
 interface PostProps {
   content: JSONContent;

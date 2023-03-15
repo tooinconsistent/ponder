@@ -1,9 +1,6 @@
-import {
-  ActionExecutor,
-  AppActions,
-} from "@tooinconsistent/client/store/app.jsx";
+import { ActionExecutor, AppActions } from "@ponder/client/store/app.jsx";
 
-import { MainViews } from "@tooinconsistent/client/store/view.js";
+import { MainViews } from "@ponder/client/store/view.js";
 
 interface RouteDefinition {
   route: string;

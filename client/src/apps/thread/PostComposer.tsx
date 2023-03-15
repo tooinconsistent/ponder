@@ -4,11 +4,11 @@ import StarterKit from "@tiptap/starter-kit";
 import { Editor, JSONContent } from "@tiptap/core";
 import Placeholder from "@tiptap/extension-placeholder";
 
-import { useStore } from "@tooinconsistent/client/store/app.jsx";
+import { useStore } from "@ponder/client/store/app.jsx";
 
 import { buttonClasses } from "../../atoms/button.js";
 import { Avatar } from "../../atoms/Avatar.jsx";
-import { classes } from "@tooinconsistent/client/lib/classes.js";
+import { classes } from "@ponder/client/lib/classes.js";
 
 interface PostComposerProps {
   onSubmit: (reply: JSONContent, replyPlain: string) => Promise<void>;

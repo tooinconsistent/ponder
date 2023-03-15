@@ -1,5 +1,5 @@
 /** Types generated for queries found in "src/domains/channels/queries/channels.sql" */
-import { PreparedQuery } from "@tooinconsistent/api/lib/db.js";
+import { PreparedQuery } from "@ponder/api/lib/db.js";
 
 /** 'SelectChannelsForUserInOrg' parameters type */
 export interface SelectChannelsForUserInOrgParams {

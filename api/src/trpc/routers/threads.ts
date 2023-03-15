@@ -1,12 +1,12 @@
 import { z } from "zod";
 
-import { router, userProcedure } from "@tooinconsistent/api/trpc/trpc.js";
+import { router, userProcedure } from "@ponder/api/trpc/trpc.js";
 
 import {
   createNewThread,
   getThreadById,
   replyInThread,
-} from "@tooinconsistent/api/domains/channels/threads.js";
+} from "@ponder/api/domains/channels/threads.js";
 
 export const threadsRouter = router({
   getById: userProcedure

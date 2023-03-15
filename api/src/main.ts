@@ -3,10 +3,10 @@ import pg from "pg";
 
 import { createHTTPHandler } from "@trpc/server/adapters/standalone";
 
-import { appRouter } from "@tooinconsistent/api/trpc/router.js";
-import { createContext } from "@tooinconsistent/api/trpc/context.js";
+import { appRouter } from "@ponder/api/trpc/router.js";
+import { createContext } from "@ponder/api/trpc/context.js";
 
-import { databaseUrl, port } from "@tooinconsistent/api/env.js";
+import { databaseUrl, port } from "@ponder/api/env.js";
 
 // Create a database pool with three connections that are lazily established
 const pool = new pg.Pool({ connectionString: databaseUrl });

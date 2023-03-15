@@ -1,4 +1,4 @@
-import type { DBClient } from "@tooinconsistent/api/lib/db.js";
+import type { DBClient } from "@ponder/api/lib/db.js";
 
 import {
   insertSessionForUser,

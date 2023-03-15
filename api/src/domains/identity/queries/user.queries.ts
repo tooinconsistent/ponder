@@ -1,5 +1,5 @@
 /** Types generated for queries found in "src/domains/identity/queries/user.sql" */
-import { PreparedQuery } from "@tooinconsistent/api/lib/db.js";
+import { PreparedQuery } from "@ponder/api/lib/db.js";
 
 /** 'UnsafelySelectUserProfile' parameters type */
 export interface UnsafelySelectUserProfileParams {

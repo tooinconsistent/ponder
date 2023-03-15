@@ -1,7 +1,7 @@
 import { Component, For, createResource } from "solid-js";
 
-import { useStore } from "@tooinconsistent/client/store/app.jsx";
-import { trpc } from "@tooinconsistent/client/lib/trpc.js";
+import { useStore } from "@ponder/client/store/app.jsx";
+import { trpc } from "@ponder/client/lib/trpc.js";
 import { ChannelDetails } from "./ChannelDetails.jsx";
 import { ThreadRow } from "./ThreadRow.jsx";
 

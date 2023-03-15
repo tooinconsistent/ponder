@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [solidPlugin()],
   resolve: {
     alias: {
-      "@tooinconsistent/client": path.resolve(__dirname, "./src"),
+      "@ponder/client": path.resolve(__dirname, "./src"),
     },
   },
   server: {

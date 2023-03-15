@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-import { router, userProcedure } from "@tooinconsistent/api/trpc/trpc.js";
+import { router, userProcedure } from "@ponder/api/trpc/trpc.js";
 
 import {
   getChannelById,
   getChannelsForUser,
-} from "@tooinconsistent/api/domains/channels/channels.js";
+} from "@ponder/api/domains/channels/channels.js";
 
 export const channelsRouter = router({
   listAll: userProcedure

@@ -1,4 +1,4 @@
-import { trpc } from "@tooinconsistent/client/lib/trpc.js";
+import { trpc } from "@ponder/client/lib/trpc.js";
 
 const AUTH_TOKEN_KEY = "_auth";
 

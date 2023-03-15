@@ -1,10 +1,10 @@
-import { hash, verify } from "@tooinconsistent/api/lib/argon2.js";
+import { hash, verify } from "@ponder/api/lib/argon2.js";
 
-import type { DBClient } from "@tooinconsistent/api/lib/db.js";
+import type { DBClient } from "@ponder/api/lib/db.js";
 
-import { getUserIdFromSession } from "@tooinconsistent/api/domains/auth/session.js";
+import { getUserIdFromSession } from "@ponder/api/domains/auth/session.js";
 
-import { selectUserAndHashByEmail } from "@tooinconsistent/api/domains/auth/queries/auth.queries.js";
+import { selectUserAndHashByEmail } from "@ponder/api/domains/auth/queries/auth.queries.js";
 
 export const getUserIdFromEmailAndPassword = async (
   { email, password }: { email: string; password: string },

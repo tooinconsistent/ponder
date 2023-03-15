@@ -1,10 +1,7 @@
 import { createEffect } from "solid-js";
 
-import { AppStore } from "@tooinconsistent/client/store/registry.js";
-import {
-  ActionExecutor,
-  AppActions,
-} from "@tooinconsistent/client/store/app.jsx";
+import { AppStore } from "@ponder/client/store/registry.js";
+import { ActionExecutor, AppActions } from "@ponder/client/store/app.jsx";
 
 import { routes } from "./routes.js";
 import { injectValuesIntoRoute, routeToRegex } from "./routeHelper.js";

@@ -1,4 +1,4 @@
-import { classes } from "@tooinconsistent/client/lib/classes.js";
+import { classes } from "@ponder/client/lib/classes.js";
 
 const paddingForSize = {
   xs: "px-2.5 py-1.5",

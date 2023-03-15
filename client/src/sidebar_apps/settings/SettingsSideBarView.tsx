@@ -1,7 +1,7 @@
 import { Component } from "solid-js";
 
-import { classes } from "@tooinconsistent/client/lib/classes.js";
-import { useStore } from "@tooinconsistent/client/store/app.jsx";
+import { classes } from "@ponder/client/lib/classes.js";
+import { useStore } from "@ponder/client/store/app.jsx";
 
 import { SideBarViewTitle } from "../../core/navigation/side_bar/SideBarViewTitle.jsx";
 import { SidebarSection } from "../../core/navigation/side_bar/SidebarSection.jsx";

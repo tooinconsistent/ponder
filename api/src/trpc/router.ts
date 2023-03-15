@@ -1,9 +1,9 @@
-import { router } from "@tooinconsistent/api/trpc/trpc.js";
+import { router } from "@ponder/api/trpc/trpc.js";
 
-import { authRouter } from "@tooinconsistent/api/trpc/routers/auth.js";
-import { channelsRouter } from "@tooinconsistent/api/trpc/routers/channels.js";
-import { threadsRouter } from "@tooinconsistent/api/trpc/routers/threads.js";
-import { userRouter } from "@tooinconsistent/api/trpc/routers/user.js";
+import { authRouter } from "@ponder/api/trpc/routers/auth.js";
+import { channelsRouter } from "@ponder/api/trpc/routers/channels.js";
+import { threadsRouter } from "@ponder/api/trpc/routers/threads.js";
+import { userRouter } from "@ponder/api/trpc/routers/user.js";
 
 export const appRouter = router({
   auth: authRouter,

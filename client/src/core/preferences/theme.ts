@@ -1,9 +1,6 @@
-import {
-  ColorTheme,
-  colorsFromTheme,
-} from "@tooinconsistent/client/lib/theme/theme.js";
+import { ColorTheme, colorsFromTheme } from "@ponder/client/lib/theme/theme.js";
 
-import { solarizedDarkTheme } from "@tooinconsistent/client/lib/theme/solarized.js";
+import { solarizedDarkTheme } from "@ponder/client/lib/theme/solarized.js";
 
 const THEME_LOCAL_STORAGE_KEY = "ponder/theme";
 

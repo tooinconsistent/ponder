@@ -1,8 +1,8 @@
 import { Component, Match, Show, Switch } from "solid-js";
 
-import { useStore } from "@tooinconsistent/client/store/app.jsx";
-import { ChannelsSideBarView } from "@tooinconsistent/client/sidebar_apps/channels/ChannelsSideBarView.jsx";
-import { SettingsSidebarView } from "@tooinconsistent/client/sidebar_apps/settings/SettingsSideBarView.jsx";
+import { useStore } from "@ponder/client/store/app.jsx";
+import { ChannelsSideBarView } from "@ponder/client/sidebar_apps/channels/ChannelsSideBarView.jsx";
+import { SettingsSidebarView } from "@ponder/client/sidebar_apps/settings/SettingsSideBarView.jsx";
 
 export const SideBar: Component = (_props) => {
   const { store } = useStore();

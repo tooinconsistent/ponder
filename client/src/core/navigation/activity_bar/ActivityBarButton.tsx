@@ -1,4 +1,4 @@
-import { classes } from "@tooinconsistent/client/lib/classes.js";
+import { classes } from "@ponder/client/lib/classes.js";
 import { ParentComponent } from "solid-js";
 
 interface ActivityBarButtonProps {

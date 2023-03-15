@@ -1,4 +1,4 @@
-import { DBClient } from "@tooinconsistent/api/lib/db.js";
+import { DBClient } from "@ponder/api/lib/db.js";
 import { unsafelySelectUserProfile } from "./queries/user.queries.js";
 
 export const unsafelyGetUserProfile = async (

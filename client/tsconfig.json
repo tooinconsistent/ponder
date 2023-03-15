@@ -12,8 +12,8 @@
     "noEmit": true,
     "skipLibCheck": true,
     "paths": {
-      "@tooinconsistent/api/*": ["../api/src/*"],
-      "@tooinconsistent/client/*": ["./src/*"]
+      "@ponder/api/*": ["../api/src/*"],
+      "@ponder/client/*": ["./src/*"]
     }
   }
 }

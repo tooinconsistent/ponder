@@ -2,7 +2,7 @@ import { createTRPCProxyClient, httpBatchLink, loggerLink } from "@trpc/client";
 
 import superjson from "superjson";
 
-import type { AppRouter } from "@tooinconsistent/api/trpc/router.js";
+import type { AppRouter } from "@ponder/api/trpc/router.js";
 
 import { getToken } from "./auth.js";
 

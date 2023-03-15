@@ -1,6 +1,6 @@
 import { Component, Show } from "solid-js";
 
-import { useStore } from "@tooinconsistent/client/store/app.jsx";
+import { useStore } from "@ponder/client/store/app.jsx";
 
 interface ThreadDetailsProps {
   title: string;
