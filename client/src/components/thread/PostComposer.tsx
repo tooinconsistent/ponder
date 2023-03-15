@@ -8,6 +8,7 @@ import { useStore } from "@tooinconsistent/client/store/app.jsx";
 
 import { buttonClasses } from "../atoms/button.js";
 import { Avatar } from "../atoms/Avatar.jsx";
+import { classes } from "@tooinconsistent/client/lib/classes.js";
 
 interface PostComposerProps {
   onSubmit: (reply: JSONContent, replyPlain: string) => Promise<void>;
@@ -80,7 +81,7 @@ export const PostComposer: Component<PostComposerProps> = (props) => {
         <div ref={(ref) => initialiseEditor(ref)} />
         <div class="mt-2 flex justify-end">
           <button
-            class={buttonClasses()}
+            class={classes(buttonClasses(), isSubmitting() && "animate-pulse")}
             disabled={isEmpty() || isSubmitting()}
             onClick={() => {
               void handleReply();

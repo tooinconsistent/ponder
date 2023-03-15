@@ -7,6 +7,8 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { trpc } from "@tooinconsistent/client/lib/trpc.js";
 import { useStore } from "@tooinconsistent/client/store/app.jsx";
 
+import { classes } from "@tooinconsistent/client/lib/classes.js";
+
 import { ThreadDetails } from "./ThreadDetails.jsx";
 import { buttonClasses } from "../atoms/button.js";
 
@@ -15,6 +17,7 @@ export const ThreadComposer: Component = (_props) => {
 
   const [editor, setEditor] = createSignal<Editor>();
   const [isEditorEmpty, setIsEditorEmpty] = createSignal(true);
+  const [isSubmitting, setIsSubmitting] = createSignal(false);
   const [title, setTitle] = createSignal("");
 
   const initialiseEditor = (editorRef: HTMLDivElement) => {
@@ -47,6 +50,7 @@ export const ThreadComposer: Component = (_props) => {
   const canSubmit = () => {
     return (
       !isEditorEmpty() &&
+      !isSubmitting() &&
       title().length > 0 &&
       store.view.currentViewProps?.channelId
     );
@@ -56,6 +60,7 @@ export const ThreadComposer: Component = (_props) => {
     if (!canSubmit()) {
       return;
     }
+    setIsSubmitting(true);
     // canSubmit allows us to infer that below is non-null
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const content = editor()!.getJSON();
@@ -64,15 +69,19 @@ export const ThreadComposer: Component = (_props) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const channelId = store.view.currentViewProps!.channelId;
 
-    const newThread = await trpc.threads.createNewThread.mutate({
-      channelId,
-      title: title(),
-      content,
-      contentPlain,
-    });
+    try {
+      const newThread = await trpc.threads.createNewThread.mutate({
+        channelId,
+        title: title(),
+        content,
+        contentPlain,
+      });
 
-    if (newThread) {
-      actions.openThread({ threadId: newThread.id });
+      if (newThread) {
+        actions.openThread({ threadId: newThread.id });
+      }
+    } catch (error) {
+      setIsSubmitting(false);
     }
   };
 
@@ -100,7 +109,10 @@ export const ThreadComposer: Component = (_props) => {
             />
             <div class="flex justify-end py-2">
               <button
-                class={buttonClasses()}
+                class={classes(
+                  buttonClasses(),
+                  isSubmitting() && "animate-pulse"
+                )}
                 disabled={!canSubmit()}
                 onClick={() => {
                   void handleCreate();
