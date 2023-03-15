@@ -4,13 +4,13 @@ type ApplicationSettings = {
   [K in keyof typeof applicationSettings]: (typeof applicationSettings)[K]["defaultValue"];
 };
 
-export interface UsersStore {
+export interface SettingsStore {
   applicationSettings: ApplicationSettings;
 }
 
 const id = "settings";
 
-const init = (): UsersStore => {
+const init = (): SettingsStore => {
   const userSettings = {};
 
   const defaultSettings = (
@@ -22,7 +22,7 @@ const init = (): UsersStore => {
     };
   }, {} as ApplicationSettings);
 
-  const store: UsersStore = {
+  const store: SettingsStore = {
     applicationSettings: { ...defaultSettings, ...userSettings },
   };
 

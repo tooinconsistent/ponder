@@ -10,4 +10,3 @@ export const applicationSettings = {
     description: string;
   }
 >;
-// TODO: investigate https://www.edgedb.com

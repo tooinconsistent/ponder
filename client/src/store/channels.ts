@@ -2,7 +2,7 @@ import { createResource, useContext } from "solid-js";
 
 import { trpc } from "../lib/trpc.js";
 
-import { AuthContext } from "../components/auth/AuthProvider.jsx";
+import { AuthContext } from "../core/auth/AuthProvider.jsx";
 
 export interface ChannelsStore {
   channels: Array<{ id: string; name: string }> | undefined;
