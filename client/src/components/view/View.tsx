@@ -2,12 +2,12 @@ import { Component, Match, Suspense, Switch } from "solid-js";
 
 import { useStore } from "@tooinconsistent/client/store/app.jsx";
 
-import { Channel } from "../channel/Channel.jsx";
+import { Channel } from "@tooinconsistent/client/apps/channel/Channel.jsx";
 
-import { Thread } from "../thread/Thread.jsx";
-import { ThreadComposer } from "../thread/ThreadComposer.jsx";
+import { Thread } from "@tooinconsistent/client/apps/thread/Thread.jsx";
+import { ThreadComposer } from "@tooinconsistent/client/apps/thread_composer/ThreadComposer.jsx";
 
-import { AdvancedAppSettings } from "../settings/AdvancedAppSettings.jsx";
+import { AdvancedAppSettings } from "@tooinconsistent/client/apps/advanced_app_settings/AdvancedAppSettings.jsx";
 
 export const View: Component = (_props) => {
   const { store } = useStore();

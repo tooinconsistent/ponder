@@ -2,7 +2,7 @@ import { Component } from "solid-js";
 
 import { getFormattedRealtiveTime } from "@tooinconsistent/client/lib/relative_time.js";
 
-import { Avatar } from "@tooinconsistent/client/components/atoms/Avatar.jsx";
+import { Avatar } from "@tooinconsistent/client/atoms/Avatar.jsx";
 
 interface ThreadRowProps {
   threadId: string;

@@ -3,7 +3,7 @@ import { Component, createSignal } from "solid-js";
 import { EditorView } from "codemirror";
 
 import { classes } from "@tooinconsistent/client/lib/classes.js";
-import { buttonClasses } from "../atoms/button.js";
+import { buttonClasses } from "../../atoms/button.js";
 
 import { JsonEditor } from "./json_editor/JsonEditor.jsx";
 import { applicationSettings } from "@tooinconsistent/client/store/settings/applicationSettings.js";

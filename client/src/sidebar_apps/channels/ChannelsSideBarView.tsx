@@ -3,8 +3,8 @@ import { Component, For } from "solid-js";
 import { useStore } from "@tooinconsistent/client/store/app.jsx";
 import { classes } from "@tooinconsistent/client/lib/classes.js";
 
-import { SideBarViewTitle } from "../side_bar/SideBarViewTitle.jsx";
-import { SidebarSection } from "../side_bar/SidebarSection.jsx";
+import { SideBarViewTitle } from "../../components/navigation/side_bar/SideBarViewTitle.jsx";
+import { SidebarSection } from "../../components/navigation/side_bar/SidebarSection.jsx";
 
 export const ChannelsSideBarView: Component = (_props) => {
   const { actions, store } = useStore();

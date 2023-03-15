@@ -8,9 +8,9 @@ import { trpc } from "@tooinconsistent/client/lib/trpc.js";
 import { useStore } from "@tooinconsistent/client/store/app.jsx";
 
 import { classes } from "@tooinconsistent/client/lib/classes.js";
+import { buttonClasses } from "@tooinconsistent/client/atoms/button.js";
 
 import { ThreadDetails } from "./ThreadDetails.jsx";
-import { buttonClasses } from "../atoms/button.js";
 
 export const ThreadComposer: Component = (_props) => {
   const { store, actions } = useStore();

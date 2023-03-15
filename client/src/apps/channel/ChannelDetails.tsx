@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 
-import { buttonClasses } from "@tooinconsistent/client/components/atoms/button.js";
+import { buttonClasses } from "@tooinconsistent/client/atoms/button.js";
 
 import { Private } from "./icons/Private.jsx";
 
