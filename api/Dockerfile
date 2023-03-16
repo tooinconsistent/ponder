@@ -6,6 +6,7 @@ RUN apt update
 RUN apt install curl unzip -y
 
 RUN curl https://bun.sh/install | bash
+RUN /root/.bun/bin/bun upgrade --canary
 
 COPY package.json .
 COPY bun.lockb .
