@@ -52,7 +52,6 @@ const server = http.createServer(async (req, res) => {
       }ms`
     );
 
-    req.url = req.url?.replace("/trpc", "");
     handler(req, res);
     return;
   } catch (err) {
