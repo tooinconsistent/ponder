@@ -35,7 +35,7 @@ export class Router {
       .map((match) => (match === "undefined" ? undefined : match));
 
     const routeParams = matchingRoute.keys.reduce(
-      (rp, key, i) => ({ ...rp, [key]: matches[i + 1] || null }),
+      (rp, key, i) => ({ ...rp, [key]: matches[i + 1] ?? null }),
       {}
     );
 

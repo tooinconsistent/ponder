@@ -46,12 +46,19 @@ export const verify = (storedHash: string, password: string) => {
     throw new Error("Invalid hash passed");
   }
 
+  if (
+    !storedParams.groups.salt ||
+    !storedParams.groups.parallelism ||
+    !storedParams.groups.passes ||
+    !storedParams.groups.memorySize
+  ) {
+    throw new Error("Failed to parse the hash");
+  }
+
   const encoder = new TextEncoder();
   const encodedPassword = encoder.encode(password);
 
-  const salt = Uint8Array.from(
-    Buffer.from(storedParams.groups.salt!, "base64")
-  );
+  const salt = Uint8Array.from(Buffer.from(storedParams.groups.salt, "base64"));
 
   const passwordHash = argon2id({
     password: encodedPassword,

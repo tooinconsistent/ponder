@@ -3,6 +3,8 @@
   "module": "main",
   "type": "module",
   "scripts": {
+    "check:tsc": "tsc",
+    "check:linting": "eslint .",
     "check:formatting": "prettier -c .",
     "format": "prettier -w .",
     "node:dev": "npx tsx watch ./src/main.ts",
@@ -11,7 +13,10 @@
   },
   "devDependencies": {
     "@types/pg": "^8.6.6",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
     "bun-types": "^0.5.6",
+    "eslint": "^8.36.0",
     "prettier": "^2.8.4",
     "typescript": "^5.0.2"
   },

@@ -1,8 +1,6 @@
 import { Component } from "solid-js";
 
-interface CogProps {}
-
-export const Cog: Component<CogProps> = (props) => {
+export const Cog: Component = (_props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

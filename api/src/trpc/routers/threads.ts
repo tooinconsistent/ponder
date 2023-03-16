@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { router, userProcedure } from "@ponder/api/trpc/trpc.ts";
+import { JSONContent } from "@ponder/api/lib/docs.ts";
 
 import {
   createNewThread,
@@ -28,7 +29,7 @@ export const threadsRouter = router({
         channelId: z.string().uuid(),
         // TODO: Tighten this type
         title: z.string(),
-        content: z.any(),
+        content: z.unknown(),
         contentPlain: z.string(),
       })
     )
@@ -38,7 +39,7 @@ export const threadsRouter = router({
           userId: ctx.userId,
           channelId: input.channelId,
           title: input.title,
-          content: input.content,
+          content: input.content as JSONContent,
           contentPlain: input.contentPlain,
         },
         ctx.pgConnection
@@ -50,7 +51,7 @@ export const threadsRouter = router({
       z.object({
         threadId: z.string().uuid(),
         // TODO: Tighten this type
-        content: z.any(),
+        content: z.unknown(),
         contentPlain: z.string(),
       })
     )
@@ -59,7 +60,7 @@ export const threadsRouter = router({
         {
           userId: ctx.userId,
           threadId: input.threadId,
-          content: input.content,
+          content: input.content as JSONContent,
           contentPlain: input.contentPlain,
         },
         ctx.pgConnection

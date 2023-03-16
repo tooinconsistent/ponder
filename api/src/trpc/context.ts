@@ -15,10 +15,7 @@ import { getUserIdFromToken } from "@ponder/api/domains/auth/auth.ts";
 export async function createContext({
   req,
   pgConnection,
-}: NodeHTTPCreateContextFnOptions<
-  http.IncomingMessage,
-  http.ServerResponse<http.IncomingMessage>
-> & {
+}: NodeHTTPCreateContextFnOptions<http.IncomingMessage, http.ServerResponse> & {
   pgConnection: DBClient;
 }) {
   let userId: string | null = null;

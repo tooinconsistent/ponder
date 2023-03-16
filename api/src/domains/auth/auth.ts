@@ -1,10 +1,10 @@
-import { hash, verify } from "@ponder/api/lib/argon2.ts";
+import { verify } from "@ponder/api/lib/argon2.js";
 
-import type { DBClient } from "@ponder/api/lib/db.ts";
+import type { DBClient } from "@ponder/api/lib/db.js";
 
-import { getUserIdFromSession } from "@ponder/api/domains/auth/session.ts";
+import { getUserIdFromSession } from "@ponder/api/domains/auth/session.js";
 
-import { selectUserAndHashByEmail } from "@ponder/api/domains/auth/queries/auth.queries.ts";
+import { selectUserAndHashByEmail } from "@ponder/api/domains/auth/queries/auth.queries.js";
 
 export const getUserIdFromEmailAndPassword = async (
   { email, password }: { email: string; password: string },
@@ -19,7 +19,7 @@ export const getUserIdFromEmailAndPassword = async (
   //       user email through timing attack.
   //       Might want to consider fixing this.
   if (userDetails && verify(userDetails.passwordHash, password)) {
-    return userDetails?.userId ?? null;
+    return userDetails.userId;
   }
 
   return null;

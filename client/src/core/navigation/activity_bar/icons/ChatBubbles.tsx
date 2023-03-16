@@ -1,8 +1,6 @@
 import { Component } from "solid-js";
 
-interface ChatBubblesProps {}
-
-export const ChatBubbles: Component<ChatBubblesProps> = (props) => {
+export const ChatBubbles: Component = (_props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

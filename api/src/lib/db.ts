@@ -13,7 +13,7 @@ export class PreparedQuery<TParamType, TResultType> extends LibPreparedQuery<
   execute: (
     params: TParamType,
     pgConnection: PoolClient
-  ) => Promise<Array<TResultType>>;
+  ) => Promise<TResultType[]>;
 
   constructor(queryIR: SQLQueryIR) {
     super(queryIR);
@@ -27,7 +27,7 @@ export class PreparedQuery<TParamType, TResultType> extends LibPreparedQuery<
       return result.map(
         (result) =>
           // deno-lint-ignore no-explicit-any
-          camelcaseKeys(result as Record<string, any>) as TResultType
+          camelcaseKeys(result as Record<string, unknown>) as TResultType
       );
     };
   }

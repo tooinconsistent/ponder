@@ -11,6 +11,7 @@ import { databaseUrl, port } from "@ponder/api/env.ts";
 // Create a database pool with three connections that are lazily established
 const pool = new pg.Pool({ connectionString: databaseUrl });
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 const server = http.createServer(async (req, res) => {
   const since = performance.now();
   console.debug(`Handling new request :: at ${since}`);
@@ -30,7 +31,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (req.method === "GET" && req.url === "/health") {
-    return new Response(`ok!`);
+    res.write("ok!");
+    res.end();
+    return;
   }
 
   const pgConnection = await pool.connect();
@@ -56,12 +59,11 @@ const server = http.createServer(async (req, res) => {
     );
 
     req.url = req.url?.replace("/trpc", "");
-    handler(req, res);
+    await handler(req, res);
     return;
   } catch (err) {
-    const res = new Response();
     console.error(err);
-    return res;
+    return;
   } finally {
     pgConnection.release();
   }

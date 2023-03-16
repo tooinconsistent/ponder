@@ -11,7 +11,7 @@ export const ActivityBarButton: ParentComponent<ActivityBarButtonProps> = (
 ) => {
   return (
     <div
-      onClick={props.onClick}
+      onClick={(e) => props.onClick(e)}
       class={classes(
         "flex h-12 w-12 cursor-pointer items-center justify-center border-l-2 p-2",
         props.isActive

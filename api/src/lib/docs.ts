@@ -1,12 +1,12 @@
-export type JSONContent = {
+export interface JSONContent {
   type?: string;
-  attrs?: Record<string, any>;
+  attrs?: Record<string, unknown>;
   content?: JSONContent[];
-  marks?: {
+  marks?: Array<{
     type: string;
-    attrs?: Record<string, any>;
-    [key: string]: any;
-  }[];
+    attrs?: Record<string, unknown>;
+    [key: string]: unknown;
+  }>;
   text?: string;
-  [key: string]: any;
-};
+  [key: string]: unknown;
+}

@@ -1,8 +1,6 @@
 import { Component } from "solid-js";
 
-interface InboxProps {}
-
-export const Inbox: Component<InboxProps> = (props) => {
+export const Inbox: Component = (_props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

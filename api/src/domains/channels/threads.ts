@@ -3,6 +3,7 @@ import { DBClient } from "@ponder/api/lib/db.ts";
 import { JSONContent } from "@ponder/api/lib/docs.ts";
 
 import {
+  Json,
   selectThreadById,
   unsafelyInsertNewPostForThread,
   unsafelyInsertNewThreadInChannel,
@@ -87,7 +88,7 @@ export const replyInThread = async (
       newPost: {
         threadId: thread.id,
         authorId: userId,
-        content,
+        content: content as Json,
         contentPlain,
       },
     },
@@ -128,7 +129,7 @@ export const createNewThread = async (
   const [result] = await unsafelyInsertNewThreadInChannel.execute(
     {
       newThread: { channelId, title, authorId: userId },
-      initalPostContent: content,
+      initalPostContent: content as Json,
       initalPostContentPlain: contentPlain,
       initialPostAuthorId: userId,
     },

@@ -5,19 +5,17 @@ import { SideBarTabs } from "@ponder/client/store/side_bar.ts";
 
 import { ActivityBarButton } from "./ActivityBarButton.jsx";
 
-import { Inbox } from "./icons/Inbox.jsx";
 import { ChatBubbles } from "./icons/ChatBubbles.jsx";
-import { Cog } from "./icons/Cog.jsx";
+// import { Inbox } from "./icons/Inbox.jsx";
+// import { Cog } from "./icons/Cog.jsx";
 
 type Activities = SideBarTabs;
 
-interface ActivityBarProps {}
-
-export const ActivityBar: Component<ActivityBarProps> = (props) => {
+export const ActivityBar: Component = (_props) => {
   const { store, actions } = useStore();
 
   // TODO: remove the ignore once other stuff is ready
-  // @ts-ignore
+  // @ts-expect-error TEMPORARY HACK
   const activities: Record<
     Activities,
     { icon: JSX.Element; openAction: ActionExecutor }
@@ -39,8 +37,8 @@ export const ActivityBar: Component<ActivityBarProps> = (props) => {
   // const topGroup: Array<Activities> = ["inbox", "channels"];
   // const bottomGroup: Array<Activities> = ["settings"];
 
-  const topGroup: Array<Activities> = ["channels"];
-  const bottomGroup: Array<Activities> = [];
+  const topGroup: Activities[] = ["channels"];
+  const bottomGroup: Activities[] = [];
 
   return (
     <div class="flex h-full w-12 flex-col justify-between border-r border-[var(--activityBar-border)] bg-[var(--activityBar-background)]">

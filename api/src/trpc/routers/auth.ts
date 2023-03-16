@@ -55,5 +55,7 @@ export const authRouter = router({
       };
     }),
 
-  logout: userProcedure.mutation(() => {}),
+  logout: userProcedure.mutation(() => {
+    // TODO: Destroy current session
+  }),
 });
