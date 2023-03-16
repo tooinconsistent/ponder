@@ -37,6 +37,9 @@ const server = http.createServer(async (req, res) => {
   const handler = createHTTPHandler({
     router: appRouter,
     createContext: (args) => createContext({ ...args, pgConnection }),
+    batching: {
+      enabled: true,
+    },
   });
   try {
     console.debug(`Delegating to handler :: at ${performance.now()}`);
