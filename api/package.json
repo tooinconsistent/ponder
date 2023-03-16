@@ -13,7 +13,7 @@
     "@types/pg": "^8.6.6",
     "bun-types": "^0.5.6",
     "prettier": "^2.8.4",
-    "typescript": "beta"
+    "typescript": "^5.0.2"
   },
   "dependencies": {
     "@pgtyped/cli": "^2.1.0",
