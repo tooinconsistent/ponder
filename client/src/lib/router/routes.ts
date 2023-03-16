@@ -1,6 +1,6 @@
 import { ActionExecutor, AppActions } from "@ponder/client/store/app.jsx";
 
-import { MainViews } from "@ponder/client/store/view.js";
+import { MainViews } from "@ponder/client/store/view.ts";
 
 interface RouteDefinition {
   route: string;

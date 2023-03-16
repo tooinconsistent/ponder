@@ -1,4 +1,4 @@
-import { applicationSettings } from "./applicationSettings.js";
+import { applicationSettings } from "./applicationSettings.ts";
 
 type ApplicationSettings = {
   [K in keyof typeof applicationSettings]: (typeof applicationSettings)[K]["defaultValue"];

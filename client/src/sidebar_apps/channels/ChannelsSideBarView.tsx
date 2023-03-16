@@ -1,7 +1,7 @@
 import { Component, For } from "solid-js";
 
 import { useStore } from "@ponder/client/store/app.jsx";
-import { classes } from "@ponder/client/lib/classes.js";
+import { classes } from "@ponder/client/lib/classes.ts";
 
 import { SideBarViewTitle } from "../../core/navigation/side_bar/SideBarViewTitle.jsx";
 import { SidebarSection } from "../../core/navigation/side_bar/SidebarSection.jsx";

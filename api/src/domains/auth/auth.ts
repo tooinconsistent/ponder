@@ -1,10 +1,10 @@
-import { hash, verify } from "@ponder/api/lib/argon2.js";
+import { hash, verify } from "@ponder/api/lib/argon2.ts";
 
-import type { DBClient } from "@ponder/api/lib/db.js";
+import type { DBClient } from "@ponder/api/lib/db.ts";
 
-import { getUserIdFromSession } from "@ponder/api/domains/auth/session.js";
+import { getUserIdFromSession } from "@ponder/api/domains/auth/session.ts";
 
-import { selectUserAndHashByEmail } from "@ponder/api/domains/auth/queries/auth.queries.js";
+import { selectUserAndHashByEmail } from "@ponder/api/domains/auth/queries/auth.queries.ts";
 
 export const getUserIdFromEmailAndPassword = async (
   { email, password }: { email: string; password: string },

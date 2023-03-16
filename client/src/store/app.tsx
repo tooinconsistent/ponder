@@ -1,9 +1,9 @@
 import { ParentComponent, createContext, useContext } from "solid-js";
 import { SetStoreFunction, createStore } from "solid-js/store";
 
-import { AppStore, registry } from "./registry.js";
-import { initialiseShortcuts } from "../lib/shortcuts/shortcuts.js";
-import { startRouting } from "../lib/router/router.js";
+import { AppStore, registry } from "./registry.ts";
+import { initialiseShortcuts } from "../lib/shortcuts/shortcuts.ts";
+import { startRouting } from "../lib/router/router.ts";
 export interface ActionProps<T = never> {
   store: AppStore;
   setStore: SetStoreFunction<AppStore>;

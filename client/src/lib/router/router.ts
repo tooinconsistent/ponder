@@ -1,10 +1,10 @@
 import { createEffect } from "solid-js";
 
-import { AppStore } from "@ponder/client/store/registry.js";
+import { AppStore } from "@ponder/client/store/registry.ts";
 import { ActionExecutor, AppActions } from "@ponder/client/store/app.jsx";
 
-import { routes } from "./routes.js";
-import { injectValuesIntoRoute, routeToRegex } from "./routeHelper.js";
+import { routes } from "./routes.ts";
+import { injectValuesIntoRoute, routeToRegex } from "./routeHelper.ts";
 
 const routeMatchers = routes.map((route) => ({
   ...route,

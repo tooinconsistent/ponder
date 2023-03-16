@@ -5,12 +5,12 @@ import {
   createResource,
 } from "solid-js";
 
-import { trpc } from "@ponder/client/lib/trpc.js";
+import { trpc } from "@ponder/client/lib/trpc.ts";
 
 import {
   login as doLogin,
   logout as doLogout,
-} from "@ponder/client/lib/auth.js";
+} from "@ponder/client/lib/auth.ts";
 
 export const AuthContext = createContext<{
   currentUser: Resource<{

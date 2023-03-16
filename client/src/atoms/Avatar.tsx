@@ -1,4 +1,4 @@
-import { classes } from "@ponder/client/lib/classes.js";
+import { classes } from "@ponder/client/lib/classes.ts";
 import { Component, Show } from "solid-js";
 
 interface AvatarProps {

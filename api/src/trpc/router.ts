@@ -1,9 +1,9 @@
-import { router } from "@ponder/api/trpc/trpc.js";
+import { router } from "@ponder/api/trpc/trpc.ts";
 
-import { authRouter } from "@ponder/api/trpc/routers/auth.js";
-import { channelsRouter } from "@ponder/api/trpc/routers/channels.js";
-import { threadsRouter } from "@ponder/api/trpc/routers/threads.js";
-import { userRouter } from "@ponder/api/trpc/routers/user.js";
+import { authRouter } from "@ponder/api/trpc/routers/auth.ts";
+import { channelsRouter } from "@ponder/api/trpc/routers/channels.ts";
+import { threadsRouter } from "@ponder/api/trpc/routers/threads.ts";
+import { userRouter } from "@ponder/api/trpc/routers/user.ts";
 
 export const appRouter = router({
   auth: authRouter,

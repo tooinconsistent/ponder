@@ -1,9 +1,9 @@
-import type { DBClient } from "@ponder/api/lib/db.js";
+import type { DBClient } from "@ponder/api/lib/db.ts";
 
 import {
   insertSessionForUser,
   selectSessionById,
-} from "./queries/session.queries.js";
+} from "./queries/session.queries.ts";
 
 export const createSession = async (
   userId: string,

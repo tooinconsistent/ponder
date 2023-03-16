@@ -1,5 +1,5 @@
 /** Types generated for queries found in "src/domains/identity/queries/organisations.sql" */
-import { PreparedQuery } from "@ponder/api/lib/db.js";
+import { PreparedQuery } from "@ponder/api/lib/db.ts";
 
 export type organisation_membership_role = "admin" | "member";
 

@@ -1,7 +1,7 @@
 import { ParentComponent, Show } from "solid-js";
 
 import { Authentication } from "./Authentication.jsx";
-import { useCurrentUser } from "./auth.js";
+import { useCurrentUser } from "./auth.ts";
 
 export const EnsureAuthenticated: ParentComponent = (props) => {
   const currentUser = useCurrentUser();

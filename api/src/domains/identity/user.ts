@@ -1,5 +1,5 @@
-import { DBClient } from "@ponder/api/lib/db.js";
-import { unsafelySelectUserProfile } from "./queries/user.queries.js";
+import { DBClient } from "@ponder/api/lib/db.ts";
+import { unsafelySelectUserProfile } from "./queries/user.queries.ts";
 
 export const unsafelyGetUserProfile = async (
   {

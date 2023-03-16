@@ -1,8 +1,8 @@
 import { ParentComponent, createContext } from "solid-js";
 import { createStore } from "solid-js/store";
 
-import { getInitialTheme, injectColorSystem, setColorTheme } from "./theme.js";
-import { ColorTheme } from "@ponder/client/lib/theme/theme.js";
+import { getInitialTheme, injectColorSystem, setColorTheme } from "./theme.ts";
+import { ColorTheme } from "@ponder/client/lib/theme/theme.ts";
 
 export interface Preferences {
   theme: ColorTheme;

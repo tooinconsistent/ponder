@@ -4,11 +4,11 @@ import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 
-import { trpc } from "@ponder/client/lib/trpc.js";
+import { trpc } from "@ponder/client/lib/trpc.ts";
 import { useStore } from "@ponder/client/store/app.jsx";
 
-import { classes } from "@ponder/client/lib/classes.js";
-import { buttonClasses } from "@ponder/client/atoms/button.js";
+import { classes } from "@ponder/client/lib/classes.ts";
+import { buttonClasses } from "@ponder/client/atoms/button.ts";
 
 import { ThreadDetails } from "./ThreadDetails.jsx";
 

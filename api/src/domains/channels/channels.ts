@@ -1,10 +1,10 @@
-import { DBClient } from "@ponder/api/lib/db.js";
+import { DBClient } from "@ponder/api/lib/db.ts";
 
 import {
   selectChannelsForUserInOrg,
   selectChannelById,
   unsafelySelectThreadsForChannelWithLatestPost,
-} from "./queries/channels.queries.js";
+} from "./queries/channels.queries.ts";
 
 export const getChannelsForUser = async (
   { userId, organisationId }: { userId: string; organisationId: string },

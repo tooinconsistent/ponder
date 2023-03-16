@@ -1,6 +1,6 @@
 import { createResource, useContext } from "solid-js";
 
-import { trpc } from "../lib/trpc.js";
+import { trpc } from "../lib/trpc.ts";
 
 import { AuthContext } from "../core/auth/AuthProvider.jsx";
 

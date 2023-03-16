@@ -1,9 +1,9 @@
 import { SetStoreFunction } from "solid-js/store";
 
 import { ActionDefinition } from "@ponder/client/store/app.jsx";
-import { AppStore } from "@ponder/client/store/registry.js";
+import { AppStore } from "@ponder/client/store/registry.ts";
 
-import { keybindings } from "./keybindings.js";
+import { keybindings } from "./keybindings.ts";
 
 export const initialiseShortcuts = (
   actions: ActionDefinition[],

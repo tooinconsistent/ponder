@@ -1,4 +1,4 @@
-import { ColorTheme } from "./theme.js";
+import { ColorTheme } from "./theme.ts";
 
 const darkPalette = {
   base0: "#002b36",

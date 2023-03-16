@@ -1,6 +1,6 @@
 import { createResource } from "solid-js";
 
-import { trpc } from "../lib/trpc.js";
+import { trpc } from "../lib/trpc.ts";
 
 export interface UsersStore {
   currentUserProfile:

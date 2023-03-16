@@ -2,7 +2,7 @@ import { z } from "zod";
 // TODO: move to typebox
 // import { Static, Type } from '@sinclair/typebox'
 
-import { hexToRgb, hslToRgb, lighten, rgbToHex, rgbToHsl } from "./colors.js";
+import { hexToRgb, hslToRgb, lighten, rgbToHex, rgbToHsl } from "./colors.ts";
 
 export const ColorTheme = z.object({
   name: z.string(),

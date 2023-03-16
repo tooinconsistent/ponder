@@ -4,11 +4,11 @@ import {
   publicProcedure,
   router,
   userProcedure,
-} from "@ponder/api/trpc/trpc.js";
+} from "@ponder/api/trpc/trpc.ts";
 
-import { getUserIdFromEmailAndPassword } from "@ponder/api/domains/auth/auth.js";
-import { createSession } from "@ponder/api/domains/auth/session.js";
-import { getOrganisationsForUser } from "@ponder/api/domains/identity/organisations.js";
+import { getUserIdFromEmailAndPassword } from "@ponder/api/domains/auth/auth.ts";
+import { createSession } from "@ponder/api/domains/auth/session.ts";
+import { getOrganisationsForUser } from "@ponder/api/domains/identity/organisations.ts";
 
 export const authRouter = router({
   whoami: publicProcedure.query(({ ctx }) => {

@@ -1,14 +1,14 @@
-import { DBClient } from "@ponder/api/lib/db.js";
+import { DBClient } from "@ponder/api/lib/db.ts";
 
-import { JSONContent } from "@ponder/api/lib/docs.js";
+import { JSONContent } from "@ponder/api/lib/docs.ts";
 
 import {
   selectThreadById,
   unsafelyInsertNewPostForThread,
   unsafelyInsertNewThreadInChannel,
   unsafelySelectPostsForThread,
-} from "./queries/threads.queries.js";
-import { selectChannelById } from "./queries/channels.queries.js";
+} from "./queries/threads.queries.ts";
+import { selectChannelById } from "./queries/channels.queries.ts";
 
 export const getThreadById = async (
   {

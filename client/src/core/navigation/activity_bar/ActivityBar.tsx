@@ -1,7 +1,7 @@
 import { Component, For, JSX } from "solid-js";
 
 import { ActionExecutor, useStore } from "@ponder/client/store/app.jsx";
-import { SideBarTabs } from "@ponder/client/store/side_bar.js";
+import { SideBarTabs } from "@ponder/client/store/side_bar.ts";
 
 import { ActivityBarButton } from "./ActivityBarButton.jsx";
 

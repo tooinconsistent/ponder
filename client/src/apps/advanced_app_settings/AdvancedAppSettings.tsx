@@ -2,11 +2,11 @@ import { Component, createSignal } from "solid-js";
 
 import { EditorView } from "codemirror";
 
-import { classes } from "@ponder/client/lib/classes.js";
-import { buttonClasses } from "../../atoms/button.js";
+import { classes } from "@ponder/client/lib/classes.ts";
+import { buttonClasses } from "../../atoms/button.ts";
 
 import { JsonEditor } from "./json_editor/JsonEditor.jsx";
-import { applicationSettings } from "@ponder/client/store/settings/applicationSettings.js";
+import { applicationSettings } from "@ponder/client/store/settings/applicationSettings.ts";
 
 const getDefaultSettingsJson = () => {
   const settings = Object.entries(applicationSettings).map(

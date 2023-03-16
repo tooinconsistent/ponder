@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 
-import { buttonClasses } from "@ponder/client/atoms/button.js";
+import { buttonClasses } from "@ponder/client/atoms/button.ts";
 
 import { Private } from "./icons/Private.jsx";
 

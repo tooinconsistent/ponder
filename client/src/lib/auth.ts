@@ -1,4 +1,4 @@
-import { trpc } from "@ponder/client/lib/trpc.js";
+import { trpc } from "@ponder/client/lib/trpc.ts";
 
 const AUTH_TOKEN_KEY = "_auth";
 

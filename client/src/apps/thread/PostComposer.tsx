@@ -6,9 +6,9 @@ import Placeholder from "@tiptap/extension-placeholder";
 
 import { useStore } from "@ponder/client/store/app.jsx";
 
-import { buttonClasses } from "../../atoms/button.js";
+import { buttonClasses } from "../../atoms/button.ts";
 import { Avatar } from "../../atoms/Avatar.jsx";
-import { classes } from "@ponder/client/lib/classes.js";
+import { classes } from "@ponder/client/lib/classes.ts";
 
 interface PostComposerProps {
   onSubmit: (reply: JSONContent, replyPlain: string) => Promise<void>;

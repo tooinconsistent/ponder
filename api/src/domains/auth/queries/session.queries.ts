@@ -1,5 +1,5 @@
 /** Types generated for queries found in "src/domains/auth/queries/session.sql" */
-import { PreparedQuery } from "@ponder/api/lib/db.js";
+import { PreparedQuery } from "@ponder/api/lib/db.ts";
 
 /** 'SelectSessionById' parameters type */
 export interface SelectSessionByIdParams {

@@ -4,9 +4,9 @@ import type { inferAsyncReturnType } from "@trpc/server";
 
 import { NodeHTTPCreateContextFnOptions } from "@trpc/server/adapters/node-http";
 
-import type { DBClient } from "@ponder/api/lib/db.js";
+import type { DBClient } from "@ponder/api/lib/db.ts";
 
-import { getUserIdFromToken } from "@ponder/api/domains/auth/auth.js";
+import { getUserIdFromToken } from "@ponder/api/domains/auth/auth.ts";
 
 /**
  * Creates context for an incoming request

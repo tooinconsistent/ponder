@@ -1,7 +1,7 @@
-import { sideBar, SideBarStore } from "./side_bar.js";
-import { view, ViewStore } from "./view.js";
-import { channels, ChannelsStore } from "./channels.js";
-import { users, UsersStore } from "./users.js";
+import { sideBar, SideBarStore } from "./side_bar.ts";
+import { view, ViewStore } from "./view.ts";
+import { channels, ChannelsStore } from "./channels.ts";
+import { users, UsersStore } from "./users.ts";
 
 export interface AppStore {
   sideBar: SideBarStore;

@@ -1,6 +1,6 @@
-import { router, userProcedure } from "@ponder/api/trpc/trpc.js";
+import { router, userProcedure } from "@ponder/api/trpc/trpc.ts";
 
-import { unsafelyGetUserProfile } from "@ponder/api/domains/identity/user.js";
+import { unsafelyGetUserProfile } from "@ponder/api/domains/identity/user.ts";
 
 export const userRouter = router({
   getMyProfile: userProcedure.query(({ ctx }) => {

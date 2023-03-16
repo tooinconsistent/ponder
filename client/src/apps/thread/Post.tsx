@@ -3,7 +3,7 @@ import { Component, createSignal, onCleanup } from "solid-js";
 import { Editor, JSONContent } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 
-import { getFormattedRealtiveTime } from "@ponder/client/lib/relative_time.js";
+import { getFormattedRealtiveTime } from "@ponder/client/lib/relative_time.ts";
 
 import { Avatar } from "@ponder/client/atoms/Avatar.jsx";
 

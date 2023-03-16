@@ -1,5 +1,5 @@
 /** Types generated for queries found in "src/domains/auth/queries/auth.sql" */
-import { PreparedQuery } from "@ponder/api/lib/db.js";
+import { PreparedQuery } from "@ponder/api/lib/db.ts";
 
 /** 'SelectUserAndHashByEmail' parameters type */
 export interface SelectUserAndHashByEmailParams {

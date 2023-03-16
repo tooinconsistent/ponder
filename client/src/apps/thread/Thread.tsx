@@ -4,7 +4,7 @@ import { JSONContent } from "@tiptap/core";
 import { onMount } from "solid-js";
 
 import { useStore } from "@ponder/client/store/app.jsx";
-import { trpc } from "@ponder/client/lib/trpc.js";
+import { trpc } from "@ponder/client/lib/trpc.ts";
 
 import { ThreadDetails } from "./ThreadDetails.jsx";
 import { PostComposer } from "./PostComposer.jsx";

@@ -1,5 +1,5 @@
-import { DBClient } from "@ponder/api/lib/db.js";
-import { selectOrganisationIdsForUser } from "./queries/organisations.queries.js";
+import { DBClient } from "@ponder/api/lib/db.ts";
+import { selectOrganisationIdsForUser } from "./queries/organisations.queries.ts";
 
 export const getOrganisationsForUser = async (
   userId: string,
