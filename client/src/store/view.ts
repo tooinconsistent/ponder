@@ -11,6 +11,7 @@ export type MainViews =
 export interface ViewStore {
   currentView: MainViews;
   currentViewProps: Record<string, string> | null;
+  showCommandPalette: boolean;
 }
 
 const id = "view";
@@ -19,6 +20,7 @@ export const init = () => {
   const store: ViewStore = {
     currentView: "home",
     currentViewProps: null,
+    showCommandPalette: false,
   };
 
   return store;

@@ -2,10 +2,10 @@ import { Component, Match, Suspense, Switch } from "solid-js";
 
 import { useStore } from "@ponder/client/store/app.jsx";
 
-import { Channel } from "@ponder/client/apps/channel/Channel.jsx";
+import { Channel } from "@ponder/client/apps/channel/view/Channel.jsx";
 
 import { Thread } from "@ponder/client/apps/thread/Thread.jsx";
-import { ThreadComposer } from "@ponder/client/apps/thread_composer/ThreadComposer.jsx";
+import { ThreadComposer } from "@ponder/client/apps/thread_composer/view/ThreadComposer.jsx";
 
 import { AdvancedAppSettings } from "@ponder/client/apps/advanced_app_settings/AdvancedAppSettings.jsx";
 

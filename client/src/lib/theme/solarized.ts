@@ -30,6 +30,7 @@ export const solarizedDarkTheme: ColorTheme = {
     base: {
       background: "base1",
       foreground: "base4",
+      focusBorder: "advanced",
     },
 
     button: {
@@ -50,6 +51,24 @@ export const solarizedDarkTheme: ColorTheme = {
       whiteBorder: "base4",
       whiteHoverBackground: "base2",
       whiteDisabledBackground: "base1",
+    },
+
+    input: {
+      background: "base0",
+      foreground: "base5",
+      placeholderForeground: "base3",
+    },
+
+    inputValidation: {
+      errorBackground: "error",
+      errorForeground: "base5",
+      errorBorder: "error",
+      infoBackground: "uncommon",
+      infoForeground: "base5",
+      infoBorder: "uncommon",
+      warningBackground: "warning",
+      warningForeground: "base5",
+      warningBorder: "warning",
     },
 
     textDescription: {
@@ -126,6 +145,15 @@ export const solarizedDarkTheme: ColorTheme = {
       background: "base0",
       foreground: "base4",
       border: "base1",
+    },
+
+    commandPalette: {
+      background: "base0",
+      foreground: "base4",
+      border: "base1",
+      selectedBackground: "base1",
+      selectedForeground: "base4",
+      matchForeground: "base6",
     },
 
     channel: {

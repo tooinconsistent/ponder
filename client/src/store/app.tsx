@@ -2,8 +2,14 @@ import { ParentComponent, createContext, useContext } from "solid-js";
 import { SetStoreFunction, createStore } from "solid-js/store";
 
 import { AppStore, registry } from "./registry.ts";
-import { initialiseShortcuts } from "../lib/shortcuts/shortcuts.ts";
+import { initialiseShortcuts } from "../lib/keybindings/shortcuts.ts";
 import { startRouting } from "../lib/router/router.ts";
+
+import { init as initChannel } from "../apps/channel/mod.ts";
+import { init as initThreadComposer } from "../apps/thread_composer/mod.ts";
+import { init as initPalette } from "../core/command_palette/mod.ts";
+import { initialiseKeyBindings } from "../lib/keybindings/keybindings.ts";
+
 export interface ActionProps<T = never> {
   store: AppStore;
   setStore: SetStoreFunction<AppStore>;
@@ -16,6 +22,11 @@ export interface ActionDefinition<T = never> {
   readonly subtitle?: string;
   readonly shortcut?: string;
   readonly perform: ({ store, setStore, params }: ActionProps<T>) => void;
+}
+
+export interface App {
+  store: AppStore;
+  setStore: SetStoreFunction<AppStore>;
 }
 
 // Actions
@@ -37,6 +48,14 @@ export const AppStoreProvider: ParentComponent = (props) => {
 
   const [store, setStore] = createStore<AppStore>(initialStore);
 
+  const app = { store, setStore };
+
+  initPalette(app);
+  initChannel(app);
+  initThreadComposer(app);
+
+  initialiseKeyBindings();
+
   const actionPerformers = actions.reduce<Record<AppActions, ActionExecutor>>(
     (acc, action) => {
       return {
@@ -52,7 +71,6 @@ export const AppStoreProvider: ParentComponent = (props) => {
 
   initialiseShortcuts(actions, store, setStore);
   startRouting(actionPerformers, store);
-  // https://github.com/leeoniya/uFuzzy -- for command palette
 
   return (
     <AppStoreContext.Provider value={{ store, actions: actionPerformers }}>

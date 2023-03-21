@@ -3,7 +3,7 @@ import { Component, Suspense } from "solid-js";
 import { Providers } from "./core/Providers.jsx";
 import { Root } from "./core/Root.jsx";
 
-const App: Component = () => {
+const Appplication: Component = () => {
   return (
     <Suspense fallback={<div>🦄</div>}>
       <Providers>
@@ -13,4 +13,4 @@ const App: Component = () => {
   );
 };
 
-export default App;
+export default Appplication;

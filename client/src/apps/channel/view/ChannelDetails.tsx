@@ -4,7 +4,7 @@ import { buttonClasses } from "@ponder/client/atoms/button.ts";
 
 import { Private } from "./icons/Private.jsx";
 
-import { useStore } from "@ponder/client/store/app.jsx";
+import { executeCommand } from "@ponder/client/lib/commands/commands.ts";
 
 interface ChannelDetailsProps {
   name: string;
@@ -14,8 +14,6 @@ interface ChannelDetailsProps {
 }
 
 export const ChannelDetails: Component<ChannelDetailsProps> = (props) => {
-  const { actions } = useStore();
-
   return (
     <div class="flex items-end justify-between border-b border-b-[var(--channel-metaDetailsBorder)] bg-[var(--channel-metaDetailsBackground)] px-10 py-8">
       <div>
@@ -44,7 +42,7 @@ export const ChannelDetails: Component<ChannelDetailsProps> = (props) => {
           <button
             class={buttonClasses({ size: "xs" })}
             onClick={() => {
-              actions.openNewThread({ channelId: props.channelId });
+              void executeCommand("channel.newThread");
             }}
           >
             <svg

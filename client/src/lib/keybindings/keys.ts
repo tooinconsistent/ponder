@@ -321,7 +321,7 @@ export function createKeybindingsHandler(
  * })
  * ```
  */
-export function keybindings(
+export function keys(
   target: Window | HTMLElement,
   keyBindingMap: KeyBindingMap,
   options: KeyBindingOptions = {}

@@ -3,14 +3,14 @@ import { SetStoreFunction } from "solid-js/store";
 import { ActionDefinition } from "@ponder/client/store/app.jsx";
 import { AppStore } from "@ponder/client/store/registry.ts";
 
-import { keybindings } from "./keybindings.ts";
+import { keys } from "./keys.ts";
 
 export const initialiseShortcuts = (
   actions: ActionDefinition[],
   store: AppStore,
   setStore: SetStoreFunction<AppStore>
 ) => {
-  keybindings(
+  keys(
     window,
     actions.reduce((acc, action) => {
       if (action.shortcut) {
