@@ -12,8 +12,6 @@ export const init = (app: App) => {
     channelId: Type.String(),
   });
 
-  console.log(OpenThreadComposerParams);
-
   registerCommand({
     id: "view.openThreadComposer",
     name: "Open Thread Composer",

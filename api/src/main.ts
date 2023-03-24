@@ -8,8 +8,9 @@ import { createContext } from "@ponder/api/trpc/context.ts";
 
 import { databaseUrl, port } from "@ponder/api/env.ts";
 
-// Create a database pool with three connections that are lazily established
-const pool = new pg.Pool({ connectionString: databaseUrl });
+// Create a user scoped database pool with twenty connections that are lazily established
+const pool = new pg.Pool({ connectionString: databaseUrl, max: 20 });
+const adminPool = new pg.Pool({ connectionString: databaseUrl, max: 20 });
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 const server = http.createServer(async (req, res) => {
@@ -20,10 +21,11 @@ const server = http.createServer(async (req, res) => {
     res.setHeader("Access-Control-Request-Method", "*");
     res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET");
     res.setHeader("Access-Control-Allow-Headers", "*");
+    res.setHeader("X-Performance", `${performance.now() - since}`);
 
     console.debug(
       `Sending options response :: at ${performance.now()} :: took ${
-        performance.now() - since
+        res.getHeader("X-Performance")?.toString() ?? ""
       }ms`
     );
     res.end();
@@ -31,15 +33,28 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (req.method === "GET" && req.url === "/health") {
+    res.setHeader("X-Performance", `${performance.now() - since}`);
+
+    console.debug(
+      `Sending health response :: at ${performance.now()} :: took ${
+        res.getHeader("X-Performance")?.toString() ?? ""
+      }ms`
+    );
     res.write("ok!");
     res.end();
     return;
   }
 
+  // Get a connection from the pool and set the role to the user
   const pgConnection = await pool.connect();
+  await pgConnection.query("set role ponder_user;");
+  // Get an admin connection from the pool
+  const adminPgConnection = await adminPool.connect();
+
   const handler = createHTTPHandler({
     router: appRouter,
-    createContext: (args) => createContext({ ...args, pgConnection }),
+    createContext: (args) =>
+      createContext({ ...args, pgConnection, adminPgConnection }),
     batching: {
       enabled: true,
     },
@@ -52,20 +67,22 @@ const server = http.createServer(async (req, res) => {
     res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET");
     res.setHeader("Access-Control-Allow-Headers", "*");
 
+    req.url = req.url?.replace("/trpc", "");
+
+    await handler(req, res);
+
     console.debug(
       `Sending response :: at ${performance.now()} :: took ${
         performance.now() - since
       }ms`
     );
-
-    req.url = req.url?.replace("/trpc", "");
-    await handler(req, res);
     return;
   } catch (err) {
     console.error(err);
     return;
   } finally {
     pgConnection.release();
+    adminPgConnection.release();
   }
 });
 

@@ -1,4 +1,3 @@
-// eslint-disable-file
 /** Types generated for queries found in "src/domains/identity/queries/organisations.sql" */
 import { PreparedQuery } from "@ponder/api/lib/db.ts";
 

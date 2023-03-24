@@ -1,17 +1,17 @@
 import { DBClient } from "@ponder/api/lib/db.ts";
 
 import {
-  selectChannelsForUserInOrg,
+  selectChannelInOrg,
   selectChannelById,
-  unsafelySelectThreadsForChannelWithLatestPost,
+  selectThreadsForChannelWithLatestPost,
 } from "./queries/channels.queries.ts";
 
 export const getChannelsForUser = async (
-  { userId, organisationId }: { userId: string; organisationId: string },
+  { organisationId }: { organisationId: string },
   pgConnection: DBClient
 ) => {
-  const result = await selectChannelsForUserInOrg.execute(
-    { userId, organisationId },
+  const result = await selectChannelInOrg.execute(
+    { organisationId },
     pgConnection
   );
 
@@ -20,10 +20,8 @@ export const getChannelsForUser = async (
 
 export const getChannelById = async (
   {
-    userId,
     channelId,
   }: {
-    userId: string;
     channelId: string;
   },
   pgConnection: DBClient
@@ -31,7 +29,6 @@ export const getChannelById = async (
   const [channel] = await selectChannelById.execute(
     {
       channelId,
-      userId,
     },
     pgConnection
   );
@@ -41,7 +38,7 @@ export const getChannelById = async (
   }
 
   const threads = (
-    await unsafelySelectThreadsForChannelWithLatestPost.execute(
+    await selectThreadsForChannelWithLatestPost.execute(
       {
         channelId,
       },

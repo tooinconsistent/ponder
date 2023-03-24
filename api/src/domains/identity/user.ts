@@ -1,5 +1,5 @@
 import { DBClient } from "@ponder/api/lib/db.ts";
-import { unsafelySelectUserProfile } from "./queries/user.queries.ts";
+import { selectUserProfile } from "./queries/user.queries.ts";
 
 export const unsafelyGetUserProfile = async (
   {
@@ -9,10 +9,7 @@ export const unsafelyGetUserProfile = async (
   },
   pgConnection: DBClient
 ) => {
-  const [result] = await unsafelySelectUserProfile.execute(
-    { userId },
-    pgConnection
-  );
+  const [result] = await selectUserProfile.execute({ userId }, pgConnection);
 
   if (!result) {
     return null;

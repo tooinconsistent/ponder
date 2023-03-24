@@ -15,10 +15,13 @@ import { getUserIdFromToken } from "@ponder/api/domains/auth/auth.ts";
 export async function createContext({
   req,
   pgConnection,
+  adminPgConnection,
 }: NodeHTTPCreateContextFnOptions<http.IncomingMessage, http.ServerResponse> & {
   pgConnection: DBClient;
+  adminPgConnection: DBClient;
 }) {
   let userId: string | null = null;
+  let sessionId: string | null = null;
 
   const authHeader = req.headers.authorization;
 
@@ -26,12 +29,22 @@ export async function createContext({
     const token = /^Bearer (?<token>\S+)$/.exec(authHeader)?.groups?.token;
 
     if (token) {
-      userId = await getUserIdFromToken(token, pgConnection);
+      userId = await getUserIdFromToken(token, adminPgConnection);
+      sessionId = token;
     }
+  }
+
+  if (userId) {
+    await pgConnection.query(
+      `select pg_catalog.set_config('jwt.claims.session_id', '${
+        sessionId ?? ""
+      }', false);`
+    );
   }
 
   return {
     pgConnection,
+    adminPgConnection,
     userId,
   };
 }

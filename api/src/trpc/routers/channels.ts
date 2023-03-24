@@ -17,7 +17,6 @@ export const channelsRouter = router({
     .query(({ input, ctx }) => {
       return getChannelsForUser(
         {
-          userId: ctx.userId,
           organisationId: input.organisationId,
         },
         ctx.pgConnection
@@ -30,9 +29,6 @@ export const channelsRouter = router({
       })
     )
     .query(({ input, ctx }) => {
-      return getChannelById(
-        { userId: ctx.userId, channelId: input.channelId },
-        ctx.pgConnection
-      );
+      return getChannelById({ channelId: input.channelId }, ctx.pgConnection);
     }),
 });

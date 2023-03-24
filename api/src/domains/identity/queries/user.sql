@@ -1,4 +1,4 @@
-/* @name unsafelySelectUserProfile */
+/* @name selectUserProfile */
 select 
 	id,
 	user_id,

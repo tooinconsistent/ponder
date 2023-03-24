@@ -13,6 +13,14 @@
 - prefer lowercase over UPPERCASE, except for the `NEW`, `OLD` and `TG_OP`
   keywords.
 
+### Security
+
+- all security definer functions should define set search_path from current due to CVE-2018-1058
+- all tables (public or not) should enable RLS
+- relevant RLS policy should be defined before granting a permission
+- grant select should never specify a column list; instead use one-to-one relations as permission boundaries
+- grant insert and grant update must ALWAYS specify a column list
+
 ### Explicitness
 
 - all functions should explicitly state immutable/stable/volatile

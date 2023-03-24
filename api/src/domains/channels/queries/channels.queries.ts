@@ -1,46 +1,35 @@
-// eslint-disable-file
 /** Types generated for queries found in "src/domains/channels/queries/channels.sql" */
 import { PreparedQuery } from "@ponder/api/lib/db.ts";
 
-/** 'SelectChannelsForUserInOrg' parameters type */
-export interface SelectChannelsForUserInOrgParams {
+/** 'SelectChannelInOrg' parameters type */
+export interface SelectChannelInOrgParams {
   organisationId: string;
-  userId: string;
 }
 
-/** 'SelectChannelsForUserInOrg' return type */
-export interface SelectChannelsForUserInOrgResult {
+/** 'SelectChannelInOrg' return type */
+export interface SelectChannelInOrgResult {
   id: string;
   name: string;
 }
 
-/** 'SelectChannelsForUserInOrg' query type */
-export interface SelectChannelsForUserInOrgQuery {
-  params: SelectChannelsForUserInOrgParams;
-  result: SelectChannelsForUserInOrgResult;
+/** 'SelectChannelInOrg' query type */
+export interface SelectChannelInOrgQuery {
+  params: SelectChannelInOrgParams;
+  result: SelectChannelInOrgResult;
 }
 
-const selectChannelsForUserInOrgIR: any = {
-  usedParamSet: { organisationId: true, userId: true },
+const selectChannelInOrgIR: any = {
+  usedParamSet: { organisationId: true },
   params: [
     {
       name: "organisationId",
       required: true,
       transform: { type: "scalar" },
-      locs: [{ a: 300, b: 315 }],
-    },
-    {
-      name: "userId",
-      required: true,
-      transform: { type: "scalar" },
-      locs: [
-        { a: 357, b: 364 },
-        { a: 402, b: 409 },
-      ],
+      locs: [{ a: 94, b: 109 }],
     },
   ],
   statement:
-    "select\n\tchannels.id,\n\tchannels.name\nfrom app_public.channels\nleft join app_public.channel_memberships on channels.id = channel_memberships.channel_id\nleft join app_public.organisation_memberships on channels.organisation_id = organisation_memberships.organisation_id\nwhere channels.organisation_id = :organisationId!\n\tand organisation_memberships.user_id = :userId!\n\tand (channel_memberships.user_id = :userId! or channels.is_public = true)\ngroup by channels.id",
+    "select\n\tchannels.id,\n\tchannels.name\nfrom app_public.channels\nwhere channels.organisation_id = :organisationId!",
 };
 
 /**
@@ -50,23 +39,17 @@ const selectChannelsForUserInOrgIR: any = {
  * 	channels.id,
  * 	channels.name
  * from app_public.channels
- * left join app_public.channel_memberships on channels.id = channel_memberships.channel_id
- * left join app_public.organisation_memberships on channels.organisation_id = organisation_memberships.organisation_id
  * where channels.organisation_id = :organisationId!
- * 	and organisation_memberships.user_id = :userId!
- * 	and (channel_memberships.user_id = :userId! or channels.is_public = true)
- * group by channels.id
  * ```
  */
-export const selectChannelsForUserInOrg = new PreparedQuery<
-  SelectChannelsForUserInOrgParams,
-  SelectChannelsForUserInOrgResult
->(selectChannelsForUserInOrgIR);
+export const selectChannelInOrg = new PreparedQuery<
+  SelectChannelInOrgParams,
+  SelectChannelInOrgResult
+>(selectChannelInOrgIR);
 
 /** 'SelectChannelById' parameters type */
 export interface SelectChannelByIdParams {
   channelId: string;
-  userId: string;
 }
 
 /** 'SelectChannelById' return type */
@@ -84,26 +67,17 @@ export interface SelectChannelByIdQuery {
 }
 
 const selectChannelByIdIR: any = {
-  usedParamSet: { channelId: true, userId: true },
+  usedParamSet: { channelId: true },
   params: [
     {
       name: "channelId",
       required: true,
       transform: { type: "scalar" },
-      locs: [{ a: 331, b: 341 }],
-    },
-    {
-      name: "userId",
-      required: true,
-      transform: { type: "scalar" },
-      locs: [
-        { a: 383, b: 390 },
-        { a: 428, b: 435 },
-      ],
+      locs: [{ a: 125, b: 135 }],
     },
   ],
   statement:
-    "select\n\tchannels.id,\n\tchannels.name,\n\tchannels.description,\n\tchannels.is_public\nfrom app_public.channels\nleft join app_public.channel_memberships on channels.id = channel_memberships.channel_id\nleft join app_public.organisation_memberships on channels.organisation_id = organisation_memberships.organisation_id\nwhere channels.id = :channelId!\n\tand organisation_memberships.user_id = :userId!\n\tand (channel_memberships.user_id = :userId! or channels.is_public = true)\ngroup by channels.id",
+    "select\n\tchannels.id,\n\tchannels.name,\n\tchannels.description,\n\tchannels.is_public\nfrom app_public.channels\nwhere channels.id = :channelId!",
 };
 
 /**
@@ -115,12 +89,7 @@ const selectChannelByIdIR: any = {
  * 	channels.description,
  * 	channels.is_public
  * from app_public.channels
- * left join app_public.channel_memberships on channels.id = channel_memberships.channel_id
- * left join app_public.organisation_memberships on channels.organisation_id = organisation_memberships.organisation_id
  * where channels.id = :channelId!
- * 	and organisation_memberships.user_id = :userId!
- * 	and (channel_memberships.user_id = :userId! or channels.is_public = true)
- * group by channels.id
  * ```
  */
 export const selectChannelById = new PreparedQuery<
@@ -128,13 +97,13 @@ export const selectChannelById = new PreparedQuery<
   SelectChannelByIdResult
 >(selectChannelByIdIR);
 
-/** 'UnsafelySelectThreadsForChannelWithLatestPost' parameters type */
-export interface UnsafelySelectThreadsForChannelWithLatestPostParams {
+/** 'SelectThreadsForChannelWithLatestPost' parameters type */
+export interface SelectThreadsForChannelWithLatestPostParams {
   channelId: string;
 }
 
-/** 'UnsafelySelectThreadsForChannelWithLatestPost' return type */
-export interface UnsafelySelectThreadsForChannelWithLatestPostResult {
+/** 'SelectThreadsForChannelWithLatestPost' return type */
+export interface SelectThreadsForChannelWithLatestPostResult {
   channelId: string;
   id: string;
   latestPostAuthorAvatarUrl: string | null;
@@ -146,13 +115,13 @@ export interface UnsafelySelectThreadsForChannelWithLatestPostResult {
   title: string;
 }
 
-/** 'UnsafelySelectThreadsForChannelWithLatestPost' query type */
-export interface UnsafelySelectThreadsForChannelWithLatestPostQuery {
-  params: UnsafelySelectThreadsForChannelWithLatestPostParams;
-  result: UnsafelySelectThreadsForChannelWithLatestPostResult;
+/** 'SelectThreadsForChannelWithLatestPost' query type */
+export interface SelectThreadsForChannelWithLatestPostQuery {
+  params: SelectThreadsForChannelWithLatestPostParams;
+  result: SelectThreadsForChannelWithLatestPostResult;
 }
 
-const unsafelySelectThreadsForChannelWithLatestPostIR: any = {
+const selectThreadsForChannelWithLatestPostIR: any = {
   usedParamSet: { channelId: true },
   params: [
     {
@@ -198,7 +167,7 @@ const unsafelySelectThreadsForChannelWithLatestPostIR: any = {
  * order by latest_post.created_at desc
  * ```
  */
-export const unsafelySelectThreadsForChannelWithLatestPost = new PreparedQuery<
-  UnsafelySelectThreadsForChannelWithLatestPostParams,
-  UnsafelySelectThreadsForChannelWithLatestPostResult
->(unsafelySelectThreadsForChannelWithLatestPostIR);
+export const selectThreadsForChannelWithLatestPost = new PreparedQuery<
+  SelectThreadsForChannelWithLatestPostParams,
+  SelectThreadsForChannelWithLatestPostResult
+>(selectThreadsForChannelWithLatestPostIR);

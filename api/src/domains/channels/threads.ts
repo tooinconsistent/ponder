@@ -5,18 +5,15 @@ import { JSONContent } from "@ponder/api/lib/docs.ts";
 import {
   Json,
   selectThreadById,
-  unsafelyInsertNewPostForThread,
-  unsafelyInsertNewThreadInChannel,
-  unsafelySelectPostsForThread,
+  insertNewPostForThread,
+  insertNewThreadInChannel,
+  selectPostsForThread,
 } from "./queries/threads.queries.ts";
-import { selectChannelById } from "./queries/channels.queries.ts";
 
 export const getThreadById = async (
   {
-    userId,
     threadId,
   }: {
-    userId: string;
     threadId: string;
   },
   pgConnection: DBClient
@@ -24,7 +21,6 @@ export const getThreadById = async (
   const [thread] = await selectThreadById.execute(
     {
       threadId,
-      userId,
     },
     pgConnection
   );
@@ -34,7 +30,7 @@ export const getThreadById = async (
   }
 
   const posts = (
-    await unsafelySelectPostsForThread.execute(
+    await selectPostsForThread.execute(
       {
         threadId,
       },
@@ -71,22 +67,10 @@ export const replyInThread = async (
   },
   pgConnection: DBClient
 ) => {
-  const [thread] = await selectThreadById.execute(
-    {
-      threadId,
-      userId,
-    },
-    pgConnection
-  );
-
-  if (!thread) {
-    return null;
-  }
-
-  const [newPost] = await unsafelyInsertNewPostForThread.execute(
+  const [newPost] = await insertNewPostForThread.execute(
     {
       newPost: {
-        threadId: thread.id,
+        threadId: threadId,
         authorId: userId,
         content: content as Json,
         contentPlain,
@@ -114,42 +98,51 @@ export const createNewThread = async (
   },
   pgConnection: DBClient
 ) => {
-  const [channel] = await selectChannelById.execute(
-    {
-      channelId,
-      userId,
-    },
-    pgConnection
-  );
+  await pgConnection.query("BEGIN");
 
-  if (!channel) {
-    return null;
-  }
-
-  const [result] = await unsafelyInsertNewThreadInChannel.execute(
+  const [newThread] = await insertNewThreadInChannel.execute(
     {
       newThread: { channelId, title, authorId: userId },
-      initalPostContent: content as Json,
-      initalPostContentPlain: contentPlain,
-      initialPostAuthorId: userId,
     },
     pgConnection
   );
 
-  if (!result) {
+  if (!newThread) {
+    await pgConnection.query("ROLLBACK");
     return null;
   }
 
+  const [initialPost] = await insertNewPostForThread.execute(
+    {
+      newPost: {
+        threadId: newThread.id,
+        authorId: userId,
+        content: content as Json,
+        contentPlain,
+      },
+    },
+    pgConnection
+  );
+
+  if (!initialPost) {
+    await pgConnection.query("ROLLBACK");
+    return null;
+  }
+
+  await pgConnection.query("COMMIT");
+
   return {
-    id: result.threadId,
-    title: result.title,
-    channelId: result.channelId,
+    id: newThread.id,
+    title: newThread.title,
+    channelId: newThread.channelId,
+    authorId: newThread.authorId,
+    createdAt: newThread.createdAt,
     posts: [
       {
-        id: result.postId,
-        content: result.content,
-        contentPlain: result.contentPlain,
-        authorId: result.authorId,
+        id: initialPost.id,
+        content: initialPost.content,
+        contentPlain: initialPost.contentPlain,
+        authorId: initialPost.authorId,
       },
     ],
   };

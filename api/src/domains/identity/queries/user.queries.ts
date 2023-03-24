@@ -1,14 +1,13 @@
-// eslint-disable-file
 /** Types generated for queries found in "src/domains/identity/queries/user.sql" */
 import { PreparedQuery } from "@ponder/api/lib/db.ts";
 
-/** 'UnsafelySelectUserProfile' parameters type */
-export interface UnsafelySelectUserProfileParams {
+/** 'SelectUserProfile' parameters type */
+export interface SelectUserProfileParams {
   userId: string;
 }
 
-/** 'UnsafelySelectUserProfile' return type */
-export interface UnsafelySelectUserProfileResult {
+/** 'SelectUserProfile' return type */
+export interface SelectUserProfileResult {
   about: string | null;
   avatarUrl: string | null;
   displayName: string;
@@ -17,13 +16,13 @@ export interface UnsafelySelectUserProfileResult {
   userId: string;
 }
 
-/** 'UnsafelySelectUserProfile' query type */
-export interface UnsafelySelectUserProfileQuery {
-  params: UnsafelySelectUserProfileParams;
-  result: UnsafelySelectUserProfileResult;
+/** 'SelectUserProfile' query type */
+export interface SelectUserProfileQuery {
+  params: SelectUserProfileParams;
+  result: SelectUserProfileResult;
 }
 
-const unsafelySelectUserProfileIR: any = {
+const selectUserProfileIR: any = {
   usedParamSet: { userId: true },
   params: [
     {
@@ -51,7 +50,7 @@ const unsafelySelectUserProfileIR: any = {
  * where user_profiles.user_id = :userId!
  * ```
  */
-export const unsafelySelectUserProfile = new PreparedQuery<
-  UnsafelySelectUserProfileParams,
-  UnsafelySelectUserProfileResult
->(unsafelySelectUserProfileIR);
+export const selectUserProfile = new PreparedQuery<
+  SelectUserProfileParams,
+  SelectUserProfileResult
+>(selectUserProfileIR);

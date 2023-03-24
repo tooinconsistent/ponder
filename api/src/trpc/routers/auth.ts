@@ -35,25 +35,27 @@ export const authRouter = router({
         password: z.string().min(8),
       })
     )
-    .mutation(async ({ input: { email, password }, ctx: { pgConnection } }) => {
-      const userId = await getUserIdFromEmailAndPassword(
-        { email, password },
-        pgConnection
-      );
+    .mutation(
+      async ({ input: { email, password }, ctx: { adminPgConnection } }) => {
+        const userId = await getUserIdFromEmailAndPassword(
+          { email, password },
+          adminPgConnection
+        );
 
-      if (userId) {
-        const { sessionId } = await createSession(userId, pgConnection);
+        if (userId) {
+          const { sessionId } = await createSession(userId, adminPgConnection);
 
-        // TODO: Add some token generation here, so it's not just a row uuid value
+          // TODO: Add some token generation here, so it's not just a row uuid value
+          return {
+            token: sessionId,
+          };
+        }
+
         return {
-          token: sessionId,
+          token: null,
         };
       }
-
-      return {
-        token: null,
-      };
-    }),
+    ),
 
   logout: userProcedure.mutation(() => {
     // TODO: Destroy current session

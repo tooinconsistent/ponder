@@ -1,14 +1,9 @@
-/* @name selectChannelsForUserInOrg */
+/* @name selectChannelInOrg */
 select
 	channels.id,
 	channels.name
 from app_public.channels
-left join app_public.channel_memberships on channels.id = channel_memberships.channel_id
-left join app_public.organisation_memberships on channels.organisation_id = organisation_memberships.organisation_id
-where channels.organisation_id = :organisationId!
-	and organisation_memberships.user_id = :userId!
-	and (channel_memberships.user_id = :userId! or channels.is_public = true)
-group by channels.id;
+where channels.organisation_id = :organisationId!;
 
 /* @name selectChannelById */
 select
@@ -17,14 +12,9 @@ select
 	channels.description,
 	channels.is_public
 from app_public.channels
-left join app_public.channel_memberships on channels.id = channel_memberships.channel_id
-left join app_public.organisation_memberships on channels.organisation_id = organisation_memberships.organisation_id
-where channels.id = :channelId!
-	and organisation_memberships.user_id = :userId!
-	and (channel_memberships.user_id = :userId! or channels.is_public = true)
-group by channels.id;
+where channels.id = :channelId!;
 
-/* @name unsafelySelectThreadsForChannelWithLatestPost */
+/* @name selectThreadsForChannelWithLatestPost */
 select 
 	threads.id, 
 	threads.channel_id, 

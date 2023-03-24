@@ -86,7 +86,7 @@ relevant operations on them. The tables will appear when you uncomment the
 --   insert (headline, body, topic),
 --   update (headline, body, topic),
 --   delete
--- on app_public.posts to :DATABASE_VISITOR;
+-- on app_public.posts to ponder_user;
 
 -- create policy select_all on app_public.posts for select using (true);
 -- create policy manage_own on app_public.posts for all using (author_id = app_public.current_user_id());

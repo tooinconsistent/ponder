@@ -1,4 +1,3 @@
-// eslint-disable-file
 /** Types generated for queries found in "src/domains/channels/queries/threads.sql" */
 import { PreparedQuery } from "@ponder/api/lib/db.ts";
 
@@ -13,7 +12,6 @@ export type Json =
 /** 'SelectThreadById' parameters type */
 export interface SelectThreadByIdParams {
   threadId: string;
-  userId: string;
 }
 
 /** 'SelectThreadById' return type */
@@ -31,26 +29,17 @@ export interface SelectThreadByIdQuery {
 }
 
 const selectThreadByIdIR: any = {
-  usedParamSet: { threadId: true, userId: true },
+  usedParamSet: { threadId: true },
   params: [
     {
       name: "threadId",
       required: true,
       transform: { type: "scalar" },
-      locs: [{ a: 392, b: 401 }],
-    },
-    {
-      name: "userId",
-      required: true,
-      transform: { type: "scalar" },
-      locs: [
-        { a: 443, b: 450 },
-        { a: 488, b: 495 },
-      ],
+      locs: [{ a: 120, b: 129 }],
     },
   ],
   statement:
-    "select\n\tthreads.id,\n\tthreads.title,\n\tthreads.created_at,\n\tthreads.channel_id\nfrom app_public.threads\nleft join app_public.channels on threads.channel_id = channels.id\nleft join app_public.channel_memberships on channels.id = channel_memberships.channel_id\nleft join app_public.organisation_memberships on channels.organisation_id = organisation_memberships.organisation_id\nwhere threads.id = :threadId!\n\tand organisation_memberships.user_id = :userId!\n\tand (channel_memberships.user_id = :userId! or channels.is_public = true)\ngroup by threads.id",
+    "select\n\tthreads.id,\n\tthreads.title,\n\tthreads.created_at,\n\tthreads.channel_id\nfrom app_public.threads\nwhere threads.id = :threadId!",
 };
 
 /**
@@ -62,13 +51,7 @@ const selectThreadByIdIR: any = {
  * 	threads.created_at,
  * 	threads.channel_id
  * from app_public.threads
- * left join app_public.channels on threads.channel_id = channels.id
- * left join app_public.channel_memberships on channels.id = channel_memberships.channel_id
- * left join app_public.organisation_memberships on channels.organisation_id = organisation_memberships.organisation_id
  * where threads.id = :threadId!
- * 	and organisation_memberships.user_id = :userId!
- * 	and (channel_memberships.user_id = :userId! or channels.is_public = true)
- * group by threads.id
  * ```
  */
 export const selectThreadById = new PreparedQuery<
@@ -76,13 +59,13 @@ export const selectThreadById = new PreparedQuery<
   SelectThreadByIdResult
 >(selectThreadByIdIR);
 
-/** 'UnsafelySelectPostsForThread' parameters type */
-export interface UnsafelySelectPostsForThreadParams {
+/** 'SelectPostsForThread' parameters type */
+export interface SelectPostsForThreadParams {
   threadId: string;
 }
 
-/** 'UnsafelySelectPostsForThread' return type */
-export interface UnsafelySelectPostsForThreadResult {
+/** 'SelectPostsForThread' return type */
+export interface SelectPostsForThreadResult {
   authorId: string;
   avatarUrl: string | null;
   content: Json;
@@ -91,13 +74,13 @@ export interface UnsafelySelectPostsForThreadResult {
   id: string;
 }
 
-/** 'UnsafelySelectPostsForThread' query type */
-export interface UnsafelySelectPostsForThreadQuery {
-  params: UnsafelySelectPostsForThreadParams;
-  result: UnsafelySelectPostsForThreadResult;
+/** 'SelectPostsForThread' query type */
+export interface SelectPostsForThreadQuery {
+  params: SelectPostsForThreadParams;
+  result: SelectPostsForThreadResult;
 }
 
-const unsafelySelectPostsForThreadIR: any = {
+const selectPostsForThreadIR: any = {
   usedParamSet: { threadId: true },
   params: [
     {
@@ -127,13 +110,13 @@ const unsafelySelectPostsForThreadIR: any = {
  * order by posts.created_at
  * ```
  */
-export const unsafelySelectPostsForThread = new PreparedQuery<
-  UnsafelySelectPostsForThreadParams,
-  UnsafelySelectPostsForThreadResult
->(unsafelySelectPostsForThreadIR);
+export const selectPostsForThread = new PreparedQuery<
+  SelectPostsForThreadParams,
+  SelectPostsForThreadResult
+>(selectPostsForThreadIR);
 
-/** 'UnsafelyInsertNewPostForThread' parameters type */
-export interface UnsafelyInsertNewPostForThreadParams {
+/** 'InsertNewPostForThread' parameters type */
+export interface InsertNewPostForThreadParams {
   newPost: {
     threadId: string;
     authorId: string;
@@ -142,8 +125,8 @@ export interface UnsafelyInsertNewPostForThreadParams {
   };
 }
 
-/** 'UnsafelyInsertNewPostForThread' return type */
-export interface UnsafelyInsertNewPostForThreadResult {
+/** 'InsertNewPostForThread' return type */
+export interface InsertNewPostForThreadResult {
   authorId: string;
   content: Json;
   contentPlain: string;
@@ -152,13 +135,13 @@ export interface UnsafelyInsertNewPostForThreadResult {
   threadId: string;
 }
 
-/** 'UnsafelyInsertNewPostForThread' query type */
-export interface UnsafelyInsertNewPostForThreadQuery {
-  params: UnsafelyInsertNewPostForThreadParams;
-  result: UnsafelyInsertNewPostForThreadResult;
+/** 'InsertNewPostForThread' query type */
+export interface InsertNewPostForThreadQuery {
+  params: InsertNewPostForThreadParams;
+  result: InsertNewPostForThreadResult;
 }
 
-const unsafelyInsertNewPostForThreadIR: any = {
+const insertNewPostForThreadIR: any = {
   usedParamSet: { newPost: true },
   params: [
     {
@@ -188,16 +171,13 @@ const unsafelyInsertNewPostForThreadIR: any = {
  * returning id, thread_id, author_id, content, content_plain, created_at
  * ```
  */
-export const unsafelyInsertNewPostForThread = new PreparedQuery<
-  UnsafelyInsertNewPostForThreadParams,
-  UnsafelyInsertNewPostForThreadResult
->(unsafelyInsertNewPostForThreadIR);
+export const insertNewPostForThread = new PreparedQuery<
+  InsertNewPostForThreadParams,
+  InsertNewPostForThreadResult
+>(insertNewPostForThreadIR);
 
-/** 'UnsafelyInsertNewThreadInChannel' parameters type */
-export interface UnsafelyInsertNewThreadInChannelParams {
-  initalPostContent: Json;
-  initalPostContentPlain: string;
-  initialPostAuthorId: string;
+/** 'InsertNewThreadInChannel' parameters type */
+export interface InsertNewThreadInChannelParams {
   newThread: {
     channelId: string;
     authorId: string;
@@ -205,31 +185,24 @@ export interface UnsafelyInsertNewThreadInChannelParams {
   };
 }
 
-/** 'UnsafelyInsertNewThreadInChannel' return type */
-export interface UnsafelyInsertNewThreadInChannelResult {
+/** 'InsertNewThreadInChannel' return type */
+export interface InsertNewThreadInChannelResult {
   authorId: string;
   channelId: string;
-  content: Json;
-  contentPlain: string;
+  closedAt: Date | null;
   createdAt: Date;
-  postId: string;
-  threadId: string;
+  id: string;
   title: string;
 }
 
-/** 'UnsafelyInsertNewThreadInChannel' query type */
-export interface UnsafelyInsertNewThreadInChannelQuery {
-  params: UnsafelyInsertNewThreadInChannelParams;
-  result: UnsafelyInsertNewThreadInChannelResult;
+/** 'InsertNewThreadInChannel' query type */
+export interface InsertNewThreadInChannelQuery {
+  params: InsertNewThreadInChannelParams;
+  result: InsertNewThreadInChannelResult;
 }
 
-const unsafelyInsertNewThreadInChannelIR: any = {
-  usedParamSet: {
-    newThread: true,
-    initialPostAuthorId: true,
-    initalPostContent: true,
-    initalPostContentPlain: true,
-  },
+const insertNewThreadInChannelIR: any = {
+  usedParamSet: { newThread: true },
   params: [
     {
       name: "newThread",
@@ -242,57 +215,22 @@ const unsafelyInsertNewThreadInChannelIR: any = {
           { name: "title", required: true },
         ],
       },
-      locs: [{ a: 92, b: 102 }],
-    },
-    {
-      name: "initialPostAuthorId",
-      required: true,
-      transform: { type: "scalar" },
-      locs: [{ a: 254, b: 274 }],
-    },
-    {
-      name: "initalPostContent",
-      required: true,
-      transform: { type: "scalar" },
-      locs: [{ a: 277, b: 295 }],
-    },
-    {
-      name: "initalPostContentPlain",
-      required: true,
-      transform: { type: "scalar" },
-      locs: [{ a: 298, b: 321 }],
+      locs: [{ a: 69, b: 79 }],
     },
   ],
   statement:
-    'with new_thread as (\n\tinsert into app_public.threads (channel_id, author_id, title)\n\tvalues :newThread!\n\treturning id, channel_id, title\n), new_post as (\n\tinsert into app_public.posts (thread_id, author_id, content, content_plain)\n\tselect new_thread.id, :initialPostAuthorId!, :initalPostContent!, :initalPostContentPlain!\n\tfrom new_thread\n\treturning id, thread_id, author_id, content, content_plain, created_at\n) \nselect \n\tnew_thread.id as "thread_id",\n\tnew_thread.channel_id,\n\tnew_thread.title,\n\tnew_post.id as "post_id",\n\tnew_post.author_id,\n\tnew_post.content,\n\tnew_post.content_plain,\n\tnew_post.created_at\nfrom new_thread, new_post',
+    "insert into app_public.threads (channel_id, author_id, title)\nvalues :newThread!\nreturning id, channel_id, title, created_at, author_id, closed_at",
 };
 
 /**
  * Query generated from SQL:
  * ```
- * with new_thread as (
- * 	insert into app_public.threads (channel_id, author_id, title)
- * 	values :newThread!
- * 	returning id, channel_id, title
- * ), new_post as (
- * 	insert into app_public.posts (thread_id, author_id, content, content_plain)
- * 	select new_thread.id, :initialPostAuthorId!, :initalPostContent!, :initalPostContentPlain!
- * 	from new_thread
- * 	returning id, thread_id, author_id, content, content_plain, created_at
- * )
- * select
- * 	new_thread.id as "thread_id",
- * 	new_thread.channel_id,
- * 	new_thread.title,
- * 	new_post.id as "post_id",
- * 	new_post.author_id,
- * 	new_post.content,
- * 	new_post.content_plain,
- * 	new_post.created_at
- * from new_thread, new_post
+ * insert into app_public.threads (channel_id, author_id, title)
+ * values :newThread!
+ * returning id, channel_id, title, created_at, author_id, closed_at
  * ```
  */
-export const unsafelyInsertNewThreadInChannel = new PreparedQuery<
-  UnsafelyInsertNewThreadInChannelParams,
-  UnsafelyInsertNewThreadInChannelResult
->(unsafelyInsertNewThreadInChannelIR);
+export const insertNewThreadInChannel = new PreparedQuery<
+  InsertNewThreadInChannelParams,
+  InsertNewThreadInChannelResult
+>(insertNewThreadInChannelIR);

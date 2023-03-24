@@ -17,10 +17,7 @@ export const threadsRouter = router({
       })
     )
     .query(({ input, ctx }) => {
-      return getThreadById(
-        { userId: ctx.userId, threadId: input.threadId },
-        ctx.pgConnection
-      );
+      return getThreadById({ threadId: input.threadId }, ctx.pgConnection);
     }),
 
   createNewThread: userProcedure
