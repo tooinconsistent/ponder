@@ -17,7 +17,7 @@ export const init = (app: App) => {
       // const thread = app.store.threads[threadId];
       // const channelId = thread?.channelId ?? "";
       // executeCommand("view.openChannel", { channelId });
-\    },
+    },
     when: () => {
       return app.store.view.currentView === "thread";
     },
