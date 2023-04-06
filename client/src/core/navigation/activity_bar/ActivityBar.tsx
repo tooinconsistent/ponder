@@ -1,24 +1,25 @@
 import { Component, For, JSX } from "solid-js";
 
-import { ActionExecutor, useStore } from "@ponder/client/store/app.jsx";
-import { SideBarTabs } from "@ponder/client/store/side_bar.ts";
+import { useStore } from "@ponder/client/store/app.tsx";
+import { SideBarTabs } from "@ponder/client/core/navigation/side_bar/mod.ts";
 
 import { ActivityBarButton } from "./ActivityBarButton.jsx";
 
 import { ChatBubbles } from "./icons/ChatBubbles.jsx";
+import { executeCommand } from "@ponder/client/lib/commands/commands.js";
 // import { Inbox } from "./icons/Inbox.jsx";
 // import { Cog } from "./icons/Cog.jsx";
 
 type Activities = SideBarTabs;
 
 export const ActivityBar: Component = (_props) => {
-  const { store, actions } = useStore();
+  const { store } = useStore();
 
   // TODO: remove the ignore once other stuff is ready
   // @ts-expect-error TEMPORARY HACK
   const activities: Record<
     Activities,
-    { icon: JSX.Element; openAction: ActionExecutor }
+    { icon: JSX.Element; openCommand: string }
   > = {
     // inbox: {
     //   icon: <Inbox />,
@@ -26,7 +27,7 @@ export const ActivityBar: Component = (_props) => {
     // },
     channels: {
       icon: <ChatBubbles />,
-      openAction: actions.openChannels,
+      openCommand: "sideBar.openChannels",
     },
     // settings: {
     //   icon: <Cog />,
@@ -52,9 +53,9 @@ export const ActivityBar: Component = (_props) => {
                 e.preventDefault();
 
                 if (store.sideBar.currentTab === activityId) {
-                  actions.toggleSideBar({});
+                  executeCommand("sideBar.toggle");
                 } else {
-                  activities[activityId].openAction({});
+                  executeCommand(activities[activityId].openCommand);
                 }
               }}
             >
@@ -73,9 +74,9 @@ export const ActivityBar: Component = (_props) => {
                 e.preventDefault();
 
                 if (store.sideBar.currentTab === activityId) {
-                  actions.toggleSideBar({});
+                  executeCommand("sideBar.toggle");
                 } else {
-                  activities[activityId].openAction({});
+                  executeCommand(activities[activityId].openCommand);
                 }
               }}
             >

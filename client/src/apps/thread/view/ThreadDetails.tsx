@@ -1,6 +1,7 @@
 import { Component, Show } from "solid-js";
 
 import { useStore } from "@ponder/client/store/app.jsx";
+import { executeCommand } from "@ponder/client/lib/commands/commands";
 
 interface ThreadDetailsProps {
   title: string;
@@ -8,13 +9,11 @@ interface ThreadDetailsProps {
 }
 
 export const ThreadDetails: Component<ThreadDetailsProps> = (props) => {
-  const { store, actions } = useStore();
+  const { store } = useStore();
 
   const channelName = () => {
-    const channel = store.channels.channels?.find(
-      (c) => c.id === props.channelId
-    );
-    return channel?.name ?? "";
+    const [channel] = store.channels.channel(props.channelId ?? "");
+    return channel()?.name ?? "";
   };
 
   return (
@@ -23,9 +22,7 @@ export const ThreadDetails: Component<ThreadDetailsProps> = (props) => {
         <Show when={props.channelId}>
           <div
             onClick={() => {
-              actions.openChannel({
-                channelId: props.channelId,
-              });
+              executeCommand("thread.backToChannel");
             }}
             class="w-40 max-w-fit cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap rounded-md bg-[var(--thread-metaDetailsActionBackground)] px-2 py-1 text-sm hover:bg-[var(--thread-metaDetailsActionHoveredBackground)]"
           >

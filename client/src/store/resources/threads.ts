@@ -1,6 +1,8 @@
 import { trpc } from "@ponder/client/lib/trpc";
 import { ResourceReturn, createResource } from "solid-js";
 
+import { App } from "../app";
+
 interface Thread {
   channelId: string;
   createdAt: Date;
@@ -18,13 +20,11 @@ interface Thread {
   }>;
 }
 
-interface ThreadsStore {
+export interface ThreadsStore {
   thread: (threadId: string) => ResourceReturn<Thread>;
 }
 
-export const id = "threads";
-
-export const init = (): ThreadsStore => {
+export const init = (app: App) => {
   const threads = new Map<string, ResourceReturn<Thread>>();
 
   const getThread = (threadId: string) => {
@@ -45,5 +45,5 @@ export const init = (): ThreadsStore => {
     },
   };
 
-  return store;
+  app.setStore("threads", store);
 };

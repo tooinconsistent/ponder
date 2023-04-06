@@ -1,3 +1,4 @@
+import { App } from "../app.tsx";
 import { applicationSettings } from "./applicationSettings.ts";
 
 type ApplicationSettings = {
@@ -8,9 +9,7 @@ export interface SettingsStore {
   applicationSettings: ApplicationSettings;
 }
 
-const id = "settings";
-
-const init = (): SettingsStore => {
+export const init = (app: App) => {
   const userSettings = {};
 
   const defaultSettings = (
@@ -26,16 +25,5 @@ const init = (): SettingsStore => {
     applicationSettings: { ...defaultSettings, ...userSettings },
   };
 
-  return store;
-};
-
-const actions = [] as const;
-
-const effects = [] as const;
-
-export const settings = {
-  id,
-  init,
-  actions,
-  effects,
+  app.setStore("settings", store);
 };

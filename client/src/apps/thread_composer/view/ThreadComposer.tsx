@@ -11,9 +11,10 @@ import { classes } from "@ponder/client/lib/classes.ts";
 import { buttonClasses } from "@ponder/client/atoms/button.ts";
 
 import { ThreadDetails } from "./ThreadDetails.jsx";
+import { executeCommand } from "@ponder/client/lib/commands/commands.js";
 
 export const ThreadComposer: Component = (_props) => {
-  const { store, actions } = useStore();
+  const { store } = useStore();
 
   const [editor, setEditor] = createSignal<Editor>();
   const [isEditorEmpty, setIsEditorEmpty] = createSignal(true);
@@ -78,11 +79,22 @@ export const ThreadComposer: Component = (_props) => {
       });
 
       if (newThread) {
-        actions.openThread({ threadId: newThread.id });
+        const [_channel, { refetch: refetchChannel }] =
+          store.channels.channel(channelId);
+        void refetchChannel();
+
+        executeCommand("view.openThread", { threadId: newThread.id });
       }
     } catch (error) {
       setIsSubmitting(false);
     }
+  };
+
+  const channelName = () => {
+    const channelId = store.view.currentViewProps?.channelId;
+
+    const [channel] = store.channels.channel(channelId ?? "");
+    return channel()?.name ?? "";
   };
 
   return (
@@ -96,7 +108,7 @@ export const ThreadComposer: Component = (_props) => {
           <div class="flex w-full max-w-xl flex-col rounded-md border border-[var(--threadComposer-border)] bg-[var(--threadComposer-background)] px-4 py-2">
             <div class="flex items-center border-b border-b-[var(--threadComposer-separator)] p-1">
               <div class="mr-2 text-xs uppercase">Create in: </div>
-              <div>{store.view.currentViewProps?.channelId}</div>
+              <div class="text-sm">{channelName()}</div>
             </div>
             <input
               class="mt-2 max-h-full w-full border-b border-b-transparent bg-[var(--threadComposer-background)] p-1 text-2xl font-medium text-[var(--textHeader-foreground)] placeholder:text-[var(--textPlaceholder-foreground)] focus:border-b-[var(--threadComposer-focusedBorder)] focus:outline-none"

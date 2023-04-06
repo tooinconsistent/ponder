@@ -1,7 +1,7 @@
 import { createEffect } from "solid-js";
 
 import { AppStore } from "@ponder/client/store/registry.ts";
-import { ActionExecutor, AppActions } from "@ponder/client/store/app.jsx";
+import { App } from "@ponder/client/store/app.jsx";
 
 import { routes } from "./routes.ts";
 import { injectValuesIntoRoute, routeToRegex } from "./routeHelper.ts";
@@ -12,10 +12,7 @@ const routeMatchers = routes.map((route) => ({
 }));
 
 export class Router {
-  constructor(
-    private store: AppStore,
-    private actions: Record<AppActions, ActionExecutor>
-  ) {}
+  constructor(private store: AppStore) {}
 
   matchPath = (path: string) => {
     let matchingRoute = routeMatchers.find((routeMatcher) =>
@@ -47,7 +44,7 @@ export class Router {
         routeParams
       )}`
     );
-    return matchingRoute.handler(this.actions, routeParams);
+    return matchingRoute.handler(routeParams);
   };
 
   clickListener = (event: MouseEvent) => {
@@ -121,11 +118,8 @@ export class Router {
   };
 }
 
-export const startRouting = (
-  actions: Record<AppActions, ActionExecutor>,
-  store: AppStore
-) => {
-  const router = new Router(store, actions);
+export const startRouting = ({ store }: App) => {
+  const router = new Router(store);
 
   // Attach to the browser event handlers
   router.attachListeners();

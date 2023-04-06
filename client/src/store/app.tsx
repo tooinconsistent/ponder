@@ -1,79 +1,67 @@
 import { ParentComponent, createContext, useContext } from "solid-js";
 import { SetStoreFunction, createStore } from "solid-js/store";
 
-import { AppStore, registry } from "./registry.ts";
-import { initialiseShortcuts } from "../lib/keybindings/shortcuts.ts";
+import { AppStore } from "./registry.ts";
 import { startRouting } from "../lib/router/router.ts";
 
 import { init as initChannel } from "../apps/channel/mod.ts";
+import { init as initThread } from "../apps/thread/mod.ts";
 import { init as initThreadComposer } from "../apps/thread_composer/mod.ts";
+
+import { init as initChannels } from "../sidebar_apps/channels/mod.ts";
+
+import { init as initThreadResource } from "./resources/threads.ts";
+import { init as initChannelResource } from "./resources/channels.ts";
+import { init as initUsersResource } from "./resources/users.ts";
+
+import { init as initView } from "../core/view/mod.ts";
 import { init as initPalette } from "../core/command_palette/mod.ts";
+import { init as initSideBar } from "../core/navigation/side_bar/mod.ts";
+
 import { initialiseKeyBindings } from "../lib/keybindings/keybindings.ts";
-
-export interface ActionProps<T = never> {
-  store: AppStore;
-  setStore: SetStoreFunction<AppStore>;
-  params: T;
-}
-
-export interface ActionDefinition<T = never> {
-  readonly id: string;
-  readonly title: string;
-  readonly subtitle?: string;
-  readonly shortcut?: string;
-  readonly perform: ({ store, setStore, params }: ActionProps<T>) => void;
-}
+import { sortPaletteCommands } from "../lib/commands/palette.ts";
 
 export interface App {
   store: AppStore;
   setStore: SetStoreFunction<AppStore>;
 }
 
-// Actions
-const actions = registry.map((store) => store.actions).flat();
-
-export type AppActions = (typeof actions)[number]["id"];
-export type ActionExecutor = <T>(params: T) => void;
-
 const AppStoreContext = createContext<{
   store: AppStore;
-  actions: Record<AppActions, ActionExecutor>;
 }>();
 
 export const AppStoreProvider: ParentComponent = (props) => {
   // Get inital store values
-  const initialStore = registry.reduce<AppStore>((appStore, currentStore) => {
-    return { ...appStore, [currentStore.id]: currentStore.init() };
-  }, {} as AppStore);
-
-  const [store, setStore] = createStore<AppStore>(initialStore);
+  const [store, setStore] = createStore<AppStore>({} as AppStore);
 
   const app = { store, setStore };
 
+  // Initialise core
+  initView(app);
   initPalette(app);
+  initialiseKeyBindings();
+  initSideBar(app);
+
+  // Initialise apps
   initChannel(app);
+  initThread(app);
   initThreadComposer(app);
 
-  initialiseKeyBindings();
+  // Initialise sidebar apps
+  initChannels(app);
 
-  const actionPerformers = actions.reduce<Record<AppActions, ActionExecutor>>(
-    (acc, action) => {
-      return {
-        ...acc,
-        [action.id]: (params: unknown) => {
-          console.debug(`app :: executing action :: ${action.id}`);
-          action.perform({ store, setStore, params: params as never });
-        },
-      };
-    },
-    {} as Record<AppActions, ActionExecutor>
-  );
+  // Initialise resources
+  initThreadResource(app);
+  initChannelResource(app);
+  initUsersResource(app);
 
-  initialiseShortcuts(actions, store, setStore);
-  startRouting(actionPerformers, store);
+  // Various random bits
+  sortPaletteCommands();
+  // Start routing
+  startRouting(app);
 
   return (
-    <AppStoreContext.Provider value={{ store, actions: actionPerformers }}>
+    <AppStoreContext.Provider value={{ store }}>
       {props.children}
     </AppStoreContext.Provider>
   );

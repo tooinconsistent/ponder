@@ -1,6 +1,8 @@
 import { createResource } from "solid-js";
 
-import { trpc } from "../lib/trpc.ts";
+import { trpc } from "../../lib/trpc.ts";
+
+import { App } from "../app.tsx";
 
 export interface UsersStore {
   currentUserProfile:
@@ -16,9 +18,7 @@ export interface UsersStore {
     | undefined;
 }
 
-const id = "users";
-
-const init = (): UsersStore => {
+export const init = (app: App) => {
   const [currentUserProfile] = createResource(() => {
     return trpc.user.getMyProfile.query();
   });
@@ -29,16 +29,5 @@ const init = (): UsersStore => {
     },
   };
 
-  return store;
-};
-
-const actions = [] as const;
-
-const effects = [] as const;
-
-export const users = {
-  id,
-  init,
-  actions,
-  effects,
+  app.setStore("users", store);
 };

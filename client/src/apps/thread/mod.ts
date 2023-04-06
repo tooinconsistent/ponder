@@ -1,3 +1,6 @@
+import { Static, Type } from "@sinclair/typebox";
+import { produce } from "solid-js/store";
+
 import { App } from "@ponder/client/store/app";
 
 import {
@@ -7,16 +10,35 @@ import {
 import { addToPalette } from "@ponder/client/lib/commands/palette";
 
 export const init = (app: App) => {
+  const OpenThreadParams = Type.Object({
+    threadId: Type.String(),
+  });
+
+  registerCommand({
+    id: "view.openThread",
+    name: "View: Open Thread",
+    description: "Opens specified Thread.",
+    paramsSchema: OpenThreadParams,
+    handler: (params: Static<typeof OpenThreadParams>) => {
+      app.setStore(
+        produce((s) => {
+          s.view.currentView = "thread";
+          s.view.currentViewProps = { threadId: params.threadId };
+        })
+      );
+    },
+  });
+
   registerCommand({
     id: "thread.backToChannel",
-    name: "Back to channel",
+    name: "Thread: Back to channel",
     description: "Goes back to the channel",
     paramsSchema: null,
     handler: () => {
       const threadId = app.store.view.currentViewProps?.threadId ?? "";
-      // const thread = app.store.threads[threadId];
-      // const channelId = thread?.channelId ?? "";
-      // executeCommand("view.openChannel", { channelId });
+      const [thread] = app.store.threads.thread(threadId);
+      const channelId = thread()?.channelId ?? "";
+      executeCommand("view.openChannel", { channelId });
     },
     when: () => {
       return app.store.view.currentView === "thread";

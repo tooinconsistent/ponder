@@ -1,4 +1,4 @@
-import { Component, For, createResource } from "solid-js";
+import { Component, For } from "solid-js";
 import { JSONContent } from "@tiptap/core";
 
 import { onMount } from "solid-js";
@@ -13,15 +13,9 @@ import { Post } from "./Post.jsx";
 export const Thread: Component = (_props) => {
   const { store } = useStore();
 
-  const [thread, { mutate: mutateThread }] = createResource(
-    () => store.view.currentViewProps?.threadId,
-    async (currentThreadId) => {
-      const threadDetails = await trpc.threads.getById.query({
-        threadId: currentThreadId,
-      });
-      return threadDetails;
-    }
-  );
+  const thread = () => {
+    return store.threads.thread(store.view.currentViewProps?.threadId ?? "");
+  };
 
   // TODO: Scroll to unread
   const scrollToLastPost = (smoothly?: boolean) => {
@@ -39,7 +33,7 @@ export const Thread: Component = (_props) => {
   });
 
   const submitHandler = async (content: JSONContent, contentPlain: string) => {
-    const threadId = thread()?.id;
+    const threadId = thread()[0].latest?.id;
     if (!threadId) {
       throw new Error("Thread :: submitting without a thread id");
     }
@@ -50,11 +44,7 @@ export const Thread: Component = (_props) => {
       contentPlain,
     });
 
-    if (newPost === null) {
-      throw new Error("Thread :: got back null from mutation");
-    }
-
-    mutateThread((currentThread) => {
+    thread()[1].mutate((currentThread) => {
       if (currentThread) {
         return {
           ...currentThread,
@@ -80,13 +70,13 @@ export const Thread: Component = (_props) => {
     <div class="flex h-full justify-center">
       <div class="flex h-full max-w-6xl flex-1 flex-col">
         <ThreadDetails
-          title={thread.latest?.title ?? ""}
-          channelId={thread.latest?.channelId}
+          title={thread()[0].latest?.title ?? ""}
+          channelId={thread()[0].latest?.channelId}
         />
         <div class="flex flex-1 justify-center overflow-y-auto p-8">
           <div class="w-full max-w-xl">
             <ul role="list">
-              <For each={thread.latest?.posts}>
+              <For each={thread()[0].latest?.posts}>
                 {(post, _idx) => (
                   <Post
                     content={post.content as JSONContent}
