@@ -1,14 +1,16 @@
-version: '3.9'
+version: "3.9"
 services:
   api:
     build:
       context: ../api
       dockerfile: Dockerfile.api
     volumes:
-      - ../api/src:/app/src
-    network_mode: service:db
+      - ../api/src:/app/api/
     environment:
       - PORT=3000
+      - DATABASE_URL=postgresql://ponder_user:postgres@inconsistent_db:5432/ponder
+    ports:
+      - "3000:3000"
     command: bun run bun:dev
   client:
     build:
@@ -17,18 +19,21 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - ../client/src:/app/src
+      - ../client/src:/app/client/
+      - /app/client/node_modules
+    stdin_open: true
+    tty: true
     command: npm run dev
-  db:
+  inconsistent_db:
     image: postgres:15
     container_name: inconsistent_db
     restart: always
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=postgres
+      - POSTGRES_USER=ponder_user
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=ponder
       - POSTGRES_PORT=5432
     volumes:
       - ./pgdata:/var/lib/postgresql/data
