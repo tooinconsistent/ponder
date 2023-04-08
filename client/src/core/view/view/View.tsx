@@ -4,10 +4,10 @@ import { useStore } from "@ponder/client/store/app.jsx";
 
 import { Channel } from "@ponder/client/apps/channel/view/Channel.jsx";
 
-import { Thread } from "@ponder/client/apps/thread/Thread.jsx";
+import { Thread } from "@ponder/client/apps/thread/view/Thread.jsx";
 import { ThreadComposer } from "@ponder/client/apps/thread_composer/view/ThreadComposer.jsx";
 
-import { AdvancedAppSettings } from "@ponder/client/apps/advanced_app_settings/AdvancedAppSettings.jsx";
+import { AdvancedAppSettings } from "@ponder/client/apps/advanced_app_settings/view/AdvancedAppSettings.jsx";
 
 export const View: Component = (_props) => {
   const { store } = useStore();

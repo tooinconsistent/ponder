@@ -1,13 +1,13 @@
 import { Component, For } from "solid-js";
 
-import { useStore } from "@ponder/client/store/app.jsx";
+import { useStore } from "@ponder/client/store/app.tsx";
 import { classes } from "@ponder/client/lib/classes.ts";
 
-import { SideBarViewTitle } from "../../core/navigation/side_bar/SideBarViewTitle.jsx";
-import { SidebarSection } from "../../core/navigation/side_bar/SidebarSection.jsx";
+import { SideBarViewTitle } from "@ponder/client/atoms/SideBarViewTitle.tsx";
+import { SidebarSection } from "@ponder/client/atoms/SidebarSection.tsx";
 
 export const ChannelsSideBarView: Component = (_props) => {
-  const { actions, store } = useStore();
+  const { store } = useStore();
 
   const currentChannel = () => {
     return (
@@ -17,8 +17,8 @@ export const ChannelsSideBarView: Component = (_props) => {
   };
 
   const sortedChannels = () => {
-    const channels = store.channels.channels ?? [];
-    const sortedCopy = [...channels].sort((a, b) =>
+    const [channels] = store.channels.listAll();
+    const sortedCopy = [...(channels() ?? [])].sort((a, b) =>
       a.name.localeCompare(b.name)
     );
 
@@ -31,12 +31,10 @@ export const ChannelsSideBarView: Component = (_props) => {
       <SidebarSection sectionTitle="All Channels">
         <For each={sortedChannels()}>
           {(channel) => (
-            <div
-              onClick={() => {
-                actions.openChannel({ channelId: channel.id });
-              }}
+            <a
+              href={`/channel/${channel.id}`}
               class={classes(
-                "cursor-pointer px-4 py-1 text-sm font-light",
+                "block cursor-pointer px-4 py-1 text-sm font-light",
                 currentChannel() !== channel.id &&
                   "hover:bg-[var(--list-hoverBackground)] hover:text-[var(--list-hoverForeground)]",
                 currentChannel() === channel.id &&
@@ -44,7 +42,7 @@ export const ChannelsSideBarView: Component = (_props) => {
               )}
             >
               # {channel.name}
-            </div>
+            </a>
           )}
         </For>
       </SidebarSection>

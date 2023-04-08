@@ -105,67 +105,98 @@ export const CommandPalette: Component = () => {
     deregisterHandlers("commandPalette.selectNext");
   });
 
+  // hide the command palette when clicking outside of it
+  const hideClickHandler = (e: MouseEvent) => {
+    if (
+      e.target instanceof HTMLElement &&
+      e.target.closest("#command-palette")
+    ) {
+      return;
+    }
+    executeCommand("commandPalette.hide");
+  };
+
+  onMount(() => {
+    document.addEventListener("click", hideClickHandler);
+  });
+
+  onCleanup(() => {
+    document.removeEventListener("click", hideClickHandler);
+  });
+
   return (
-    <div class="absolute left-[calc(50%-min(40rem,80vw)/2)] top-0 z-50 w-[calc(min(40rem,80vw))] rounded-sm border border-[var(--commandPalette-border)] bg-[var(--commandPalette-background)] text-[var(--commandPalette-foreground)]">
-      <div class="p-1 px-2">
-        <input
-          onInput={(e) => {
-            const idxs = u.filter(commandNames, e.currentTarget.value);
-            if (!idxs) {
-              setSearchResults(null);
-              return;
-            }
-            const info = u.info(idxs, commandNames, e.currentTarget.value);
-            const order = u.sort(info, commandNames, e.currentTarget.value);
-
-            setSelectionIdx(0);
-            setSearchResults({ idxs, info, order });
-          }}
-          ref={inputRef}
-          class="w-full border border-[var(--input-border)] bg-[var(--input-background)] px-1 py-0.5 text-sm focus:border-[var(--base-focusBorder)] focus:outline-none"
-        />
-      </div>
-
-      <div class="max-h-96 overflow-y-scroll p-1 px-2 pb-2">
-        <Show
-          when={searchResults()}
-          keyed
-          fallback={() => (
-            <>
-              {
-                // eslint-disable-next-line solid/prefer-for
-                commands.map((cmd, idx) => (
-                  <CommandPaletteRow selected={selectionIdx() === idx}>
-                    {cmd.name}
-                  </CommandPaletteRow>
-                ))
+    <>
+      <div
+        id="command-palette"
+        class="absolute left-[calc(50%-min(40rem,80vw)/2)] top-0 z-50 w-[calc(min(40rem,80vw))] rounded-sm border border-[var(--commandPalette-border)] bg-[var(--commandPalette-background)] text-[var(--commandPalette-foreground)]"
+      >
+        <div class="p-1 px-2">
+          <input
+            onInput={(e) => {
+              const idxs = u.filter(commandNames, e.currentTarget.value);
+              if (!idxs) {
+                setSearchResults(null);
+                return;
               }
-            </>
-          )}
-        >
-          {(res) => (
-            <>
-              {
-                // eslint-disable-next-line solid/prefer-for
-                res.order.map((infoIdx, idx) => {
-                  const parts = uFuzzy.highlight(
-                    commandNames[res.info.idx[infoIdx]],
-                    res.info.ranges[infoIdx],
-                    mark,
-                    [],
-                    append
-                  );
-                  return (
-                    <CommandPaletteRow selected={selectionIdx() === idx}>
-                      {parts}
+              const info = u.info(idxs, commandNames, e.currentTarget.value);
+              const order = u.sort(info, commandNames, e.currentTarget.value);
+
+              setSelectionIdx(0);
+              setSearchResults({ idxs, info, order });
+            }}
+            ref={inputRef}
+            class="w-full border border-[var(--input-border)] bg-[var(--input-background)] px-1 py-0.5 text-sm focus:border-[var(--base-focusBorder)] focus:outline-none"
+          />
+        </div>
+
+        <div class="max-h-96 overflow-y-scroll p-1 px-2 pb-2">
+          <Show
+            when={searchResults()}
+            keyed
+            fallback={() => (
+              <>
+                {
+                  // eslint-disable-next-line solid/prefer-for
+                  commands.map((cmd, idx) => (
+                    <CommandPaletteRow
+                      selected={selectionIdx() === idx}
+                      command={cmd}
+                    >
+                      {cmd.name}
                     </CommandPaletteRow>
-                  );
-                })
-              }
-            </>
-          )}
-        </Show>
+                  ))
+                }
+              </>
+            )}
+          >
+            {(res) => (
+              <>
+                {
+                  // eslint-disable-next-line solid/prefer-for
+                  res.order.map((infoIdx, idx) => {
+                    const parts = uFuzzy.highlight(
+                      commandNames[res.info.idx[infoIdx]],
+                      res.info.ranges[infoIdx],
+                      mark,
+                      [],
+                      append
+                    );
+                    const cmd = commands[res.info.idx[infoIdx]];
+                    return (
+                      <CommandPaletteRow
+                        selected={selectionIdx() === idx}
+                        command={cmd}
+                      >
+                        {parts}
+                      </CommandPaletteRow>
+                    );
+                  })
+                }
+              </>
+            )}
+          </Show>
+        </div>
       </div>
-    </div>
+    </>
   );
 };

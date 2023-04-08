@@ -1,7 +1,7 @@
 import { Component } from "solid-js";
 
 import { ActivityBar } from "./activity_bar/ActivityBar.jsx";
-import { SideBar } from "./side_bar/SideBar.jsx";
+import { SideBar } from "./side_bar/view/SideBar.jsx";
 
 export const Navigation: Component = (_props) => {
   return (

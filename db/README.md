@@ -5,3 +5,9 @@ This project is based on top of graphile-migrate. Please make sure to read its [
 ## DB conventions
 
 All the conventions are documented in [CONVENTIONS.md](./CONVENTIONS.md).
+
+## DB setup
+```
+create role ponder_user;
+grant ponder_user to ponder;
+```

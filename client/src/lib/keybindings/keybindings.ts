@@ -11,6 +11,7 @@ interface KeyBinding {
 const bindings: KeyBinding[] = [
   { key: "$mod+k", command: "commandPalette.show" },
   { key: "Escape", command: "commandPalette.hide", everywhere: true },
+  { key: "Escape", command: "thread.backToChannel" },
   {
     key: "ArrowUp",
     command: "commandPalette.selectPrevious",
@@ -29,6 +30,7 @@ const bindings: KeyBinding[] = [
     everywhere: true,
   },
   { key: "c", command: "channel.newThread" },
+  { key: "$mod+Shift+b", command: "sideBar.toggle" },
 ];
 
 export const initialiseKeyBindings = () => {
@@ -63,7 +65,13 @@ export const initialiseKeyBindings = () => {
             return;
           }
 
+          let handled = false;
+
           keyBindings?.forEach((keyBinding) => {
+            if (handled) {
+              return;
+            }
+
             console.debug(
               `keybindings :: got shortcut for command :: ${keyBinding.command}`
             );
@@ -92,6 +100,8 @@ export const initialiseKeyBindings = () => {
 
             e.preventDefault();
             e.stopPropagation();
+
+            handled = true;
           });
         },
       };

@@ -6,6 +6,19 @@ interface PaletteCommand {
 
 const paletteCommands: PaletteCommand[] = [];
 
+export const sortPaletteCommands = () => {
+  paletteCommands.sort((a, b) => {
+    const commandA = registeredCommands.get(a.id);
+    const commandB = registeredCommands.get(b.id);
+
+    if (!commandA || !commandB) {
+      return 0;
+    }
+
+    return commandA.name.localeCompare(commandB.name);
+  });
+};
+
 export const addToPalette = (command: PaletteCommand) => {
   if (paletteCommands.find((c) => command.id === c.id)) {
     console.error(

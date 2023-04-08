@@ -1,7 +1,7 @@
 import { Component, Show } from "solid-js";
 
 import { Navigation } from "./navigation/Navigation.jsx";
-import { View } from "./view/View.jsx";
+import { View } from "./view/view/View.jsx";
 import { StatusBar } from "./status_bar/StatusBar.jsx";
 import { CommandPalette } from "./command_palette/view/CommandPalette.jsx";
 
