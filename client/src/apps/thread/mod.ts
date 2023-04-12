@@ -46,4 +46,13 @@ export const init = (app: App) => {
   });
 
   addToPalette({ id: "thread.backToChannel" });
+
+  registerCommand({
+    id: "thread.replyToThread",
+    name: "Thread: Reply to the thread",
+    description: "Replies to the thread with current message in the editor",
+    paramsSchema: null,
+  });
+
+  addToPalette({ id: "thread.replyToThread" });
 };

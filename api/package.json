@@ -13,23 +13,23 @@
   },
   "devDependencies": {
     "@types/pg": "^8.6.6",
-    "@typescript-eslint/eslint-plugin": "^5.55.0",
-    "@typescript-eslint/parser": "^5.55.0",
-    "bun-types": "^0.5.6",
-    "eslint": "^8.36.0",
-    "prettier": "^2.8.4",
-    "typescript": "^5.0.2"
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "bun-types": "^0.5.8",
+    "eslint": "^8.38.0",
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.4"
   },
   "dependencies": {
     "@pgtyped/cli": "^2.1.0",
-    "@pgtyped/runtime": "^2.0.0",
-    "@trpc/server": "10.11.0",
+    "@pgtyped/runtime": "^2.1.0",
+    "@trpc/server": "10.19.1",
     "argon2id": "^1.0.0",
     "camelcase-keys": "^8.0.2",
     "dotenv": "^16.0.3",
-    "pg": "^8.9.0",
+    "pg": "^8.10.0",
     "replace-in-file": "^6.3.5",
     "superjson": "1.12.2",
-    "zod": "^3.20.6"
+    "zod": "^3.21.4"
   }
 }

@@ -1,14 +1,19 @@
 import { Component, createSignal, onCleanup, onMount } from "solid-js";
 
-import StarterKit from "@tiptap/starter-kit";
 import { Editor, JSONContent } from "@tiptap/core";
+import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
+import HardBreak from "@tiptap/extension-hard-break";
 
 import { useStore } from "@ponder/client/store/app.jsx";
+import {
+  deregisterHandlers,
+  registerHandler,
+} from "@ponder/client/lib/commands/commands.ts";
 
-import { buttonClasses } from "../../../atoms/button.ts";
-import { Avatar } from "../../../atoms/Avatar.jsx";
 import { classes } from "@ponder/client/lib/classes.ts";
+import { buttonClasses } from "@ponder/client/atoms/button.ts";
+import { Avatar } from "@ponder/client/atoms/Avatar.jsx";
 
 interface PostComposerProps {
   onSubmit: (reply: JSONContent, replyPlain: string) => Promise<void>;
@@ -25,7 +30,18 @@ export const PostComposer: Component<PostComposerProps> = (props) => {
     const editorInstance = new Editor({
       element: editorRef,
       extensions: [
-        StarterKit,
+        StarterKit.configure({
+          hardBreak: false,
+        }),
+        HardBreak.extend({
+          addKeyboardShortcuts() {
+            return {
+              // eslint-disable-next-line @typescript-eslint/no-empty-function
+              "Mod-Enter": () => false,
+            };
+          },
+        }),
+        // HardBreak,
         Placeholder.configure({ placeholder: "Reply..." }),
       ],
       editorProps: {
@@ -49,7 +65,29 @@ export const PostComposer: Component<PostComposerProps> = (props) => {
     });
   });
 
+  onMount(() => {
+    registerHandler("thread.replyToThread", {
+      handler: () => {
+        void handleReply();
+      },
+      when: () => {
+        return !isEmpty() && !isSubmitting();
+      },
+    });
+  });
+
+  onCleanup(() => {
+    deregisterHandlers("thread.replyToThread");
+  });
+
   const handleReply = async () => {
+    if (isEmpty() || isSubmitting()) {
+      console.error(
+        "post composer :: tried to submit reply with empty composer"
+      );
+      return;
+    }
+
     const reply = editor()?.getJSON();
     const replyPlain = editor()?.getText();
     if (reply && replyPlain) {
@@ -61,7 +99,7 @@ export const PostComposer: Component<PostComposerProps> = (props) => {
         editor()?.commands.clearContent();
         setIsEmpty(true);
       } catch {
-        console.error("post compose :: failed to submit reply");
+        console.error("post composer :: failed to submit reply");
       } finally {
         setIsSubmitting(false);
       }

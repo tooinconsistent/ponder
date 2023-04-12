@@ -31,6 +31,7 @@ const bindings: KeyBinding[] = [
   },
   { key: "c", command: "channel.newThread" },
   { key: "$mod+Shift+b", command: "sideBar.toggle" },
+  { key: "$mod+Enter", command: "thread.replyToThread" },
 ];
 
 export const initialiseKeyBindings = () => {
