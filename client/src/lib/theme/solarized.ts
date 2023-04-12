@@ -161,7 +161,7 @@ export const solarizedDarkTheme: ColorTheme = {
       metaDetailsBorder: "base1",
       threadRowDivider: "base3",
       threadListBackground: "base1",
-      threadRowHoverBackground: "lighten(base1, 5)",
+      threadRowSelectedBackground: "lighten(base1, 5)",
     },
 
     thread: {

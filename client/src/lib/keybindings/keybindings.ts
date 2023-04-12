@@ -25,9 +25,33 @@ const bindings: KeyBinding[] = [
     repeats: true,
   },
   {
+    key: "ArrowUp",
+    command: "channel.selectPreviousThread",
+    repeats: true,
+  },
+  {
+    key: "ArrowDown",
+    command: "channel.selectNextThread",
+    repeats: true,
+  },
+  {
+    key: "j",
+    command: "channel.selectNextThread",
+    repeats: true,
+  },
+  {
+    key: "k",
+    command: "channel.selectPreviousThread",
+    repeats: true,
+  },
+  {
     key: "Enter",
     command: "commandPalette.executeSelectedCommand",
     everywhere: true,
+  },
+  {
+    key: "Enter",
+    command: "channel.openSelectedThread",
   },
   { key: "c", command: "channel.newThread" },
   { key: "$mod+Shift+b", command: "sideBar.toggle" },

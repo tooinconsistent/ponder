@@ -9,7 +9,7 @@ export type MainViews =
 
 export interface ViewStore {
   currentView: MainViews;
-  currentViewProps: Record<string, string> | null;
+  currentViewProps: Record<string, string | null> | null;
   showCommandPalette: boolean;
 }
 

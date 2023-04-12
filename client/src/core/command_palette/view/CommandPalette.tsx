@@ -103,6 +103,7 @@ export const CommandPalette: Component = () => {
   onCleanup(() => {
     deregisterHandlers("commandPalette.selectPrevious");
     deregisterHandlers("commandPalette.selectNext");
+    deregisterHandlers("commandPalette.executeSelectedCommand");
   });
 
   // hide the command palette when clicking outside of it
@@ -153,7 +154,7 @@ export const CommandPalette: Component = () => {
           <Show
             when={searchResults()}
             keyed
-            fallback={() => (
+            fallback={
               <>
                 {
                   // eslint-disable-next-line solid/prefer-for
@@ -167,7 +168,7 @@ export const CommandPalette: Component = () => {
                   ))
                 }
               </>
-            )}
+            }
           >
             {(res) => (
               <>

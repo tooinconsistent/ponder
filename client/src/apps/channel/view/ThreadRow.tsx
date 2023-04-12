@@ -1,10 +1,13 @@
 import { Component } from "solid-js";
 
+import { classes } from "@ponder/client/lib/classes";
 import { getFormattedRealtiveTime } from "@ponder/client/lib/relative_time.ts";
 
 import { Avatar } from "@ponder/client/atoms/Avatar.jsx";
 
 interface ThreadRowProps {
+  selected: boolean;
+  onHover: () => void;
   threadId: string;
   title: string;
   latestPost: {
@@ -19,7 +22,13 @@ interface ThreadRowProps {
 
 export const ThreadRow: Component<ThreadRowProps> = (props) => {
   return (
-    <div class="cursor-pointer hover:bg-[var(--channel-threadRowHoverBackground)]">
+    <div
+      class={classes(
+        "cursor-pointer",
+        props.selected && "bg-[--channel-threadRowSelectedBackground]"
+      )}
+      onMouseEnter={() => props.onHover()}
+    >
       <a href={`/thread/${props.threadId}`}>
         <div class="flex items-center px-2 py-4 sm:px-4">
           <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
@@ -41,7 +50,7 @@ export const ThreadRow: Component<ThreadRowProps> = (props) => {
                   margins="mr-2"
                 />
                 <div class="flex items-center text-xs text-[var(--base-foreground)]">
-                  <p class="whitespace-normal line-clamp-2">
+                  <p class="line-clamp-2 whitespace-normal">
                     <span class="mr-1 font-medium">
                       {props.latestPost.author.displayName}:
                     </span>
