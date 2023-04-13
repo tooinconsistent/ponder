@@ -37,7 +37,7 @@ export const Post: Component<PostProps> = (props) => {
     <li class="group">
       <div class="relative pb-8">
         <span
-          class="absolute top-5 left-5 -ml-px h-full w-0.5 bg-[var(--base-foreground)] group-last:hidden"
+          class="absolute left-5 top-5 -ml-px h-full w-0.5 bg-[var(--base-foreground)] group-last:hidden"
           aria-hidden="true"
         />
         <div class="relative flex items-start space-x-3">

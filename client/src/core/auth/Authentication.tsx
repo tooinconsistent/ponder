@@ -12,7 +12,7 @@ export const Authentication: Component = (_props) => {
   return (
     <>
       <div class="flex min-h-full">
-        <div class="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+        <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
           <div class="mx-auto w-full max-w-sm lg:w-96">
             <div>
               <h2 class="mt-6 text-3xl font-bold tracking-tight text-[var(--textHeader-foreground)]">

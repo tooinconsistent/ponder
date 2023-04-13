@@ -69,7 +69,9 @@ const server = http.createServer(async (req, res) => {
 
     req.url = req.url?.replace("/trpc", "");
 
-    await handler(req, res);
+    // TODO: remove this any cast once http types are fixed
+    // eslint-disable-next-line
+    await handler(req as any, res);
 
     console.debug(
       `Sending response :: at ${performance.now()} :: took ${

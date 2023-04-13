@@ -23,7 +23,7 @@
   "dependencies": {
     "@pgtyped/cli": "^2.1.0",
     "@pgtyped/runtime": "^2.1.0",
-    "@trpc/server": "10.19.1",
+    "@trpc/server": "10.20.0",
     "argon2id": "^1.0.0",
     "camelcase-keys": "^8.0.2",
     "dotenv": "^16.0.3",

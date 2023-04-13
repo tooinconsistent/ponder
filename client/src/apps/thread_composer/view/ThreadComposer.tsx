@@ -68,7 +68,7 @@ export const ThreadComposer: Component = (_props) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const contentPlain = editor()!.getText();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const channelId = store.view.currentViewProps!.channelId;
+    const channelId = store.view.currentViewProps!.channelId!;
 
     try {
       const newThread = await trpc.threads.createNewThread.mutate({
@@ -102,7 +102,7 @@ export const ThreadComposer: Component = (_props) => {
       <div class="flex h-full max-w-6xl flex-1 flex-col">
         <ThreadDetails
           title="New Thread"
-          channelId={store.view.currentViewProps?.channelId}
+          channelId={store.view.currentViewProps?.channelId ?? ""}
         />
         <div class="flex flex-1 justify-center overflow-y-auto p-8 pt-2">
           <div class="flex w-full max-w-xl flex-col rounded-md border border-[var(--threadComposer-border)] bg-[var(--threadComposer-background)] px-4 py-2">
