@@ -12,18 +12,22 @@ import { addToPalette } from "@ponder/client/lib/commands/palette";
 export const init = (app: App) => {
   const OpenChannelParams = Type.Object({
     channelId: Type.String(),
+    selectedThreadId: Type.Optional(Type.String()),
   });
 
   registerCommand({
     id: "view.openChannel",
     name: "Open Channel",
-    description: "Opens specified channel.",
+    description: "Opens channel app for a specifed channel.",
     paramsSchema: OpenChannelParams,
     handler: (params: Static<typeof OpenChannelParams>) => {
       app.setStore(
         produce((s) => {
           s.view.currentView = "channel";
-          s.view.currentViewProps = { channelId: params.channelId };
+          s.view.currentViewProps = {
+            channelId: params.channelId,
+            selectedThreadId: params.selectedThreadId ?? null,
+          };
         })
       );
     },
@@ -45,4 +49,25 @@ export const init = (app: App) => {
   });
 
   addToPalette({ id: "channel.newThread" });
+
+  registerCommand({
+    id: "channel.selectNextThread",
+    name: "Select next",
+    description: "Selects next thread row in the channel view",
+    paramsSchema: null,
+  });
+
+  registerCommand({
+    id: "channel.selectPreviousThread",
+    name: "Select previous",
+    description: "Selects previous thread row in the channel view",
+    paramsSchema: null,
+  });
+
+  registerCommand({
+    id: "channel.openSelectedThread",
+    name: "Open Selected Thread",
+    description: "Opens currently selected thread in the channel view",
+    paramsSchema: null,
+  });
 };

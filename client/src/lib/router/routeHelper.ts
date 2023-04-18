@@ -41,7 +41,7 @@ const RGX = /(\/|^)([:*][^/]*?)(\?)?(?=[/.]|$)/g;
 
 export const injectValuesIntoRoute = (
   route: string,
-  values: Record<string, string | number>
+  values: Record<string, string | null>
 ) => {
   return route.replace(
     RGX,

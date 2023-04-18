@@ -38,7 +38,10 @@ export const init = (app: App) => {
       const threadId = app.store.view.currentViewProps?.threadId ?? "";
       const [thread] = app.store.threads.thread(threadId);
       const channelId = thread()?.channelId ?? "";
-      executeCommand("view.openChannel", { channelId });
+      executeCommand("view.openChannel", {
+        channelId,
+        selectedThreadId: threadId,
+      });
     },
     when: () => {
       return app.store.view.currentView === "thread";
@@ -46,4 +49,13 @@ export const init = (app: App) => {
   });
 
   addToPalette({ id: "thread.backToChannel" });
+
+  registerCommand({
+    id: "thread.replyToThread",
+    name: "Thread: Reply to the thread",
+    description: "Replies to the thread with current message in the editor",
+    paramsSchema: null,
+  });
+
+  addToPalette({ id: "thread.replyToThread" });
 };
