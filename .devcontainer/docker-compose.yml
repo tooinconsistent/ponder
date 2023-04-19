@@ -3,37 +3,49 @@ services:
   api:
     build:
       context: ../api
-      dockerfile: Dockerfile.api
+      dockerfile: ../.devcontainer/Dockerfile.api
     volumes:
-      - ../api/src:/app/api/
+      - ../api:/app
+      - ponder-api-modules:/app/node_modules
     environment:
       - PORT=3000
-      - DATABASE_URL=postgresql://ponder_user:postgres@inconsistent_db:5432/ponder
+      - DATABASE_URL=postgresql://postgres:postgres@ponder_db:5432/ponder
     ports:
       - "3000:3000"
-    command: bun run bun:dev
+    working_dir: /app
+    command: "bun run bun:dev"
+
   client:
     build:
       context: ../client
-      dockerfile: Dockerfile.client
+      dockerfile: ../.devcontainer/Dockerfile.client
     ports:
       - "3001:3001"
     volumes:
-      - ../client/src:/app/client/
-      - /app/client/node_modules
+      - ../client:/app
+      - ponder-client-modules:/app/node_modules
     stdin_open: true
     tty: true
-    command: npm run dev
-  inconsistent_db:
-    image: postgres:15
-    container_name: inconsistent_db
-    restart: always
+    working_dir: /app
+    command: "npm run dev"
+
+  ponder_db:
+    image: postgres:latest
+    container_name: ponder_db
+    restart: unless-stopped
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=ponder_user
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=ponder
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=postgres
       - POSTGRES_PORT=5432
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - ponder-postgres-data:/var/lib/postgresql/data
+      - ./db_init/01_create-db-users.sql:/docker-entrypoint-initdb.d/01_create-db-users.sql
+      - ./db_init/02_init-plugins.sql:/docker-entrypoint-initdb.d/02_init-plugins.sql
+
+volumes:
+  ponder-postgres-data:
+  ponder-api-modules:
+  ponder-client-modules:

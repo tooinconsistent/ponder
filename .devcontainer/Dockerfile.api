@@ -1,0 +1,10 @@
+FROM oven/bun 
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the dependecy definitions
+COPY package.json .
+COPY bun.lockb bun.lockb
+
+RUN bun install
