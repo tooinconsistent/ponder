@@ -1,7 +1,7 @@
 {
   "name": "tooInconsitent ponder",
   "dockerComposeFile": "docker-compose.yml",
-  "service": "app",
-  "workspaceFolder": "/workspace",
+  "service": "client",
+  "workspaceFolder": "/app",
   "forwardPorts": [3001, 5432]
 }
