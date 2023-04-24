@@ -20,11 +20,17 @@ export const JsonEditor: Component<JsonEditorProps> = (props) => {
       doc: props.doc,
       extensions: [
         basicSetup,
-        // TODO: remove this any cast after prosemirror is updated
+        // TODO: remove all this any casts after prosemirror is updated
         // eslint-disable-next-line
         keymap.of([...defaultKeymap, indentWithTab, ...lintKeymap] as any),
         json(),
-        ...(props.skipLint ? [] : [lintGutter(), linter(jsonParseLinter())]),
+        ...(props.skipLint
+          ? []
+          : [
+              lintGutter(),
+              // eslint-disable-next-line
+              linter(jsonParseLinter() as any),
+            ]),
         EditorView.theme({}, { dark: false }),
         EditorState.readOnly.of(props.readOnly ?? false),
       ],
