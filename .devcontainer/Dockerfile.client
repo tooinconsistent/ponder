@@ -1,0 +1,11 @@
+FROM node:latest
+
+# Set the working directory to /app
+WORKDIR /app
+
+RUN curl https://bun.sh/install | bash
+
+COPY package.json .
+COPY bun.lockb bun.lockb
+
+RUN /root/.bun/bin/bun install

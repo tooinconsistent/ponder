@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+  api:
+    build:
+      context: ../api
+      dockerfile: ../.devcontainer/Dockerfile.api
+    volumes:
+      - ../api:/app
+      - ponder-api-modules:/app/node_modules
+    environment:
+      - PORT=3000
+      - DATABASE_URL=postgresql://postgres:postgres@ponder_db:5432/ponder
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    command: "bun run bun:dev"
+
+  client:
+    build:
+      context: ../client
+      dockerfile: ../.devcontainer/Dockerfile.client
+    ports:
+      - "3001:3001"
+    volumes:
+      - ../client:/app
+      - ponder-client-modules:/app/node_modules
+    stdin_open: true
+    tty: true
+    working_dir: /app
+    command: "npm run dev"
+
+  ponder_db:
+    image: postgres:latest
+    container_name: ponder_db
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=postgres
+      - POSTGRES_PORT=5432
+    volumes:
+      - ponder-postgres-data:/var/lib/postgresql/data
+      - ./db_init/01_create-db-users.sql:/docker-entrypoint-initdb.d/01_create-db-users.sql
+      - ./db_init/02_init-plugins.sql:/docker-entrypoint-initdb.d/02_init-plugins.sql
+
+volumes:
+  ponder-postgres-data:
+  ponder-api-modules:
+  ponder-client-modules:
