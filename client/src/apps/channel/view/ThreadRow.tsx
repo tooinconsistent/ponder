@@ -7,7 +7,7 @@ import { Avatar } from "@ponder/client/atoms/Avatar.jsx";
 
 interface ThreadRowProps {
   selected: boolean;
-  onHover: () => void;
+  onHover?: () => void;
   threadId: string;
   title: string;
   latestPost: {
@@ -18,16 +18,17 @@ interface ThreadRowProps {
       displayName: string;
     };
   };
+  ref: any;
 }
 
 export const ThreadRow: Component<ThreadRowProps> = (props) => {
   return (
     <div
       class={classes(
-        "cursor-pointer",
+        "cursor-pointer hover:bg-white",
         props.selected && "bg-[--channel-threadRowSelectedBackground]"
       )}
-      onMouseEnter={() => props.onHover()}
+      data-id={props.dataId}
     >
       <a href={`/thread/${props.threadId}`}>
         <div class="flex items-center px-2 py-4 sm:px-4">

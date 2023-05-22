@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Component, For, createSignal, onCleanup, onMount } from "solid-js";
 
 import {
@@ -33,10 +34,27 @@ export const Channel: Component = (_props) => {
   onMount(() => {
     registerHandler("channel.selectPreviousThread", {
       handler: () => {
-        setSelectionIdx((previousIdx) => {
+        setSelectionIdx((previousIdx: number) => {
           if (previousIdx > 0) {
+            const itemNode = document.querySelector(
+              `[data-id="${previousIdx - 1}"]`
+            );
+            itemNode &&
+              itemNode.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
             return previousIdx - 1;
           }
+
+          const itemNode = document.querySelector(
+            `[data-id="${threads().length - 1}"]`
+          );
+          itemNode &&
+            itemNode.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
           return threads().length - 1;
         });
       },
@@ -44,11 +62,24 @@ export const Channel: Component = (_props) => {
 
     registerHandler("channel.selectNextThread", {
       handler: () => {
-        setSelectionIdx((previousIdx) => {
+        setSelectionIdx((previousIdx: number) => {
           if (previousIdx + 1 >= threads().length) {
+            const itemNode = document.querySelector(`[data-id="${0}"]`);
+            itemNode &&
+              itemNode.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
             return 0;
           }
-
+          const itemNode = document.querySelector(
+            `[data-id="${previousIdx + 1}"]`
+          );
+          itemNode &&
+            itemNode.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
           return previousIdx + 1;
         });
       },
@@ -82,8 +113,8 @@ export const Channel: Component = (_props) => {
             {(thread, idx) => (
               <ThreadRow
                 selected={idx() === selectionIdx()}
+                dataId={idx()}
                 // eslint-disable-next-line solid/reactivity
-                onHover={() => setSelectionIdx(idx)}
                 threadId={thread.id}
                 title={thread.title}
                 latestPost={{
