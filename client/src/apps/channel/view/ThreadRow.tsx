@@ -24,7 +24,7 @@ export const ThreadRow: Component<ThreadRowProps> = (props) => {
   return (
     <div
       class={classes(
-        "cursor-pointer hover:bg-white",
+        "cursor-pointer hover:bg-[--channel-threadRowSelectedBackground]",
         props.selected && "bg-[--channel-threadRowSelectedBackground]"
       )}
     >
