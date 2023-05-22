@@ -18,7 +18,6 @@ interface ThreadRowProps {
       displayName: string;
     };
   };
-  ref: any;
 }
 
 export const ThreadRow: Component<ThreadRowProps> = (props) => {
