@@ -30,7 +30,7 @@ export const Channel: Component = (_props) => {
     )
   );
 
-  const inView = (element) => {
+  function inView(element: Element): boolean {
     const bounding = element.getBoundingClientRect();
     return (
       bounding.top >= 0 &&
@@ -40,7 +40,7 @@ export const Channel: Component = (_props) => {
       bounding.right <=
         (window.innerWidth || document.documentElement.clientWidth)
     );
-  };
+  }
 
   onMount(() => {
     registerHandler("channel.selectPreviousThread", {
@@ -50,8 +50,9 @@ export const Channel: Component = (_props) => {
             const itemNode = document.querySelector(
               `[data-id="${previousIdx - 1}"]`
             );
-            !inView(itemNode) &&
-              itemNode?.scrollIntoView({
+            itemNode &&
+              !inView(itemNode) &&
+              itemNode.scrollIntoView({
                 behavior: "smooth",
                 block: "center",
               });
@@ -61,8 +62,9 @@ export const Channel: Component = (_props) => {
           const itemNode = document.querySelector(
             `[data-id="${threads().length - 1}"]`
           );
-          !inView(itemNode) &&
-            itemNode?.scrollIntoView({
+          itemNode &&
+            !inView(itemNode) &&
+            itemNode.scrollIntoView({
               behavior: "smooth",
               block: "center",
             });
@@ -77,8 +79,9 @@ export const Channel: Component = (_props) => {
           if (previousIdx + 1 >= threads().length) {
             const itemNode = document.querySelector(`[data-id="${0}"]`);
 
-            !inView(itemNode) &&
-              itemNode?.scrollIntoView({
+            itemNode &&
+              !inView(itemNode) &&
+              itemNode.scrollIntoView({
                 behavior: "smooth",
                 block: "center",
               });
@@ -87,8 +90,9 @@ export const Channel: Component = (_props) => {
           const itemNode = document.querySelector(
             `[data-id="${previousIdx + 1}"]`
           );
-          !inView(itemNode) &&
-            itemNode?.scrollIntoView({
+          itemNode &&
+            !inView(itemNode) &&
+            itemNode.scrollIntoView({
               behavior: "smooth",
               block: "center",
             });

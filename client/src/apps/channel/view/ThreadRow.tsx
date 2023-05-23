@@ -7,8 +7,9 @@ import { Avatar } from "@ponder/client/atoms/Avatar.jsx";
 
 interface ThreadRowProps {
   selected: boolean;
-  onHover?: () => void;
+  onHover: () => void;
   threadId: string;
+  dataId: string | number;
   title: string;
   latestPost: {
     createdAt: Date;
