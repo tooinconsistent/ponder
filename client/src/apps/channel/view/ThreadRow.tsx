@@ -24,9 +24,11 @@ export const ThreadRow: Component<ThreadRowProps> = (props) => {
   return (
     <div
       class={classes(
-        "cursor-pointer hover:bg-[--channel-threadRowSelectedBackground]",
+        "cursor-pointer",
         props.selected && "bg-[--channel-threadRowSelectedBackground]"
       )}
+      data-id={props.dataId}
+      onMouseEnter={() => props.onHover()}
     >
       <a href={`/thread/${props.threadId}`}>
         <div class="flex items-center px-2 py-4 sm:px-4">

@@ -30,6 +30,18 @@ export const Channel: Component = (_props) => {
     )
   );
 
+  const inView = (element) => {
+    const bounding = element.getBoundingClientRect();
+    return (
+      bounding.top >= 0 &&
+      bounding.left >= 0 &&
+      bounding.bottom <=
+        (window.innerHeight || document.documentElement.clientHeight) &&
+      bounding.right <=
+        (window.innerWidth || document.documentElement.clientWidth)
+    );
+  };
+
   onMount(() => {
     registerHandler("channel.selectPreviousThread", {
       handler: () => {
@@ -38,20 +50,22 @@ export const Channel: Component = (_props) => {
             const itemNode = document.querySelector(
               `[data-id="${previousIdx - 1}"]`
             );
-            itemNode?.scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-            });
+            !inView(itemNode) &&
+              itemNode?.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
             return previousIdx - 1;
           }
 
           const itemNode = document.querySelector(
             `[data-id="${threads().length - 1}"]`
           );
-          itemNode?.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-          });
+          !inView(itemNode) &&
+            itemNode?.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
           return threads().length - 1;
         });
       },
@@ -62,19 +76,22 @@ export const Channel: Component = (_props) => {
         setSelectionIdx((previousIdx: number) => {
           if (previousIdx + 1 >= threads().length) {
             const itemNode = document.querySelector(`[data-id="${0}"]`);
-            itemNode?.scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-            });
+
+            !inView(itemNode) &&
+              itemNode?.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
             return 0;
           }
           const itemNode = document.querySelector(
             `[data-id="${previousIdx + 1}"]`
           );
-          itemNode?.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-          });
+          !inView(itemNode) &&
+            itemNode?.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
           return previousIdx + 1;
         });
       },
@@ -109,6 +126,8 @@ export const Channel: Component = (_props) => {
               <ThreadRow
                 selected={idx() === selectionIdx()}
                 // eslint-disable-next-line solid/reactivity
+                onHover={() => setSelectionIdx(idx)}
+                dataId={idx()}
                 threadId={thread.id}
                 title={thread.title}
                 latestPost={{
