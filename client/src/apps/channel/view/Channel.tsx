@@ -9,6 +9,7 @@ import { useStore } from "@ponder/client/store/app.jsx";
 
 import { ChannelDetails } from "./ChannelDetails.jsx";
 import { ThreadRow } from "./ThreadRow.jsx";
+import { isChildInView } from "@ponder/client/lib/dom_helpers.js";
 
 export const Channel: Component = (_props) => {
   const { store } = useStore();
@@ -30,45 +31,28 @@ export const Channel: Component = (_props) => {
     )
   );
 
-  function inView(element: Element): boolean {
-    const bounding = element.getBoundingClientRect();
-    return (
-      bounding.top >= 0 &&
-      bounding.left >= 0 &&
-      bounding.bottom <=
-        (window.innerHeight || document.documentElement.clientHeight) &&
-      bounding.right <=
-        (window.innerWidth || document.documentElement.clientWidth)
-    );
-  }
-
   onMount(() => {
     registerHandler("channel.selectPreviousThread", {
       handler: () => {
         setSelectionIdx((previousIdx: number) => {
-          if (previousIdx > 0) {
-            const itemNode = document.querySelector(
-              `[data-id="${previousIdx - 1}"]`
-            );
-            itemNode &&
-              !inView(itemNode) &&
-              itemNode.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-              });
-            return previousIdx - 1;
-          }
-
-          const itemNode = document.querySelector(
-            `[data-id="${threads().length - 1}"]`
+          const newSelectionIdx =
+            previousIdx > 0 ? previousIdx - 1 : threads().length - 1;
+          const newSelectionItemNode = document.querySelector(
+            `[data-id="${newSelectionIdx}"]`
           );
-          itemNode &&
-            !inView(itemNode) &&
-            itemNode.scrollIntoView({
+          if (
+            newSelectionItemNode &&
+            !isChildInView(
+              newSelectionItemNode,
+              document.querySelector("#channelContainer")
+            )
+          ) {
+            newSelectionItemNode.scrollIntoView({
               behavior: "smooth",
               block: "center",
             });
-          return threads().length - 1;
+          }
+          return newSelectionIdx;
         });
       },
     });
@@ -76,27 +60,25 @@ export const Channel: Component = (_props) => {
     registerHandler("channel.selectNextThread", {
       handler: () => {
         setSelectionIdx((previousIdx: number) => {
-          if (previousIdx + 1 >= threads().length) {
-            const itemNode = document.querySelector(`[data-id="${0}"]`);
-
-            itemNode &&
-              !inView(itemNode) &&
-              itemNode.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-              });
-            return 0;
-          }
-          const itemNode = document.querySelector(
-            `[data-id="${previousIdx + 1}"]`
+          const newSelectionIdx =
+            previousIdx + 1 >= threads().length ? 0 : previousIdx + 1;
+          const newSelectionItemNode = document.querySelector(
+            `[data-id="${newSelectionIdx}"]`
           );
-          itemNode &&
-            !inView(itemNode) &&
-            itemNode.scrollIntoView({
+
+          if (
+            newSelectionItemNode &&
+            !isChildInView(
+              newSelectionItemNode,
+              document.querySelector("#channelContainer")
+            )
+          ) {
+            newSelectionItemNode.scrollIntoView({
               behavior: "smooth",
               block: "center",
             });
-          return previousIdx + 1;
+          }
+          return newSelectionIdx;
         });
       },
     });
@@ -124,7 +106,10 @@ export const Channel: Component = (_props) => {
           isPrivate={!channel().latest?.isPublic}
           channelId={channel().latest?.id ?? null}
         />
-        <div class="flex-1 divide-y divide-[var(--channel-threadRowDivider)] overflow-auto bg-[var(--channel-threadListBackground)] px-9">
+        <div
+          class="flex-1 divide-y divide-[var(--channel-threadRowDivider)] overflow-auto bg-[var(--channel-threadListBackground)] px-9"
+          id="channelContainer"
+        >
           <For each={threads()}>
             {(thread, idx) => (
               <ThreadRow
