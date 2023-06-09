@@ -2,9 +2,9 @@ import { Component } from "solid-js";
 
 import { classes } from "@ponder/client/lib/classes.ts";
 
-import { SideBarViewTitle } from "@ponder/client/atoms/SideBarViewTitle.jsx";
-import { SidebarSection } from "@ponder/client/atoms/SidebarSection.jsx";
-import { executeCommand } from "@ponder/client/lib/commands/commands";
+import { SideBarViewTitle } from "@ponder/client/elements/SideBarViewTitle.tsx";
+import { SidebarSection } from "@ponder/client/elements/SidebarSection.tsx";
+import { executeCommand } from "@ponder/client/lib/commands/commands.ts";
 
 export const SettingsSidebarView: Component = (_props) => {
   return (

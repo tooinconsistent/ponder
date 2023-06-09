@@ -1,7 +1,7 @@
 import { Component, createSignal } from "solid-js";
 
 import { useAuthentication } from "./auth.ts";
-import { buttonClasses } from "../../atoms/button.ts";
+import { buttonClasses } from "../../elements/button.ts";
 
 export const Authentication: Component = (_props) => {
   const { login } = useAuthentication();

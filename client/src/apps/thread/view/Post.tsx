@@ -5,7 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 
 import { getFormattedRealtiveTime } from "@ponder/client/lib/relative_time.ts";
 
-import { Avatar } from "@ponder/client/atoms/Avatar.jsx";
+import { Avatar } from "@ponder/client/elements/Avatar.tsx";
 
 interface PostProps {
   content: JSONContent;

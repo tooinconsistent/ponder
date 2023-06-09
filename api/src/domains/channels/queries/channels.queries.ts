@@ -1,24 +1,24 @@
 /** Types generated for queries found in "src/domains/channels/queries/channels.sql" */
 import { PreparedQuery } from "@ponder/api/lib/db.ts";
 
-/** 'SelectChannelInOrg' parameters type */
-export interface SelectChannelInOrgParams {
+/** 'SelectAllChannelslInOrg' parameters type */
+export interface SelectAllChannelslInOrgParams {
   organisationId: string;
 }
 
-/** 'SelectChannelInOrg' return type */
-export interface SelectChannelInOrgResult {
+/** 'SelectAllChannelslInOrg' return type */
+export interface SelectAllChannelslInOrgResult {
   id: string;
   name: string;
 }
 
-/** 'SelectChannelInOrg' query type */
-export interface SelectChannelInOrgQuery {
-  params: SelectChannelInOrgParams;
-  result: SelectChannelInOrgResult;
+/** 'SelectAllChannelslInOrg' query type */
+export interface SelectAllChannelslInOrgQuery {
+  params: SelectAllChannelslInOrgParams;
+  result: SelectAllChannelslInOrgResult;
 }
 
-const selectChannelInOrgIR: any = {
+const selectAllChannelslInOrgIR: any = {
   usedParamSet: { organisationId: true },
   params: [
     {
@@ -42,10 +42,64 @@ const selectChannelInOrgIR: any = {
  * where channels.organisation_id = :organisationId!
  * ```
  */
-export const selectChannelInOrg = new PreparedQuery<
-  SelectChannelInOrgParams,
-  SelectChannelInOrgResult
->(selectChannelInOrgIR);
+export const selectAllChannelslInOrg = new PreparedQuery<
+  SelectAllChannelslInOrgParams,
+  SelectAllChannelslInOrgResult
+>(selectAllChannelslInOrgIR);
+
+/** 'SelectAllChannelsJoinedByUser' parameters type */
+export interface SelectAllChannelsJoinedByUserParams {
+  organisationId: string;
+  userId: string;
+}
+
+/** 'SelectAllChannelsJoinedByUser' return type */
+export interface SelectAllChannelsJoinedByUserResult {
+  id: string;
+  name: string;
+}
+
+/** 'SelectAllChannelsJoinedByUser' query type */
+export interface SelectAllChannelsJoinedByUserQuery {
+  params: SelectAllChannelsJoinedByUserParams;
+  result: SelectAllChannelsJoinedByUserResult;
+}
+
+const selectAllChannelsJoinedByUserIR: any = {
+  usedParamSet: { organisationId: true, userId: true },
+  params: [
+    {
+      name: "organisationId",
+      required: true,
+      transform: { type: "scalar" },
+      locs: [{ a: 183, b: 198 }],
+    },
+    {
+      name: "userId",
+      required: true,
+      transform: { type: "scalar" },
+      locs: [{ a: 234, b: 241 }],
+    },
+  ],
+  statement:
+    "select\n\tchannels.id,\n\tchannels.name\nfrom app_public.channels\nleft join app_public.channel_memberships on channel_memberships.channel_id = channels.id\nwhere channels.organisation_id = :organisationId! and channel_memberships.user_id = :userId!",
+};
+
+/**
+ * Query generated from SQL:
+ * ```
+ * select
+ * 	channels.id,
+ * 	channels.name
+ * from app_public.channels
+ * left join app_public.channel_memberships on channel_memberships.channel_id = channels.id
+ * where channels.organisation_id = :organisationId! and channel_memberships.user_id = :userId!
+ * ```
+ */
+export const selectAllChannelsJoinedByUser = new PreparedQuery<
+  SelectAllChannelsJoinedByUserParams,
+  SelectAllChannelsJoinedByUserResult
+>(selectAllChannelsJoinedByUserIR);
 
 /** 'SelectChannelById' parameters type */
 export interface SelectChannelByIdParams {

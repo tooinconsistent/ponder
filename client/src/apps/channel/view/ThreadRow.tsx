@@ -3,7 +3,7 @@ import { Component } from "solid-js";
 import { classes } from "@ponder/client/lib/classes";
 import { getFormattedRealtiveTime } from "@ponder/client/lib/relative_time.ts";
 
-import { Avatar } from "@ponder/client/atoms/Avatar.jsx";
+import { Avatar } from "@ponder/client/elements/Avatar.tsx";
 
 interface ThreadRowProps {
   selected: boolean;

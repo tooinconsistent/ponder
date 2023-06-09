@@ -5,13 +5,13 @@ import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 
 import { trpc } from "@ponder/client/lib/trpc.ts";
-import { useStore } from "@ponder/client/store/app.jsx";
+import { useStore } from "@ponder/client/store/app.tsx";
 
 import { classes } from "@ponder/client/lib/classes.ts";
-import { buttonClasses } from "@ponder/client/atoms/button.ts";
+import { buttonClasses } from "@ponder/client/elements/button.ts";
 
 import { ThreadDetails } from "./ThreadDetails.jsx";
-import { executeCommand } from "@ponder/client/lib/commands/commands.js";
+import { executeCommand } from "@ponder/client/lib/commands/commands.ts";
 
 export const ThreadComposer: Component = (_props) => {
   const { store } = useStore();

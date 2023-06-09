@@ -1,9 +1,17 @@
-/* @name selectChannelInOrg */
+/* @name selectAllChannelslInOrg */
 select
 	channels.id,
 	channels.name
 from app_public.channels
 where channels.organisation_id = :organisationId!;
+
+/* @name selectAllChannelsJoinedByUser */
+select
+	channels.id,
+	channels.name
+from app_public.channels
+left join app_public.channel_memberships on channel_memberships.channel_id = channels.id
+where channels.organisation_id = :organisationId! and channel_memberships.user_id = :userId!;
 
 /* @name selectChannelById */
 select

@@ -4,7 +4,8 @@ import { router, userProcedure } from "@ponder/api/trpc/trpc.ts";
 
 import {
   getChannelById,
-  getChannelsForUser,
+  getAllChannelsForUser,
+  getJoinedChannelsForUser,
 } from "@ponder/api/domains/channels/channels.ts";
 
 export const channelsRouter = router({
@@ -15,9 +16,24 @@ export const channelsRouter = router({
       })
     )
     .query(({ input, ctx }) => {
-      return getChannelsForUser(
+      return getAllChannelsForUser(
         {
           organisationId: input.organisationId,
+        },
+        ctx.pgConnection
+      );
+    }),
+  listJoined: userProcedure
+    .input(
+      z.object({
+        organisationId: z.string().uuid(),
+      })
+    )
+    .query(({ input, ctx }) => {
+      return getJoinedChannelsForUser(
+        {
+          organisationId: input.organisationId,
+          userId: ctx.userId,
         },
         ctx.pgConnection
       );

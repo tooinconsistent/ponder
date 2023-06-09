@@ -5,15 +5,15 @@ import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import HardBreak from "@tiptap/extension-hard-break";
 
-import { useStore } from "@ponder/client/store/app.jsx";
+import { useStore } from "@ponder/client/store/app.tsx";
 import {
   deregisterHandlers,
   registerHandler,
 } from "@ponder/client/lib/commands/commands.ts";
 
 import { classes } from "@ponder/client/lib/classes.ts";
-import { buttonClasses } from "@ponder/client/atoms/button.ts";
-import { Avatar } from "@ponder/client/atoms/Avatar.jsx";
+import { buttonClasses } from "@ponder/client/elements/button.ts";
+import { Avatar } from "@ponder/client/elements/Avatar.tsx";
 
 interface PostComposerProps {
   onSubmit: (reply: JSONContent, replyPlain: string) => Promise<void>;

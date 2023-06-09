@@ -1,17 +1,30 @@
 import { DBClient } from "@ponder/api/lib/db.ts";
 
 import {
-  selectChannelInOrg,
+  selectAllChannelslInOrg,
+  selectAllChannelsJoinedByUser,
   selectChannelById,
   selectThreadsForChannelWithLatestPost,
 } from "./queries/channels.queries.ts";
 
-export const getChannelsForUser = async (
+export const getAllChannelsForUser = async (
   { organisationId }: { organisationId: string },
   pgConnection: DBClient
 ) => {
-  const result = await selectChannelInOrg.execute(
+  const result = await selectAllChannelslInOrg.execute(
     { organisationId },
+    pgConnection
+  );
+
+  return result;
+};
+
+export const getJoinedChannelsForUser = async (
+  { organisationId, userId }: { organisationId: string; userId: string },
+  pgConnection: DBClient
+) => {
+  const result = await selectAllChannelsJoinedByUser.execute(
+    { organisationId, userId },
     pgConnection
   );
 

@@ -30,6 +30,7 @@ interface Channel {
 export interface ChannelsStore {
   channel: (channelId: string) => ResourceReturn<Channel>;
   listAll: () => ResourceReturn<Array<{ id: string; name: string }>>;
+  listJoined: () => ResourceReturn<Array<{ id: string; name: string }>>;
 }
 
 export const init = (app: App) => {
@@ -66,6 +67,30 @@ export const init = (app: App) => {
     return allChannels;
   };
 
+  let joinedChannelsList: ResourceReturn<
+    Array<{ id: string; name: string }>
+  > | null = null;
+
+  const getJoinedChannelsList = () => {
+    const auth = useContext(AuthContext);
+
+    const joinedChannels = createResource(() => {
+      const organisationId =
+        auth?.currentUser()?.organisations[0]?.organisationId;
+
+      if (!organisationId) {
+        return [];
+      }
+
+      return trpc.channels.listJoined.query({
+        organisationId,
+      });
+    });
+
+    joinedChannelsList = joinedChannels;
+    return joinedChannels;
+  };
+
   const store: ChannelsStore = {
     channel: (channelId: string) => {
       if (channels.has(channelId)) {
@@ -80,6 +105,13 @@ export const init = (app: App) => {
         return allChannelsList;
       }
       return getAllChannelsList();
+    },
+
+    listJoined: () => {
+      if (joinedChannelsList) {
+        return joinedChannelsList;
+      }
+      return getJoinedChannelsList();
     },
   };
 
