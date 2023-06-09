@@ -9,6 +9,7 @@ import { useStore } from "@ponder/client/store/app.jsx";
 
 import { ChannelDetails } from "./ChannelDetails.jsx";
 import { ThreadRow } from "./ThreadRow.jsx";
+import { isChildInView } from "@ponder/client/lib/dom_helpers.js";
 
 export const Channel: Component = (_props) => {
   const { store } = useStore();
@@ -30,26 +31,71 @@ export const Channel: Component = (_props) => {
     )
   );
 
+  const [isNavigatingUsingKeyboard, setIsNavigatingUsingKeyboard] =
+    createSignal(false);
+  const mouseNavigationHandler = () => {
+    if (isNavigatingUsingKeyboard()) {
+      setIsNavigatingUsingKeyboard(false);
+    }
+  };
+
   onMount(() => {
+    document.addEventListener("mousemove", mouseNavigationHandler);
+
     registerHandler("channel.selectPreviousThread", {
       handler: () => {
-        setSelectionIdx((previousIdx) => {
-          if (previousIdx > 0) {
-            return previousIdx - 1;
+        setIsNavigatingUsingKeyboard(true);
+        setSelectionIdx((previousIdx: number) => {
+          const newSelectionIdx =
+            previousIdx > 0 ? previousIdx - 1 : threads().length - 1;
+
+          const newSelectionThreadId = threads()[newSelectionIdx].id;
+          const newSelectionItemNode = document.querySelector(
+            `[data-id="${newSelectionThreadId}"]`
+          );
+
+          if (
+            newSelectionItemNode &&
+            !isChildInView(
+              newSelectionItemNode,
+              document.querySelector("#channelContainer")
+            )
+          ) {
+            newSelectionItemNode.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
           }
-          return threads().length - 1;
+          return newSelectionIdx;
         });
       },
     });
 
     registerHandler("channel.selectNextThread", {
       handler: () => {
-        setSelectionIdx((previousIdx) => {
-          if (previousIdx + 1 >= threads().length) {
-            return 0;
-          }
+        setIsNavigatingUsingKeyboard(true);
+        setSelectionIdx((previousIdx: number) => {
+          const newSelectionIdx =
+            previousIdx + 1 >= threads().length ? 0 : previousIdx + 1;
 
-          return previousIdx + 1;
+          const newSelectionThreadId = threads()[newSelectionIdx].id;
+          const newSelectionItemNode = document.querySelector(
+            `[data-id="${newSelectionThreadId}"]`
+          );
+
+          if (
+            newSelectionItemNode &&
+            !isChildInView(
+              newSelectionItemNode,
+              document.querySelector("#channelContainer")
+            )
+          ) {
+            newSelectionItemNode.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          }
+          return newSelectionIdx;
         });
       },
     });
@@ -63,6 +109,8 @@ export const Channel: Component = (_props) => {
   });
 
   onCleanup(() => {
+    document.removeEventListener("mousemove", mouseNavigationHandler);
+
     deregisterHandlers("channel.selectPreviousThread");
     deregisterHandlers("channel.selectNextThread");
     deregisterHandlers("channel.openSelectedThread");
@@ -77,13 +125,20 @@ export const Channel: Component = (_props) => {
           isPrivate={!channel().latest?.isPublic}
           channelId={channel().latest?.id ?? null}
         />
-        <div class="flex-1 divide-y divide-[var(--channel-threadRowDivider)] overflow-auto bg-[var(--channel-threadListBackground)] px-9">
+        <div
+          class="flex-1 divide-y divide-[var(--channel-threadRowDivider)] overflow-auto bg-[var(--channel-threadListBackground)] px-9"
+          id="channelContainer"
+        >
           <For each={threads()}>
             {(thread, idx) => (
               <ThreadRow
                 selected={idx() === selectionIdx()}
                 // eslint-disable-next-line solid/reactivity
-                onHover={() => setSelectionIdx(idx)}
+                onHover={() => {
+                  if (!isNavigatingUsingKeyboard()) {
+                    setSelectionIdx(idx);
+                  }
+                }}
                 threadId={thread.id}
                 title={thread.title}
                 latestPost={{

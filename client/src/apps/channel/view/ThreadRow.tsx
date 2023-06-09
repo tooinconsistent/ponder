@@ -27,6 +27,7 @@ export const ThreadRow: Component<ThreadRowProps> = (props) => {
         "cursor-pointer",
         props.selected && "bg-[--channel-threadRowSelectedBackground]"
       )}
+      data-id={props.threadId}
       onMouseEnter={() => props.onHover()}
     >
       <a href={`/thread/${props.threadId}`}>
