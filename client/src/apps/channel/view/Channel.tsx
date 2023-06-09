@@ -31,15 +31,29 @@ export const Channel: Component = (_props) => {
     )
   );
 
+  const [isNavigatingUsingKeyboard, setIsNavigatingUsingKeyboard] =
+    createSignal(false);
+  const mouseNavigationHandler = () => {
+    if (isNavigatingUsingKeyboard()) {
+      setIsNavigatingUsingKeyboard(false);
+    }
+  };
+
   onMount(() => {
+    document.addEventListener("mousemove", mouseNavigationHandler);
+
     registerHandler("channel.selectPreviousThread", {
       handler: () => {
+        setIsNavigatingUsingKeyboard(true);
         setSelectionIdx((previousIdx: number) => {
           const newSelectionIdx =
             previousIdx > 0 ? previousIdx - 1 : threads().length - 1;
+
+          const newSelectionThreadId = threads()[newSelectionIdx].id;
           const newSelectionItemNode = document.querySelector(
-            `[data-id="${newSelectionIdx}"]`
+            `[data-id="${newSelectionThreadId}"]`
           );
+
           if (
             newSelectionItemNode &&
             !isChildInView(
@@ -59,11 +73,14 @@ export const Channel: Component = (_props) => {
 
     registerHandler("channel.selectNextThread", {
       handler: () => {
+        setIsNavigatingUsingKeyboard(true);
         setSelectionIdx((previousIdx: number) => {
           const newSelectionIdx =
             previousIdx + 1 >= threads().length ? 0 : previousIdx + 1;
+
+          const newSelectionThreadId = threads()[newSelectionIdx].id;
           const newSelectionItemNode = document.querySelector(
-            `[data-id="${newSelectionIdx}"]`
+            `[data-id="${newSelectionThreadId}"]`
           );
 
           if (
@@ -92,6 +109,8 @@ export const Channel: Component = (_props) => {
   });
 
   onCleanup(() => {
+    document.removeEventListener("mousemove", mouseNavigationHandler);
+
     deregisterHandlers("channel.selectPreviousThread");
     deregisterHandlers("channel.selectNextThread");
     deregisterHandlers("channel.openSelectedThread");
@@ -115,8 +134,11 @@ export const Channel: Component = (_props) => {
               <ThreadRow
                 selected={idx() === selectionIdx()}
                 // eslint-disable-next-line solid/reactivity
-                onHover={() => setSelectionIdx(idx)}
-                dataId={idx()}
+                onHover={() => {
+                  if (!isNavigatingUsingKeyboard()) {
+                    setSelectionIdx(idx);
+                  }
+                }}
                 threadId={thread.id}
                 title={thread.title}
                 latestPost={{

@@ -9,7 +9,6 @@ interface ThreadRowProps {
   selected: boolean;
   onHover: () => void;
   threadId: string;
-  dataId: string | number;
   title: string;
   latestPost: {
     createdAt: Date;
@@ -28,7 +27,7 @@ export const ThreadRow: Component<ThreadRowProps> = (props) => {
         "cursor-pointer",
         props.selected && "bg-[--channel-threadRowSelectedBackground]"
       )}
-      data-id={props.dataId}
+      data-id={props.threadId}
       onMouseEnter={() => props.onHover()}
     >
       <a href={`/thread/${props.threadId}`}>
