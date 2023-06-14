@@ -31,8 +31,25 @@ export const Channel: Component = (_props) => {
     )
   );
 
+  onMount(() => {
+    const threadId = threads()[selectionIdx()].id;
+    const threadItemNode = document.querySelector(`[data-id="${threadId}"]`);
+
+    if (
+      threadItemNode &&
+      !isChildInView(
+        threadItemNode,
+        document.querySelector("#channelContainer")
+      )
+    ) {
+      threadItemNode.scrollIntoView({
+        block: "center",
+      });
+    }
+  });
+
   const [isNavigatingUsingKeyboard, setIsNavigatingUsingKeyboard] =
-    createSignal(false);
+    createSignal(true);
   const mouseNavigationHandler = () => {
     if (isNavigatingUsingKeyboard()) {
       setIsNavigatingUsingKeyboard(false);
