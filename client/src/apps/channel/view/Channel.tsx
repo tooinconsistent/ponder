@@ -50,9 +50,30 @@ export const Channel: Component = (_props) => {
 
   const [isNavigatingUsingKeyboard, setIsNavigatingUsingKeyboard] =
     createSignal(true);
-  const mouseNavigationHandler = () => {
+  const mouseNavigationHandler = (ev: MouseEvent) => {
     if (isNavigatingUsingKeyboard()) {
-      setIsNavigatingUsingKeyboard(false);
+      const distanceTravelled = Math.sqrt(
+        Math.pow(ev.movementX, 2) + Math.pow(ev.movementY, 2)
+      );
+
+      if (distanceTravelled > 0) {
+        setIsNavigatingUsingKeyboard(false);
+        const currentlyHoveredThread = document.querySelector(
+          "#channelContainer>:hover"
+        );
+
+        if (currentlyHoveredThread !== null) {
+          const currentlyHoveredThreadId =
+            currentlyHoveredThread.getAttribute("data-id");
+
+          if (currentlyHoveredThreadId !== null) {
+            const currentlyHoveredThreadIdx = threads().findIndex(
+              (thread) => thread.id === currentlyHoveredThreadId
+            );
+            setSelectionIdx(currentlyHoveredThreadIdx);
+          }
+        }
+      }
     }
   };
 
